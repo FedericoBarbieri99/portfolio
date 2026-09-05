@@ -1,0 +1,146 @@
+@import 'tailwindcss';
+@source '../scripts';
+
+/* ---------- fonts ---------- */
+@font-face {
+  font-family: 'Bricolage Grotesque';
+  src: url('/fonts/bricolage-grotesque-latin.woff2') format('woff2');
+  font-weight: 200 800;
+  font-stretch: 75% 100%;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Azeret Mono';
+  src: url('/fonts/azeret-mono-latin.woff2') format('woff2');
+  font-weight: 300 600;
+  font-display: swap;
+}
+
+/* ---------- tokens: the front palette. Backstage overrides the same variables, so every utility flips. ---------- */
+@theme {
+  --color-*: initial;
+  --color-bg: #edefec;
+  --color-ink: #111c33;
+  --color-line: #c8ccc6;
+  --color-signal: #d9481c;
+  --color-mute: #5f6878;
+
+  --font-sans: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'Azeret Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --text-*: initial;
+  --text-xs: 11px;
+  --text-sm: 14px;
+  --text-md: 15px;
+  --text-base: 17px;
+  --text-base--line-height: 1.5;
+  --text-lede: 19px;
+  --text-sub: 22px;
+  --text-title: 30px;
+
+  --spacing-gutter: clamp(20px, 4vw, 64px);
+  --spacing-bar: 56px;
+
+  --breakpoint-*: initial;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 900px;
+
+  --ease-page: cubic-bezier(0.2, 0.7, 0, 1);
+  --dur: 600ms;
+}
+
+/* backstage: applies inside html[data-mode="backstage"] */
+@custom-variant bs (&:where([data-mode='backstage'], [data-mode='backstage'] *));
+/* JS ran: html.js is set by main.ts, so rows collapse only when the script can reopen them */
+@custom-variant js (&:where(.js, .js *));
+
+/* optical size axis of Bricolage Grotesque */
+@utility opsz-* {
+  font-variation-settings: 'opsz' --value(integer);
+}
+
+/* backstage-only layer: hidden on the front, revealed by JS (or by CSS when motion is off) */
+@utility bs {
+  opacity: 0;
+  visibility: hidden;
+  [data-mode='backstage'] & {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    transition:
+      background-color var(--dur) var(--ease-page),
+      color var(--dur) var(--ease-page),
+      border-color var(--dur) var(--ease-page),
+      stroke var(--dur) var(--ease-page),
+      fill var(--dur) var(--ease-page);
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--spacing-bar) + 16px);
+    color-scheme: light;
+  }
+  html[data-mode='backstage'] {
+    --color-bg: #0f2451;
+    --color-ink: #edefec;
+    --color-line: #5c7dc7;
+    --color-signal: #ffb03b;
+    --color-mute: #9fb4e0;
+    color-scheme: dark;
+  }
+  body {
+    font-variation-settings: 'opsz' 17;
+    -webkit-font-smoothing: antialiased;
+  }
+  a {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.16em;
+  }
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-bg);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+  /* the flip: a circular wipe from the switch (motion.ts sets --vt-x/--vt-y and pauses --dur) */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+  ::view-transition-old(root) {
+    z-index: 1;
+  }
+  ::view-transition-new(root) {
+    z-index: 2;
+    animation: wipe 750ms var(--ease-page) both;
+  }
+  @keyframes wipe {
+    from {
+      clip-path: circle(0 at var(--vt-x, 50%) var(--vt-y, 50%));
+    }
+    to {
+      clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 50%) var(--vt-y, 50%));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}

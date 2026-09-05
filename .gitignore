@@ -1,0 +1,44 @@
+node_modules
+dist
+dist-ssr
+*.local
+
+# env
+.env
+.env.*
+!.env.example
+
+# logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# misc
+*.pdf
+coverage
+.cache
+
+# tool-local configs
+.impeccable/config.local.json
+.impeccable/hook.cache.json
+.impeccable/review/
+.claude/settings.local.json
+.codex/hooks.json
+.cursor/hooks.json
