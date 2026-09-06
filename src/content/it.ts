@@ -26,7 +26,7 @@ const it: Content = {
     did: 'Cosa ho fatto',
     under: 'Sotto il cofano',
     skillsHeading: 'Competenze',
-    skillsNote: 'Grandi quanto il tempo di lavoro che occupano. Gira la pagina per le prove.',
+    skillsNote: 'In ordine di tempo di lavoro che occupano. Gira la pagina per le prove.',
     expHeading: 'Esperienza',
     eduHeading: 'Formazione',
     aboutHeading: 'Chi sono',
@@ -101,7 +101,7 @@ const it: Content = {
           did: 'Ho costruito l’app Flutter con state management BLoC e la web app Next.js: gantt e timeline, automazioni sui task, editor rich-text, export PDF, accesso e calendario tramite Microsoft 365. La logica server gira come Firebase Cloud Functions.',
           under:
             'Flutter con flutter_bloc e dio, Next.js con React, TipTap, react-pdf, MSAL e Microsoft Graph, Firebase Auth, Firestore e Cloud Functions su Node. Circa 42.000 righe di Dart e 39.000 di TypeScript, oltre 1.000 commit come autore principale.',
-          chain: ['Flutter · BLoC', 'Next.js', 'Cloud Functions', 'Firestore', 'Microsoft Graph'],
+          chain: ['Flutter', 'Next.js', 'Cloud Functions', 'Firestore', 'Microsoft Graph'],
         },
       ],
       also: [
@@ -151,39 +151,33 @@ const it: Content = {
   skills: [
     {
       group: 'Linguaggi',
-      tier: 1,
       items: ['Java', 'TypeScript', 'Dart', 'Python', 'SQL'],
-      proof: ['Java · ecosistema Aitech, scraper', 'TypeScript · Towedo web, App Viaggi, Traq', 'Dart · Towedo mobile', 'Python · carte di Traq, script', 'SQL · migrazioni Flyway'],
+      proof: ['Java, ecosistema Aitech, scraper', 'TypeScript, Towedo web, App Viaggi, Traq', 'Dart, Towedo mobile', 'Python, carte di Traq, script', 'SQL, migrazioni Flyway'],
     },
     {
       group: 'Backend',
-      tier: 1,
       items: ['Java', 'Spring Boot', 'Spring Security', 'JPA', 'MySQL', 'Node.js', 'Express', 'FastAPI'],
-      proof: ['ecosistema Aitech · ~1.000 commit', 'single sign-on OIDC in produzione', 'Cloud Functions su Node · Towedo, App Viaggi'],
+      proof: ['ecosistema Aitech, ~1.000 commit', 'single sign-on OIDC in produzione', 'Cloud Functions su Node, Towedo, App Viaggi'],
     },
     {
       group: 'Frontend',
-      tier: 1,
       items: ['Vaadin', 'TypeScript', 'React', 'Next.js', 'Vite', 'Tailwind'],
-      proof: ['Vaadin 25 · viste Flow e React', 'Towedo web · 39.000 righe di TypeScript', 'due siti aziendali in Next.js'],
+      proof: ['Vaadin 25, viste Flow e React', 'Towedo web, 39.000 righe di TypeScript', 'due siti aziendali in Next.js'],
     },
     {
       group: 'Mobile',
-      tier: 2,
-      items: ['Flutter · BLoC', 'React Native · Expo'],
-      proof: ['Towedo · 42.000 righe di Dart', 'App Viaggi · Expo 56', 'Traq · Expo 51'],
+      items: ['Flutter', 'React Native', 'Expo'],
+      proof: ['Towedo, 42.000 righe di Dart', 'App Viaggi, Expo 56', 'Traq, Expo 51'],
     },
     {
       group: 'Cloud',
-      tier: 2,
-      items: ['Firebase', 'Cloud Functions', 'Firestore', 'Docker', 'GitHub Actions', 'Google Cloud'],
-      proof: ['rules Firestore testate sull’emulatore', 'immagini su GHCR · deploy con docker compose'],
+      items: ['Firebase', 'Cloud Functions', 'Firestore', 'Docker', 'Traefik', 'GitHub Actions', 'Google Cloud'],
+      proof: ['rules Firestore testate sull’emulatore', 'immagini su GHCR, deploy con docker compose'],
     },
     {
       group: 'E poi',
-      tier: 3,
       items: ['Python', 'Postgres', 'Stripe', 'Playwright', 'Electron'],
-      proof: ['App Viaggi v1 · Express su Postgres', 'scraper Java su Playwright', 'checkout Stripe embedded'],
+      proof: ['App Viaggi v1, Express su Postgres', 'scraper Java su Playwright', 'checkout Stripe embedded'],
     },
   ],
   experience: [

@@ -22,10 +22,9 @@ export interface WorkGroup {
   alsoTags: string;
 }
 
-// tier 1 = what I do every day, 3 = used in shipped work. Drives the type size on the front.
+// ordered by how much working time they take; all set at one size
 export interface SkillGroup {
   group: string;
-  tier: 1 | 2 | 3;
   items: string[];
   proof: string[];
 }

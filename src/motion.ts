@@ -168,8 +168,8 @@ function penguin() {
   const label = document.querySelector<HTMLElement>('[data-penguin-label]');
   const H = 38;
   const OFF = 44; // offstage: this far past the page edge
-  // where a perch may be for it to stand there (feet y in viewport): clear of the top bar and, when there is room, of the HUD
-  const ZONE = { top: 200, bottom: () => Math.max(200 + 220, innerHeight - 300) };
+  // where a perch may be for it to stand there (feet y in viewport): clear of the top bar and, when there is room, of the HUD (desktop only)
+  const ZONE = { top: 200, bottom: () => Math.max(200 + 220, innerHeight - (desktop ? 300 : 120)) };
   const READ = () => ZONE.top + (ZONE.bottom() - ZONE.top) * 0.62; // where it likes to land, so it rides up a while before moving again
   const S = { x: 0, y: 0, face: -1, rot: 0, sq: 1, bob: 0, breath: 0, scene: '' }; // face: -1 looks left … 1 looks right
   let walked = 0;
@@ -601,7 +601,7 @@ function penguin() {
   }
 }
 
-// ---------- hover inspector (backstage, desktop): the page reads its own computed type ----------
+// ---------- inspector (backstage): the page reads its own computed type. Hover with a mouse, tap on touch ----------
 function inspector() {
   const label = document.querySelector<HTMLElement>('[data-inspect]');
   if (!label) return;
@@ -611,10 +611,10 @@ function inspector() {
     current = null;
     label.hidden = true;
   };
-  addEventListener('mousemove', (e) => {
+  const show = (e: MouseEvent) => {
     if (mode !== 'backstage') return current && clear();
     const el = (e.target as HTMLElement | null)?.closest<HTMLElement>('h1, h2, h3, h4, p, li, a, button, dt, dd');
-    if (!el || el.closest('[data-hud]')) return clear();
+    if (!el || el.closest('[data-hud], [data-toggle]')) return clear(); // the toggle's own click flips the page: never leave it outlined
     if (el !== current) {
       if (current) current.style.outline = '';
       current = el;
@@ -628,8 +628,11 @@ function inspector() {
       label.textContent = `${el.tagName.toLowerCase()} · ${family} ${cs.fontWeight}${stretch < 100 ? ` · wdth ${stretch}` : ''} · ${fs}px / ${(lh / fs).toFixed(2)}`;
       label.hidden = false;
     }
-    label.style.transform = `translate(${e.clientX + 14}px, ${e.clientY + 18}px)`;
-  });
+    const x = Math.min(e.clientX + 14, innerWidth - label.offsetWidth - 8); // keeps it on screen on a phone
+    label.style.transform = `translate(${x}px, ${e.clientY + 18}px)`;
+  };
+  addEventListener('pointermove', (e) => e.pointerType === 'mouse' && show(e));
+  addEventListener('click', show); // a tap (click has coordinates and, unlike pointerdown, never fires for a scroll drag)
   document.documentElement.addEventListener('mouseleave', clear);
   addEventListener('scroll', clear, { passive: true });
 }
@@ -656,8 +659,8 @@ function load() {
 
 export function init() {
   if (!reduced) load();
-  if (desktop) inspector();
-  if (desktop && !reduced) penguin();
+  inspector();
+  if (!reduced) penguin();
   // #backstage opens the page already flipped (shareable, and handy for screenshots)
   if (location.hash === '#backstage') setMode('backstage');
 }

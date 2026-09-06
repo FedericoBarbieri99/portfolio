@@ -22,12 +22,12 @@ const H2 = 'relative w-fit max-w-full text-[clamp(40px,6vw,80px)] font-extrabold
 const COLS = 'grid grid-cols-[250px_minmax(0,1fr)] gap-x-8 max-lg:grid-cols-1 max-lg:gap-y-2';
 const MUTE_MD = 'text-md text-mute';
 // redline: amber mono annotation, its label comes from data-label
-const RL = 'absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none after:content-[attr(data-label)] after:absolute after:whitespace-nowrap max-md:hidden';
-const TAG = 'absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none px-1.5 py-1 border border-signal max-md:hidden';
+const RL = 'absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none after:content-[attr(data-label)] after:absolute after:whitespace-nowrap';
+const TAG = 'absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none px-1.5 py-1 border border-signal';
 
-// measuring bracket under the heading, its label to the right
+// measuring bracket under the heading, its label to the right (under it on phones, where there is no room beside)
 const bracket = (label) =>
-  `<span class="${RL} bs inset-x-0 -bottom-[14px] after:left-full after:ml-2 after:-top-1.5 border-t border-signal before:content-[''] before:absolute before:-top-1 before:inset-x-0 before:h-2 before:border-x before:border-signal" aria-hidden="true" data-label="${esc(label)}"></span>`;
+  `<span class="${RL} bs inset-x-0 -bottom-[14px] after:left-full after:ml-2 after:-top-1.5 max-md:after:left-0 max-md:after:ml-0 max-md:after:top-1.5 border-t border-signal before:content-[''] before:absolute before:-top-1 before:inset-x-0 before:h-2 before:border-x before:border-signal" aria-hidden="true" data-label="${esc(label)}"></span>`;
 
 // section heading with its backstage spec, plus the section's id tag in the corner
 const heading = (id, text, ui) =>
@@ -113,21 +113,13 @@ function alsoRow(g, ui) {
 </li>`;
 }
 
-// Skills ladder: type size follows the tier; backstage draws the evidence under each rung.
-const TIER = {
-  1: 'text-[clamp(30px,3.8vw,54px)] font-bold font-stretch-75% tracking-[-0.025em] leading-[1.05] opsz-60',
-  2: 'text-[clamp(24px,2.2vw,32px)] font-semibold tracking-[-0.015em] leading-[1.15] opsz-30',
-  3: 'text-[20px] font-medium leading-[1.3]',
-};
+// Skills ladder: one size for every rung, items set apart by space alone; backstage draws the evidence under each rung.
+const SKILL = 'text-[clamp(24px,2.2vw,32px)] font-semibold tracking-[-0.015em] leading-[1.15] opsz-30';
 function skillRow(s) {
-  // separator trails the item, so a wrapped line never starts with a dot
-  const dot = s.tier === 3 ? 'after:text-mute' : 'after:text-line';
   return `
 <li class="relative ${COLS} py-[26px] pb-[30px] border-b border-line max-md:gap-y-2.5">
   <h3 class="${MUTE_MD} font-normal pt-[0.45em] max-md:pt-0">${esc(s.group)}</h3>
-  <ul class="flex flex-wrap items-baseline gap-x-[0.45em] gap-y-[0.1em] text-balance ${TIER[s.tier]}">${s.items
-    .map((i) => `<li class="not-last:after:content-['·'] after:ml-[0.45em] after:font-normal ${dot}">${esc(i)}</li>`)
-    .join('')}</ul>
+  <ul class="flex flex-wrap items-baseline gap-x-[1em] gap-y-[0.1em] text-balance ${SKILL}">${s.items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>
 ${chain(s.proof, true)}
 </li>`;
 }
@@ -180,8 +172,9 @@ function page(c) {
       <h1 class="col-start-1 row-start-1 relative w-fit max-w-full text-[clamp(88px,14vw,220px)] font-extrabold font-stretch-75% opsz-96 leading-[0.86] tracking-[-0.03em] max-md:text-[clamp(64px,19vw,120px)]" id="hero-name">
         <span class="block" data-split>${esc(hero.first)}</span>
         <span class="block" data-split>${esc(hero.last)}</span>
-        <span class="${RL} bs inset-y-0 -right-[30px] border-l border-signal before:content-[''] before:absolute before:-left-1 before:inset-y-0 before:w-2 before:border-y before:border-signal after:left-2.5 after:-top-0.5" aria-hidden="true" data-label="${esc(ui.rlName)}"></span>
-        <span class="${RL} bs inset-x-0 -bottom-[22px] border-t border-signal before:content-[''] before:absolute before:-top-1 before:inset-x-0 before:h-2 before:border-x before:border-signal after:left-0 after:top-2" aria-hidden="true" data-label="${esc(ui.rlSize)}"></span>
+        <!-- the h1 redlines quote the desktop size and need room to its right: desktop only -->
+        <span class="${RL} bs max-md:hidden inset-y-0 -right-[30px] border-l border-signal before:content-[''] before:absolute before:-left-1 before:inset-y-0 before:w-2 before:border-y before:border-signal after:left-2.5 after:-top-0.5" aria-hidden="true" data-label="${esc(ui.rlName)}"></span>
+        <span class="${RL} bs max-md:hidden inset-x-0 -bottom-[22px] border-t border-signal before:content-[''] before:absolute before:-top-1 before:inset-x-0 before:h-2 before:border-x before:border-signal after:left-0 after:top-2" aria-hidden="true" data-label="${esc(ui.rlSize)}"></span>
       </h1>
       <div class="col-start-2 row-start-1 self-end justify-self-end w-[clamp(150px,15vw,210px)] text-right max-md:col-start-1 max-md:row-start-2 max-md:justify-self-start max-md:text-left max-md:w-[150px] max-md:mt-9">
         <button class="relative z-2 block w-full cursor-pointer rounded-full [&:hover_circle]:brightness-[1.08]" type="button" data-toggle aria-pressed="false" aria-label="${esc(ui.toggleLabel)}">
@@ -193,7 +186,7 @@ function page(c) {
       <p class="col-span-full row-start-3 relative self-start mt-[22px] max-w-[60ch] text-lede max-md:row-start-4" data-fade>${esc(hero.intro)}<span class="${RL} bs inset-x-0 -bottom-[18px] border-t border-signal after:right-0 after:top-1.5" aria-hidden="true" data-label="${esc(ui.rlMeasure)}"></span></p>
 
       <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <span class="${RL} bs top-[calc(clamp(48px,12vh,140px)_-_28px)] -left-gutter w-gutter border-t border-dashed border-signal after:left-0 after:-top-4" data-label="${esc(ui.rlGutter)}"></span>
+        <span class="${RL} bs max-md:hidden top-[calc(clamp(48px,12vh,140px)_-_28px)] -left-gutter w-gutter border-t border-dashed border-signal after:left-0 after:-top-4" data-label="${esc(ui.rlGutter)}"></span>
         <span class="${TAG} bs top-3.5 left-0">${esc(ui.rlRoute)}</span>
         <span class="${TAG} bs top-3.5 right-0">${esc(ui.rlMode)}</span>
         <span class="${TAG} bs bottom-3.5 left-0">${esc(ui.rlStack)}</span>
@@ -257,7 +250,7 @@ function page(c) {
   </footer>
 
   <!-- the penguin: hides behind the switch knob, walks the hairlines and behind two phrases -->
-  <div data-penguin class="absolute top-0 left-0 w-7 z-1 origin-bottom pointer-events-none will-change-transform max-md:hidden motion-reduce:hidden" aria-hidden="true">
+  <div data-penguin class="absolute top-0 left-0 w-7 z-1 origin-bottom pointer-events-none will-change-transform motion-reduce:hidden" aria-hidden="true">
     <svg viewBox="0 0 28 38" class="block w-full h-auto">
       <path class="fill-ink" d="M20.5 27 C23.5 26.5 24.5 29 23 32 C22.5 30 21.5 28.5 20.5 27 Z" />
       <path class="fill-ink stroke-ink stroke-1 [stroke-linejoin:round]" d="M13.5 2.5 C9.5 2.5 6.5 6 6 12 C5.5 16 4.5 20 4.5 24 C4.5 30 8 34 13.5 34 C19 34 22.5 30 22.5 24 C22.5 20 21.5 16 21 12 C20.5 6 17.5 2.5 13.5 2.5 Z" />
@@ -276,7 +269,7 @@ function page(c) {
       <g data-prop="headphones" hidden><path class="fill-none stroke-bg stroke-[1.2] [stroke-linecap:round]" d="M7.2 8 C7.6 2.4 19.4 2.4 19.8 8" /><circle class="fill-signal" cx="7.4" cy="9" r="2.1" /><circle class="fill-signal" cx="19.6" cy="9" r="1.4" /></g>
     </svg>
   </div>
-  <span data-penguin-label data-prefix="${esc(ui.rlMascot)}" class="bs absolute top-0 left-0 z-1 font-mono text-xs leading-none tracking-[0.01em] text-signal whitespace-nowrap pointer-events-none max-md:hidden" aria-hidden="true"></span>
+  <span data-penguin-label data-prefix="${esc(ui.rlMascot)}" class="bs absolute top-0 left-0 z-1 font-mono text-xs leading-none tracking-[0.01em] text-signal whitespace-nowrap pointer-events-none" aria-hidden="true"></span>
   <!-- live timelines panel (backstage) -->
   <aside data-hud class="bs fixed right-gutter bottom-4 z-9 w-[230px] pt-2.5 px-3 pb-3 border border-line bg-bg font-mono text-xs text-mute max-md:hidden motion-reduce:hidden" aria-hidden="true">
     <p class="mb-2 text-signal">${esc(ui.tlPanel)}</p>

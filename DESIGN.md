@@ -30,24 +30,12 @@ typography:
     fontWeight: 700
     lineHeight: 1
     letterSpacing: "-0.025em"
-  skill-tier-1:
-    fontFamily: "Bricolage Grotesque, Helvetica Neue, Arial, sans-serif"
-    fontSize: "clamp(30px, 3.8vw, 54px)"
-    fontWeight: 700
-    lineHeight: 1.05
-    letterSpacing: "-0.025em"
-  skill-tier-2:
+  skill:
     fontFamily: "Bricolage Grotesque, Helvetica Neue, Arial, sans-serif"
     fontSize: "clamp(24px, 2.2vw, 32px)"
     fontWeight: 600
     lineHeight: 1.15
     letterSpacing: "-0.015em"
-  skill-tier-3:
-    fontFamily: "Bricolage Grotesque, Helvetica Neue, Arial, sans-serif"
-    fontSize: "20px"
-    fontWeight: 500
-    lineHeight: 1.3
-    letterSpacing: "normal"
   title:
     fontFamily: "Bricolage Grotesque, Helvetica Neue, Arial, sans-serif"
     fontSize: "30px"
@@ -156,9 +144,9 @@ Density is editorial: one column of long text, generous vertical rhythm, a wide 
 - Two token sets on one DOM, switched by `data-mode` on `<html>`; every Tailwind colour utility reads the same variables, so the whole page flips. The flip itself is a circular View Transition wipe growing from the switch (colour transitions paused for its 750ms); without the API it falls back to the native 600ms colour transition. anime.js animates only the knob, staggers and SVG draws.
 - Backstage annotates, it never decorates: every section heading carries its type spec, every section its id and padding, hovered text its computed size, and the HUD reports timelines, scroll position and the last three events.
 - Ledger rows grouped under employer names instead of cards; hairlines carry all structure.
-- One grotesque, two registers: the condensed axis (wdth 75, opsz 96/60) marks the top of every hierarchy (name, section headings, employer names, tier-1 skills); everything below it is the same face at normal width, opsz 30 or 17.
+- One grotesque, two registers: the condensed axis (wdth 75, opsz 96/60) marks the top of every hierarchy (name, section headings, employer names); everything below it is the same face at normal width, opsz 30 or 17.
 - Mono appears only where it is content (annotations, chains, "under the hood").
-- One orchestrated load sequence, motion otherwise only on action. The page has a stagehand: a 28px penguin in the page's own ink and bone, orange beak and feet, drawn with a small head, a round belly, a tail and one flipper held away from the body, an eye with a pupil that blinks. In the wings it changes one accessory at a time, all in the same three colours: a scarf, round glasses, a beanie, headphones, a bow tie, and often nothing at all. It is born behind the switch knob, steps out into the empty half of the track once the switch is drawn, and hops onto the pill when the switch flips. From then on it always stands on something real, at the right end of the row, rung or role nearest the reading line; the reader's scroll chooses the station, never the pose. To a neighbouring station it hops and lands with a squash; to a distant one it walks off through the right edge of the page, the wings of this stage. How it comes back depends on the reader: scrolling down, it arrives from above, dropping from behind the top bar straight onto the perch; scrolling up, it walks back in from the right. Twice it walks in along a line of text and stops behind a sentence, its head bobbing above the words (the phrase sits above it in the ground colour), and at the end it hides behind the email button and climbs on top of it to wave. Every move is timed and drawn with the classic vocabulary: it turns through its own profile before changing direction, crouches before a hop, stretches in the air, leans only as far as it travels sideways, and lands with a squash that overshoots and settles; walking has a step bob and a waddle, standing has breath and a blink. It stays on a perch until that perch nears the top or bottom band of the screen, then moves in the reader's direction to the perch nearest the reading line, never before it has had a beat to land. An opened row carries it along. It is never caught between poses, and if the page scrolls while it moves, it thinks again once it has landed. Desktop only; hidden with reduced motion; it never crosses the text column except behind those two phrases.
+- One orchestrated load sequence, motion otherwise only on action. The page has a stagehand: a 28px penguin in the page's own ink and bone, orange beak and feet, drawn with a small head, a round belly, a tail and one flipper held away from the body, an eye with a pupil that blinks. In the wings it changes one accessory at a time, all in the same three colours: a scarf, round glasses, a beanie, headphones, a bow tie, and often nothing at all. It is born behind the switch knob, steps out into the empty half of the track once the switch is drawn, and hops onto the pill when the switch flips. From then on it always stands on something real, at the right end of the row, rung or role nearest the reading line; the reader's scroll chooses the station, never the pose. To a neighbouring station it hops and lands with a squash; to a distant one it walks off through the right edge of the page, the wings of this stage. How it comes back depends on the reader: scrolling down, it arrives from above, dropping from behind the top bar straight onto the perch; scrolling up, it walks back in from the right. Twice it walks in along a line of text and stops behind a sentence, its head bobbing above the words (the phrase sits above it in the ground colour), and at the end it hides behind the email button and climbs on top of it to wave. Every move is timed and drawn with the classic vocabulary: it turns through its own profile before changing direction, crouches before a hop, stretches in the air, leans only as far as it travels sideways, and lands with a squash that overshoots and settles; walking has a step bob and a waddle, standing has breath and a blink. It stays on a perch until that perch nears the top or bottom band of the screen, then moves in the reader's direction to the perch nearest the reading line, never before it has had a beat to land. An opened row carries it along. It is never caught between poses, and if the page scrolls while it moves, it thinks again once it has landed. Hidden with reduced motion; it never crosses the text column except behind those two phrases.
 
 ## Colors
 
@@ -194,9 +182,7 @@ Cold bone and navy at rest; blueprint blue with amber marks in backstage. One si
 - **Display** (800, clamp(88px, 14vw, 220px), 0.86, -0.03em, wdth 75, opsz 96): the name only. Two lines, left-aligned, width fit-content so redlines can hug it. clamp(64px, 19vw, 120px) under 768px.
 - **Heading** (800, clamp(40px, 6vw, 80px), 0.95, -0.03em, wdth 75, opsz 96): section titles, balanced wrap, 44px below. No separate mobile size; the clamp does the work.
 - **Org** (700, clamp(34px, 4.2vw, 60px), 1, -0.025em, wdth 75, opsz 60): employer names heading each work group; the period sits beside them at baseline in Dates.
-- **Skill tier 1** (700, clamp(30px, 3.8vw, 54px), 1.05, -0.025em, wdth 75, opsz 60): the skills that take most working time (back-end, front-end).
-- **Skill tier 2** (600, clamp(24px, 2.2vw, 32px), 1.15, -0.015em, opsz 30): mobile and cloud.
-- **Skill tier 3** (500, 20px, 1.3): everything else. Separators are a trailing middle dot in hairline colour (mute on tier 3), so a wrapped line never begins with a dot.
+- **Skill** (600, clamp(24px, 2.2vw, 32px), 1.15, -0.015em, opsz 30): every rung at the same size; rungs are ordered by working time, never sized by it. Items are set apart by a 1em gap, no separator glyph.
 - **Title** (600, 30px, 1.1, -0.015em, opsz 30): project rows. 24px under 768px.
 - **Subtitle** (500, 22px, 1.35): role line, project summaries, contact note, experience roles.
 - **Lede** (400, 19px, 1.5): hero intro, about paragraphs, skills note; measure ≤ 60ch (44ch for the note).
@@ -216,7 +202,7 @@ A single 1440px max column with a fluid gutter (`clamp(20px, 4vw, 64px)`); conte
 
 Hero: a two-column grid, name left, switch bottom-right of the name row, role and intro full width beneath; min-height fills the viewport under the 56px sticky bar. Work: employer groups (org name · period, 8px below), each holding a ledger of rows (title · years · tags · +; the grid is `1fr 7.5em auto 24px`) that expand in place with a CSS grid-rows transition, one open at a time, closed by an "Also" row (title 22px/500 in mute, tags column carries a short summary) that expands to a plain list of smaller things done there; groups are `clamp(56px, 8vh, 96px)` apart. Skills: a ladder of rungs on a 250px label / 1fr items grid, 32px gap, hairline between rungs. Experience and education: the same 250px date column and text column. About: one column of lede text, ≤ 60ch. Contact: note, pill button, LinkedIn link, plain email.
 
-Under 900px rows restack (title on the first line, years in mute Dates and tags on the second, the plus spanning both; years never wrap), and the skills, experience and education grids collapse to one column with 8px row gap. Under 768px the hero becomes one column with the switch under the name; redlines, corner tags, HUD and penguin are removed; row titles drop to 24px; row chains fade out at the right edge instead of wrapping; skill chains leave the padding and stack in flow under the rung (see Components); the bar's mode label is hidden so the toggle keeps its gutter. Under 640px the section nav is hidden.
+Under 900px rows restack (title on the first line, years in mute Dates and tags on the second, the plus spanning both; years never wrap), and the skills, experience and education grids collapse to one column with 8px row gap. Under 768px the hero becomes one column with the switch under the name; the HUD, the name redlines and the gutter line are removed (corner tags, section tags, h2 brackets and the penguin stay); row titles drop to 24px; row chains fade out at the right edge instead of wrapping; skill chains leave the padding and stack in flow under the rung (see Components); the bar's mode label is hidden so the toggle keeps its gutter. Under 640px the section nav is hidden.
 
 ## Elevation & Depth
 
@@ -247,15 +233,15 @@ An SVG toggle: a 200×100 pill track stroked in ink and a knob filled with the s
 - **Backstage:** a stack chain (below) in the row's bottom padding so nothing shifts on toggle.
 
 ### Skills ladder
-- **Rung:** group label (Dates, mute, 250px column) beside a wrapping list of skills at the tier's size (tier 1–3 above), separated by trailing middle dots; hairline below; 26px above, 30px below.
+- **Rung:** group label (Dates, mute, 250px column) beside a wrapping list of skills at the one skill size, 1em apart; hairline below; 26px above, 30px below.
 - **Backstage:** a proof chain (below) of facts already on the page, in the rung's bottom padding on desktop.
 - **Mobile (≤ 768px):** the chain leaves the padding and stacks in flow under the rung, one node per line, line hidden; it is hidden entirely in front mode so no blank band remains. Accepted trade-off: the section grows on toggle on phones.
 
 ### Chains (backstage)
 The shared drawing under rows and rungs: a 2px line in hairline colour drawn left to right on reveal (1000ms, 70ms stagger) with 11px mono node labels in amber spaced along it, each label on a page-coloured pad so it breaks the line. Nodes are `aria-hidden`; the same component serves the row's stack and the rung's proof.
 
-### Redlines and tags (backstage, desktop only)
-Amber 1px measurement lines with 8px end ticks and an 11px mono label: name height, name width, gutter, intro measure. Bordered mono tags at the hero corners (route, `data-mode`, stack). All `aria-hidden`; hidden under 768px.
+### Redlines and tags (backstage)
+Amber 1px measurement lines with 8px end ticks and an 11px mono label: name height, name width, gutter, intro measure. Bordered mono tags at the hero corners (route, `data-mode`, stack). All `aria-hidden`. Under 768px the two name redlines and the gutter line are hidden (they quote desktop sizes and need room beside the name); the h2 label moves under its bracket.
 
 ### HUD ("Running timelines")
 Fixed bottom-right, 230px, 1px border, mono 11px. One row per registered animation (load, toggle) with a 2px progress bar and a percentage, updated per frame only while backstage is on. Hidden on mobile and under reduced motion.
@@ -269,8 +255,8 @@ Sticky 56px bar: name (600), section links (Work, Skills, Experience, About, Con
 - Do reserve the signal colour for the knob, focus ring and annotations.
 - Do put technical detail in "Under the hood" (backstage) rather than inflating the front copy.
 - Do use hairlines (1px, `--line`) for all structure; never boxes with backgrounds.
-- Do use the condensed axis (wdth 75) only at the top of a hierarchy: name, section heading, employer, tier-1 skill. Rows, subtitles and body stay at normal width.
-- Do rank by type size alone; when something new needs a hierarchy, pick a tier that already exists.
+- Do use the condensed axis (wdth 75) only at the top of a hierarchy: name, section heading, employer. Rows, subtitles and body stay at normal width.
+- Do rank by type size alone; when something new needs a hierarchy, pick a size that already exists. Skills are the exception: one size, ordered.
 - Don't add cards, shadows, gradients, glass, icon tiles, bars, percentages or badges.
 - Don't use the mono face in front mode, and don't use it at sizes above 13px anywhere.
 - Don't add per-section entrance animations; the page has one load sequence, one scroll-linked line, and one toggle timeline.
