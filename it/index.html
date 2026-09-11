@@ -14,43 +14,51 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://federicobarbieri.it/it/" />
   <meta name="theme-color" content="#EDEFEC" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
   <link rel="preload" href="/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/src/styles.css" />
   <script type="module" src="/src/main.ts"></script>
 </head>
 <body class="relative bg-bg text-ink font-sans text-base overflow-x-clip">
   <a class="absolute left-gutter -top-[100px] focus:top-2 px-3.5 py-2.5 bg-ink text-bg z-20" href="#work">Vai ai progetti</a>
 
-  <header class="sticky top-0 z-10 flex items-center gap-7 h-bar px-gutter bg-bg border-b border-line text-sm max-sm:gap-[18px]">
-    <a class="font-semibold mr-auto no-underline hover:underline" href="#top">Federico Barbieri</a>
-    <nav class="flex gap-[22px] max-sm:hidden" aria-label="Sections">
-      <a class="no-underline hover:underline" href="#work">Progetti</a>
-      <a class="no-underline hover:underline" href="#skills">Competenze</a>
-      <a class="no-underline hover:underline" href="#experience">Esperienza</a>
-      <a class="no-underline hover:underline" href="#about">Chi sono</a>
-      <a class="no-underline hover:underline" href="#contact">Contatti</a>
+  <header class="sticky top-0 z-10 flex items-center gap-x-7 h-bar px-gutter bg-bg border-b border-line text-sm max-[1100px]:flex-wrap max-[1100px]:gap-x-4 max-sm:gap-x-1.5">
+    <a class="font-semibold mr-auto gap-2.5 inline-flex items-center min-h-11 shrink-0 no-underline nav-link" href="#top"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 66 64" fill="currentColor" class="w-8 h-8 shrink-0" aria-hidden="true" focusable="false">
+  <path d="M10 14H29V21H17V28H27V35H17V50H10Z"/>
+  <path fill-rule="evenodd" d="M33 14H43C51 14 55 18 55 23.5C55 27.3 53 30 50 31.5C54 33 56 36 56 40C56 46.5 51 50 43.5 50H33ZM40 21V28H43C46.3 28 48 26.8 48 24.5S46.3 21 43 21ZM40 35V43H43.5C47 43 49 41.6 49 39S47 35 43.5 35Z"/>
+</svg>
+<span class="max-sm:sr-only">Federico Barbieri</span></a>
+    <nav class="flex gap-[22px] max-[1100px]:order-last max-[1100px]:w-full max-[1100px]:overflow-x-auto max-[1100px]:-mt-1 max-[1100px]:gap-6" aria-label="Sezioni">
+      <a class="inline-flex items-center min-h-11 shrink-0 no-underline nav-link" href="#work">Progetti</a>
+      <a class="inline-flex items-center min-h-11 shrink-0 no-underline nav-link" href="#skills">Competenze</a>
+      <a class="inline-flex items-center min-h-11 shrink-0 no-underline nav-link" href="#experience">Esperienza</a>
+      <a class="inline-flex items-center min-h-11 shrink-0 no-underline nav-link" href="#about">Chi sono</a>
+      <a class="inline-flex items-center min-h-11 shrink-0 no-underline nav-link max-[1100px]:hidden" href="#contact">Contatti</a>
     </nav>
-    <a class="text-mute no-underline hover:underline" href="/" hreflang="en" lang="en">English</a>
-    <button class="inline-flex items-center gap-2 py-1 cursor-pointer" type="button" data-toggle aria-pressed="false" aria-label="Mostra il backstage di questa pagina">
+    <a class="inline-flex items-center min-h-11 shrink-0 no-underline nav-link min-[1100px]:hidden" href="#contact">Contatti</a>
+    <a class="text-mute inline-flex items-center min-h-11 shrink-0 no-underline nav-link" href="/" hreflang="en" lang="en">English</a>
+    <button class="inline-flex items-center justify-center min-w-11 min-h-11 gap-2 cursor-pointer not-js:hidden" type="button" data-toggle aria-pressed="false" aria-label="Mostra il backstage di questa pagina">
       
 <svg class="w-10 h-5" viewBox="0 0 200 100" aria-hidden="true" focusable="false">
   <path  class="fill-none stroke-ink stroke-7 [stroke-linecap:round]" d="M50 4 H150 A46 46 0 0 1 150 96 H50 A46 46 0 0 1 50 4 Z" />
   <circle data-knob  class="fill-signal" cx="50" cy="50" r="34" />
 </svg>
-      <span class="min-w-[5.5em] text-left text-mute max-md:hidden" data-mode-label data-front="front" data-backstage="backstage">front</span>
+      <span class="min-w-[5.5em] text-left text-mute max-[1100px]:hidden" data-mode-label data-front="front" data-backstage="backstage">front</span>
     </button>
   </header>
 
   <main id="top" class="max-w-[1440px] mx-auto px-gutter">
-    <section class="relative min-h-[calc(100svh-var(--spacing-bar))] grid grid-cols-[minmax(0,1fr)_auto] grid-rows-[auto_auto_1fr] gap-x-10 pt-[clamp(48px,12vh,140px)] pb-[clamp(48px,8vh,96px)] max-md:grid-cols-1 max-md:grid-rows-[auto_auto_auto_1fr] max-md:pt-10" aria-labelledby="hero-name">
+    <section class="relative min-h-[min(820px,calc(100svh-var(--spacing-bar)))] grid grid-cols-[minmax(0,1fr)_auto] grid-rows-[auto_auto_1fr_auto] gap-x-10 pt-[clamp(48px,12vh,140px)] pb-11 max-md:gap-x-5 max-md:pt-12" aria-labelledby="hero-name">
       <h1 class="col-start-1 row-start-1 relative w-fit max-w-full text-[clamp(88px,14vw,220px)] font-extrabold font-stretch-75% opsz-96 leading-[0.86] tracking-[-0.03em] max-md:text-[clamp(64px,19vw,120px)]" id="hero-name">
-        <span class="block" data-split>Federico</span>
-        <span class="block" data-split>Barbieri</span>
+        <span class="block overflow-hidden pb-[0.05em] -mb-[0.05em]"><span class="block origin-bottom-left" data-name-line>Federico</span></span>
+        <span class="block overflow-hidden pb-[0.05em] -mb-[0.05em]"><span class="block origin-bottom-left" data-name-line>Barbieri</span></span>
         <!-- the h1 redlines quote the desktop size and need room to its right: desktop only -->
         <span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none after:content-[attr(data-label)] after:absolute after:whitespace-nowrap bs max-md:hidden inset-y-0 -right-[30px] border-l border-signal before:content-[''] before:absolute before:-left-1 before:inset-y-0 before:w-2 before:border-y before:border-signal after:left-2.5 after:-top-0.5" aria-hidden="true" data-label="h1 · Bricolage Grotesque · wdth 75 · opsz 96"></span>
         <span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none after:content-[attr(data-label)] after:absolute after:whitespace-nowrap bs max-md:hidden inset-x-0 -bottom-[22px] border-t border-signal before:content-[''] before:absolute before:-top-1 before:inset-x-0 before:h-2 before:border-x before:border-signal after:left-0 after:top-2" aria-hidden="true" data-label="clamp(88px, 14vw, 220px)"></span>
       </h1>
-      <div class="col-start-2 row-start-1 self-end justify-self-end w-[clamp(150px,15vw,210px)] text-right max-md:col-start-1 max-md:row-start-2 max-md:justify-self-start max-md:text-left max-md:w-[150px] max-md:mt-9">
+      <div class="col-start-2 row-start-1 self-end justify-self-end w-[clamp(150px,15vw,210px)] text-right max-md:w-[clamp(96px,19vw,150px)] not-js:hidden">
         <button class="relative z-2 block w-full cursor-pointer rounded-full [&:hover_circle]:brightness-[1.08]" type="button" data-toggle aria-pressed="false" aria-label="Mostra il backstage di questa pagina">
           
 <svg class="block w-full h-auto" viewBox="0 0 200 100" aria-hidden="true" focusable="false">
@@ -58,10 +66,14 @@
   <circle data-knob data-hero-knob class="fill-signal" cx="50" cy="50" r="34" />
 </svg>
         </button>
-        <p class="mt-3.5 text-sm leading-[1.4] text-mute max-w-[20ch] ml-auto text-balance max-md:ml-0" data-fade>Gira la pagina per vedere cosa la fa funzionare</p>
+        <p class="mt-3.5 text-sm leading-[1.4] text-mute max-w-[20ch] ml-auto text-balance" data-fade>Gira la pagina per vedere cosa la fa funzionare</p>
       </div>
-      <p class="col-span-full row-start-2 mt-[clamp(32px,5vh,56px)] text-sub font-medium leading-[1.3] max-md:row-start-3" data-fade>Fullstack developer<span class="block font-normal text-mute">Brescia</span></p>
-      <p class="col-span-full row-start-3 relative self-start mt-[22px] max-w-[60ch] text-lede max-md:row-start-4" data-fade>Prendere un’idea e renderla qualcosa di vero è la parte che mi ha sempre attratto della programmazione. Seguo piattaforme web, mobile e cloud a tutto tondo: quello che l’utente vede e quello che le fa funzionare.<span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none after:content-[attr(data-label)] after:absolute after:whitespace-nowrap bs inset-x-0 -bottom-[18px] border-t border-signal after:right-0 after:top-1.5" aria-hidden="true" data-label="misura ≤ 60ch"></span></p>
+      <p class="col-span-full row-start-2 mt-[clamp(32px,5vh,56px)] text-sub font-medium leading-[1.3]" data-fade>Fullstack developer<span class="block font-normal text-mute">Brescia</span></p>
+      <p class="col-span-full row-start-3 relative self-start mt-[22px] max-w-[60ch] text-lede" data-fade>Prendere un’idea e renderla qualcosa di vero è la parte che mi ha sempre attratto della programmazione. Seguo piattaforme web, mobile e cloud a tutto tondo: quello che l’utente vede e quello che le fa funzionare.<span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none after:content-[attr(data-label)] after:absolute after:whitespace-nowrap bs inset-x-0 -bottom-[18px] border-t border-signal after:right-0 after:top-1.5" aria-hidden="true" data-label="misura ≤ 60ch"></span></p>
+      <a class="col-span-full row-start-4 flex items-center justify-between min-h-11 mt-14 w-full font-medium underline underline-offset-4 group" href="#work" data-fade>
+        Esplora i progetti
+        <svg class="w-5 h-5 group-hover:translate-y-1 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3v17m-7-7 7 7 7-7" /></svg>
+      </a>
 
       <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
         <span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none after:content-[attr(data-label)] after:absolute after:whitespace-nowrap bs max-md:hidden top-[calc(clamp(48px,12vh,140px)_-_28px)] -left-gutter w-gutter border-t border-dashed border-signal after:left-0 after:-top-4" data-label="gutter clamp(20px, 4vw, 64px)"></span>
@@ -73,23 +85,23 @@
 
     <section class="relative py-[clamp(72px,11vh,150px)] border-t border-line" id="work" aria-labelledby="work-h">
       <h2 class="relative w-fit max-w-full text-[clamp(40px,6vw,80px)] font-extrabold font-stretch-75% tracking-[-0.03em] leading-[0.95] opsz-96 mb-11 text-balance" id="work-h">Progetti scelti<span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none after:content-[attr(data-label)] after:absolute after:whitespace-nowrap bs inset-x-0 -bottom-[14px] after:left-full after:ml-2 after:-top-1.5 max-md:after:left-0 max-md:after:ml-0 max-md:after:top-1.5 border-t border-signal before:content-[''] before:absolute before:-top-1 before:inset-x-0 before:h-2 before:border-x before:border-signal" aria-hidden="true" data-label="h2 · wdth 75 · clamp(40px, 6vw, 80px)"></span></h2>
-      <span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none px-1.5 py-1 border border-signal bs top-4 right-0">#work · padding clamp(72px, 11vh, 150px)</span>
+      <span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none px-1.5 py-1 border border-signal bs top-4 right-0" aria-hidden="true">#work · padding clamp(72px, 11vh, 150px)</span>
       <ol>
-<li class="not-first:mt-[clamp(56px,8vh,96px)]" id="g-aitech">
-  <h3 class="flex items-baseline flex-wrap gap-x-[22px] gap-y-2 mb-2"><span class="text-[clamp(34px,4.2vw,60px)] font-bold font-stretch-75% tracking-[-0.025em] leading-none opsz-60">Aitech</span><span class="text-md text-mute tabular-nums">2025 – oggi</span></h3>
+<li class="not-first:mt-[clamp(56px,8vh,96px)]" id="g-current">
+  <h3 class="flex items-baseline flex-wrap gap-x-[22px] gap-y-2 mb-2"><span class="text-[clamp(34px,4.2vw,60px)] font-bold font-stretch-75% tracking-[-0.025em] leading-none opsz-60">Ruolo attuale</span><span class="text-md text-mute tabular-nums">2025 – oggi</span></h3>
   <ol class="border-t border-line">
-<li class="relative border-b border-line pb-3.5" id="w-aitech">
+<li class="relative border-b border-line pb-3.5" id="w-platform">
   <h4 class="m-0 font-normal">
-    <button data-row class="group grid grid-cols-[minmax(0,1fr)_7.5em_auto_24px] items-baseline gap-x-6 w-full pt-[26px] pb-3 text-left cursor-pointer max-lg:grid-cols-[auto_minmax(0,1fr)_24px] max-lg:[grid-template-areas:'title_title_plus'_'years_tags_plus'] max-lg:gap-y-1.5" type="button" aria-expanded="false" aria-controls="p-aitech">
-      <span class="text-title font-semibold tracking-[-0.015em] opsz-30 max-md:text-[24px] leading-[1.1] group-hover:underline group-hover:decoration-2 group-hover:underline-offset-[0.1em] max-lg:[grid-area:title]">Ecosistema piattaforme Aitech</span>
+    <button data-row class="group grid grid-cols-[minmax(0,1fr)_7.5em_auto_24px] items-baseline gap-x-6 w-full pt-[26px] pb-3 text-left cursor-pointer max-lg:grid-cols-[auto_minmax(0,1fr)_24px] max-lg:[grid-template-areas:'title_title_plus'_'years_tags_plus'] max-lg:gap-y-1.5" type="button" aria-expanded="false" aria-controls="p-platform">
+      <span class="text-title font-semibold tracking-[-0.015em] opsz-30 max-md:text-[24px] leading-[1.1] project-title max-lg:[grid-area:title]">Ecosistema di piattaforme</span>
       <span class="tabular-nums max-lg:[grid-area:years] max-lg:text-md max-lg:text-mute max-lg:whitespace-nowrap">2025–2026</span>
       <span class="text-sm text-mute justify-self-end text-right max-lg:[grid-area:tags]">Java, Spring Boot, Vaadin, OIDC, MySQL</span>
-      <span class="relative w-[18px] h-[18px] self-center justify-self-end transition-transform duration-[450ms] ease-page group-aria-expanded:rotate-45 before:content-[''] before:absolute before:left-0 before:top-2 before:w-[18px] before:h-0.5 before:bg-current after:content-[''] after:absolute after:left-0 after:top-2 after:w-[18px] after:h-0.5 after:bg-current after:rotate-90 max-lg:[grid-area:plus]" aria-hidden="true"></span>
+      <span class="relative w-[18px] h-[18px] self-center justify-self-end transition-transform duration-[220ms] ease-page group-aria-expanded:rotate-45 before:content-[''] before:absolute before:left-0 before:top-2 before:w-[18px] before:h-0.5 before:bg-current after:content-[''] after:absolute after:left-0 after:top-2 after:w-[18px] after:h-0.5 after:bg-current after:rotate-90 max-lg:[grid-area:plus]" aria-hidden="true"></span>
     </button>
   </h4>
-  <div class="grid grid-rows-[1fr] js:not-data-open:grid-rows-[0fr] transition-[grid-template-rows] duration-[550ms] ease-page" id="p-aitech">
+  <p class="max-w-[70ch] pb-7 text-mute leading-[1.55] text-pretty">Una suite di prodotti per un’azienda della formazione professionale, interni e rivolti ai clienti, con una sola identità: un gestionale per il core business, un authorization server centrale, un marketplace, ticketing e timesheet. Progetto l’architettura e scrivo gran parte del codice.</p>
+  <div class="grid grid-rows-[1fr] js:not-data-open:grid-rows-[0fr] transition-[grid-template-rows] duration-[360ms] ease-page" id="p-platform">
     <div class="overflow-hidden min-h-0 grid gap-[26px] max-w-[70ch] pb-3 js:not-in-data-open:pb-0 js:in-data-open:pb-9">
-      <p class="text-sub font-medium leading-[1.35] text-pretty">Una suite di prodotti per un ente di formazione, interni e rivolti ai clienti, con una sola identità: un gestionale per il core business, un authorization server centrale, un marketplace, ticketing e timesheet. Progetto l’architettura e scrivo gran parte del codice.</p>
       <dl class="grid gap-[22px]">
         <div><dt class="text-sm text-mute mb-1.5">Il problema</dt><dd class="leading-[1.55] text-pretty">L’azienda gestiva il proprio lavoro su strumenti separati con login separati. Ogni nuovo prodotto voleva dire un altro database utenti e un’altra password, e nessuno strumento parlava con gli altri.</dd></div>
         <div><dt class="text-sm text-mute mb-1.5">Cosa ho fatto</dt><dd class="leading-[1.55] text-pretty">Ho progettato e costruito i prodotti come un unico ecosistema con una sola identità. Il gestionale è il più grande: modella l’operatività quotidiana dell’azienda da capo a fondo, dalla pianificazione alla rendicontazione, e integra i servizi esterni su cui il business già si appoggia. Un authorization server separato gestisce il login di tutto ed emette token OIDC che portano solo l’identità, mentre ogni prodotto tiene i propri ruoli e decide chi entra. Il marketplace vende con checkout Stripe; ticketing e timesheet girano sullo stesso stack e sullo stesso login. Le decisioni sono scritte come ADR prima di andare in produzione.</dd></div>
@@ -104,38 +116,38 @@
     <ol class="relative flex justify-between font-mono text-xs leading-[18px] text-signal whitespace-nowrap max-md:justify-start max-md:gap-3.5 max-md:overflow-hidden max-md:mask-r-from-78%"><li class="px-2 bg-bg first:pl-0 last:pr-0 ">Vaadin 25</li><li class="px-2 bg-bg first:pl-0 last:pr-0 ">Spring Boot · Java 25</li><li class="px-2 bg-bg first:pl-0 last:pr-0 ">Authorization Server · OIDC</li><li class="px-2 bg-bg first:pl-0 last:pr-0 ">JPA · Flyway</li><li class="px-2 bg-bg first:pl-0 last:pr-0 ">MySQL</li></ol>
   </div>
 </li>
-<li class="relative border-b border-line pb-3.5" id="w-also-aitech">
+<li class="relative border-b border-line pb-3.5" id="w-also-current">
   <h4 class="m-0 font-normal">
-    <button data-row class="group grid grid-cols-[minmax(0,1fr)_7.5em_auto_24px] items-baseline gap-x-6 w-full pt-5 pb-3 text-left cursor-pointer max-lg:grid-cols-[auto_minmax(0,1fr)_24px] max-lg:[grid-template-areas:'title_title_plus'_'years_tags_plus'] max-lg:gap-y-1.5" type="button" aria-expanded="false" aria-controls="p-also-aitech">
-      <span class="text-sub font-medium text-mute max-md:text-[20px] leading-[1.1] group-hover:underline group-hover:decoration-2 group-hover:underline-offset-[0.1em] max-lg:[grid-area:title]">E poi</span>
+    <button data-row class="group grid grid-cols-[minmax(0,1fr)_7.5em_auto_24px] items-baseline gap-x-6 w-full pt-5 pb-3 text-left cursor-pointer max-lg:grid-cols-[auto_minmax(0,1fr)_24px] max-lg:[grid-template-areas:'title_title_plus'_'years_tags_plus'] max-lg:gap-y-1.5" type="button" aria-expanded="false" aria-controls="p-also-current">
+      <span class="text-sub font-medium text-mute max-md:text-[20px] leading-[1.1] project-title max-lg:[grid-area:title]">E poi</span>
       <span class="tabular-nums max-lg:[grid-area:years] max-lg:text-md max-lg:text-mute max-lg:whitespace-nowrap"></span>
       <span class="text-sm text-mute justify-self-end text-right max-lg:[grid-area:tags]">scraper, Electron, Python, sito</span>
-      <span class="relative w-[18px] h-[18px] self-center justify-self-end transition-transform duration-[450ms] ease-page group-aria-expanded:rotate-45 before:content-[''] before:absolute before:left-0 before:top-2 before:w-[18px] before:h-0.5 before:bg-current after:content-[''] after:absolute after:left-0 after:top-2 after:w-[18px] after:h-0.5 after:bg-current after:rotate-90 max-lg:[grid-area:plus]" aria-hidden="true"></span>
+      <span class="relative w-[18px] h-[18px] self-center justify-self-end transition-transform duration-[220ms] ease-page group-aria-expanded:rotate-45 before:content-[''] before:absolute before:left-0 before:top-2 before:w-[18px] before:h-0.5 before:bg-current after:content-[''] after:absolute after:left-0 after:top-2 after:w-[18px] after:h-0.5 after:bg-current after:rotate-90 max-lg:[grid-area:plus]" aria-hidden="true"></span>
     </button>
   </h4>
-  <div class="grid grid-rows-[1fr] js:not-data-open:grid-rows-[0fr] transition-[grid-template-rows] duration-[550ms] ease-page" id="p-also-aitech">
+  <div class="grid grid-rows-[1fr] js:not-data-open:grid-rows-[0fr] transition-[grid-template-rows] duration-[360ms] ease-page" id="p-also-current">
     <div class="overflow-hidden min-h-0 grid gap-[26px] max-w-[70ch] pb-3 js:not-in-data-open:pb-0 js:in-data-open:pb-9">
-      <ul class="grid gap-2.5 text-pretty"><li>Uno scraper Playwright in Java, porting di un prototipo Python, che alimenta un database MySQL.</li><li>Un client desktop Electron per strumenti interni.</li><li>Script Python che validano dati Excel e PDF per il processo di conformità di un cliente enterprise.</li><li>Il sito aziendale in Next.js.</li></ul>
+      <ul class="grid gap-2.5 text-pretty"><li>Uno scraper Playwright in Java, porting di un prototipo Python, che alimenta un database MySQL.</li><li>Un client desktop Electron per strumenti interni.</li><li>Script Python che validano dati Excel e PDF per il processo di conformità di un cliente enterprise.</li><li>Un sito aziendale in Next.js.</li></ul>
     </div>
   </div>
 </li>
   </ol>
 </li>
-<li class="not-first:mt-[clamp(56px,8vh,96px)]" id="g-starktech">
-  <h3 class="flex items-baseline flex-wrap gap-x-[22px] gap-y-2 mb-2"><span class="text-[clamp(34px,4.2vw,60px)] font-bold font-stretch-75% tracking-[-0.025em] leading-none opsz-60">StarkTech</span><span class="text-md text-mute tabular-nums">2022 – 2025</span></h3>
+<li class="not-first:mt-[clamp(56px,8vh,96px)]" id="g-previous">
+  <h3 class="flex items-baseline flex-wrap gap-x-[22px] gap-y-2 mb-2"><span class="text-[clamp(34px,4.2vw,60px)] font-bold font-stretch-75% tracking-[-0.025em] leading-none opsz-60">Ruolo precedente</span><span class="text-md text-mute tabular-nums">2022 – 2025</span></h3>
   <ol class="border-t border-line">
-<li class="relative border-b border-line pb-3.5" id="w-towedo">
+<li class="relative border-b border-line pb-3.5" id="w-pm">
   <h4 class="m-0 font-normal">
-    <button data-row class="group grid grid-cols-[minmax(0,1fr)_7.5em_auto_24px] items-baseline gap-x-6 w-full pt-[26px] pb-3 text-left cursor-pointer max-lg:grid-cols-[auto_minmax(0,1fr)_24px] max-lg:[grid-template-areas:'title_title_plus'_'years_tags_plus'] max-lg:gap-y-1.5" type="button" aria-expanded="false" aria-controls="p-towedo">
-      <span class="text-title font-semibold tracking-[-0.015em] opsz-30 max-md:text-[24px] leading-[1.1] group-hover:underline group-hover:decoration-2 group-hover:underline-offset-[0.1em] max-lg:[grid-area:title]">Towedo</span>
+    <button data-row class="group grid grid-cols-[minmax(0,1fr)_7.5em_auto_24px] items-baseline gap-x-6 w-full pt-[26px] pb-3 text-left cursor-pointer max-lg:grid-cols-[auto_minmax(0,1fr)_24px] max-lg:[grid-template-areas:'title_title_plus'_'years_tags_plus'] max-lg:gap-y-1.5" type="button" aria-expanded="false" aria-controls="p-pm">
+      <span class="text-title font-semibold tracking-[-0.015em] opsz-30 max-md:text-[24px] leading-[1.1] project-title max-lg:[grid-area:title]">Piattaforma di project management</span>
       <span class="tabular-nums max-lg:[grid-area:years] max-lg:text-md max-lg:text-mute max-lg:whitespace-nowrap">2022–2024</span>
       <span class="text-sm text-mute justify-self-end text-right max-lg:[grid-area:tags]">Flutter, Next.js, Firebase, TypeScript</span>
-      <span class="relative w-[18px] h-[18px] self-center justify-self-end transition-transform duration-[450ms] ease-page group-aria-expanded:rotate-45 before:content-[''] before:absolute before:left-0 before:top-2 before:w-[18px] before:h-0.5 before:bg-current after:content-[''] after:absolute after:left-0 after:top-2 after:w-[18px] after:h-0.5 after:bg-current after:rotate-90 max-lg:[grid-area:plus]" aria-hidden="true"></span>
+      <span class="relative w-[18px] h-[18px] self-center justify-self-end transition-transform duration-[220ms] ease-page group-aria-expanded:rotate-45 before:content-[''] before:absolute before:left-0 before:top-2 before:w-[18px] before:h-0.5 before:bg-current after:content-[''] after:absolute after:left-0 after:top-2 after:w-[18px] after:h-0.5 after:bg-current after:rotate-90 max-lg:[grid-area:plus]" aria-hidden="true"></span>
     </button>
   </h4>
-  <div class="grid grid-rows-[1fr] js:not-data-open:grid-rows-[0fr] transition-[grid-template-rows] duration-[550ms] ease-page" id="p-towedo">
+  <p class="max-w-[70ch] pb-7 text-mute leading-[1.55] text-pretty">Una piattaforma di project management: app mobile, web app con gantt e timeline, automazioni sui task e integrazione Microsoft 365. Ero lo sviluppatore principale su entrambi i client.</p>
+  <div class="grid grid-rows-[1fr] js:not-data-open:grid-rows-[0fr] transition-[grid-template-rows] duration-[360ms] ease-page" id="p-pm">
     <div class="overflow-hidden min-h-0 grid gap-[26px] max-w-[70ch] pb-3 js:not-in-data-open:pb-0 js:in-data-open:pb-9">
-      <p class="text-sub font-medium leading-[1.35] text-pretty">Una piattaforma di project management: app mobile, web app con gantt e timeline, automazioni sui task e integrazione Microsoft 365. Ero lo sviluppatore principale su entrambi i client.</p>
       <dl class="grid gap-[22px]">
         <div><dt class="text-sm text-mute mb-1.5">Il problema</dt><dd class="leading-[1.55] text-pretty">I team avevano bisogno di un posto solo per pianificare il lavoro da telefono e desktop, con le viste di pianificazione che fogli di calcolo e chat non potevano dare.</dd></div>
         <div><dt class="text-sm text-mute mb-1.5">Cosa ho fatto</dt><dd class="leading-[1.55] text-pretty">Ho costruito l’app Flutter con state management BLoC e la web app Next.js: gantt e timeline, automazioni sui task, editor rich-text, export PDF, accesso e calendario tramite Microsoft 365. La logica server gira come Firebase Cloud Functions.</dd></div>
@@ -150,18 +162,18 @@
     <ol class="relative flex justify-between font-mono text-xs leading-[18px] text-signal whitespace-nowrap max-md:justify-start max-md:gap-3.5 max-md:overflow-hidden max-md:mask-r-from-78%"><li class="px-2 bg-bg first:pl-0 last:pr-0 ">Flutter</li><li class="px-2 bg-bg first:pl-0 last:pr-0 ">Next.js</li><li class="px-2 bg-bg first:pl-0 last:pr-0 ">Cloud Functions</li><li class="px-2 bg-bg first:pl-0 last:pr-0 ">Firestore</li><li class="px-2 bg-bg first:pl-0 last:pr-0 ">Microsoft Graph</li></ol>
   </div>
 </li>
-<li class="relative border-b border-line pb-3.5" id="w-also-starktech">
+<li class="relative border-b border-line pb-3.5" id="w-also-previous">
   <h4 class="m-0 font-normal">
-    <button data-row class="group grid grid-cols-[minmax(0,1fr)_7.5em_auto_24px] items-baseline gap-x-6 w-full pt-5 pb-3 text-left cursor-pointer max-lg:grid-cols-[auto_minmax(0,1fr)_24px] max-lg:[grid-template-areas:'title_title_plus'_'years_tags_plus'] max-lg:gap-y-1.5" type="button" aria-expanded="false" aria-controls="p-also-starktech">
-      <span class="text-sub font-medium text-mute max-md:text-[20px] leading-[1.1] group-hover:underline group-hover:decoration-2 group-hover:underline-offset-[0.1em] max-lg:[grid-area:title]">E poi</span>
+    <button data-row class="group grid grid-cols-[minmax(0,1fr)_7.5em_auto_24px] items-baseline gap-x-6 w-full pt-5 pb-3 text-left cursor-pointer max-lg:grid-cols-[auto_minmax(0,1fr)_24px] max-lg:[grid-template-areas:'title_title_plus'_'years_tags_plus'] max-lg:gap-y-1.5" type="button" aria-expanded="false" aria-controls="p-also-previous">
+      <span class="text-sub font-medium text-mute max-md:text-[20px] leading-[1.1] project-title max-lg:[grid-area:title]">E poi</span>
       <span class="tabular-nums max-lg:[grid-area:years] max-lg:text-md max-lg:text-mute max-lg:whitespace-nowrap"></span>
       <span class="text-sm text-mute justify-self-end text-right max-lg:[grid-area:tags]">app NDA, sito</span>
-      <span class="relative w-[18px] h-[18px] self-center justify-self-end transition-transform duration-[450ms] ease-page group-aria-expanded:rotate-45 before:content-[''] before:absolute before:left-0 before:top-2 before:w-[18px] before:h-0.5 before:bg-current after:content-[''] after:absolute after:left-0 after:top-2 after:w-[18px] after:h-0.5 after:bg-current after:rotate-90 max-lg:[grid-area:plus]" aria-hidden="true"></span>
+      <span class="relative w-[18px] h-[18px] self-center justify-self-end transition-transform duration-[220ms] ease-page group-aria-expanded:rotate-45 before:content-[''] before:absolute before:left-0 before:top-2 before:w-[18px] before:h-0.5 before:bg-current after:content-[''] after:absolute after:left-0 after:top-2 after:w-[18px] after:h-0.5 after:bg-current after:rotate-90 max-lg:[grid-area:plus]" aria-hidden="true"></span>
     </button>
   </h4>
-  <div class="grid grid-rows-[1fr] js:not-data-open:grid-rows-[0fr] transition-[grid-template-rows] duration-[550ms] ease-page" id="p-also-starktech">
+  <div class="grid grid-rows-[1fr] js:not-data-open:grid-rows-[0fr] transition-[grid-template-rows] duration-[360ms] ease-page" id="p-also-previous">
     <div class="overflow-hidden min-h-0 grid gap-[26px] max-w-[70ch] pb-3 js:not-in-data-open:pb-0 js:in-data-open:pb-9">
-      <ul class="grid gap-2.5 text-pretty"><li>Un’app social geolocalizzata per un cliente sotto NDA: Expo e Firebase, ricerca di prossimità con geohash, clustering su mappa, chat vincolata all’abbonamento. Circa 26.000 righe, 53 commit miei.</li><li>Il sito aziendale in Next.js.</li></ul>
+      <ul class="grid gap-2.5 text-pretty"><li>Un’app social geolocalizzata per un cliente sotto NDA: Expo e Firebase, ricerca di prossimità con geohash, clustering su mappa, chat vincolata all’abbonamento. Circa 26.000 righe, 53 commit miei.</li><li>Un sito aziendale in Next.js.</li></ul>
     </div>
   </div>
 </li>
@@ -173,15 +185,15 @@
 <li class="relative border-b border-line pb-3.5" id="w-viaggi">
   <h4 class="m-0 font-normal">
     <button data-row class="group grid grid-cols-[minmax(0,1fr)_7.5em_auto_24px] items-baseline gap-x-6 w-full pt-[26px] pb-3 text-left cursor-pointer max-lg:grid-cols-[auto_minmax(0,1fr)_24px] max-lg:[grid-template-areas:'title_title_plus'_'years_tags_plus'] max-lg:gap-y-1.5" type="button" aria-expanded="false" aria-controls="p-viaggi">
-      <span class="text-title font-semibold tracking-[-0.015em] opsz-30 max-md:text-[24px] leading-[1.1] group-hover:underline group-hover:decoration-2 group-hover:underline-offset-[0.1em] max-lg:[grid-area:title]">App Viaggi</span>
+      <span class="text-title font-semibold tracking-[-0.015em] opsz-30 max-md:text-[24px] leading-[1.1] project-title max-lg:[grid-area:title]">App Viaggi</span>
       <span class="tabular-nums max-lg:[grid-area:years] max-lg:text-md max-lg:text-mute max-lg:whitespace-nowrap">2025–2026</span>
       <span class="text-sm text-mute justify-self-end text-right max-lg:[grid-area:tags]">Expo, React Native, Firebase, TypeScript</span>
-      <span class="relative w-[18px] h-[18px] self-center justify-self-end transition-transform duration-[450ms] ease-page group-aria-expanded:rotate-45 before:content-[''] before:absolute before:left-0 before:top-2 before:w-[18px] before:h-0.5 before:bg-current after:content-[''] after:absolute after:left-0 after:top-2 after:w-[18px] after:h-0.5 after:bg-current after:rotate-90 max-lg:[grid-area:plus]" aria-hidden="true"></span>
+      <span class="relative w-[18px] h-[18px] self-center justify-self-end transition-transform duration-[220ms] ease-page group-aria-expanded:rotate-45 before:content-[''] before:absolute before:left-0 before:top-2 before:w-[18px] before:h-0.5 before:bg-current after:content-[''] after:absolute after:left-0 after:top-2 after:w-[18px] after:h-0.5 after:bg-current after:rotate-90 max-lg:[grid-area:plus]" aria-hidden="true"></span>
     </button>
   </h4>
-  <div class="grid grid-rows-[1fr] js:not-data-open:grid-rows-[0fr] transition-[grid-template-rows] duration-[550ms] ease-page" id="p-viaggi">
+  <p class="max-w-[70ch] pb-7 text-mute leading-[1.55] text-pretty">Un’app nativa per organizzare viaggi di gruppo: votare la destinazione, proporre alloggi, costruire l’itinerario su mappa e calendario, dividere le spese, chattare. Costruita due volte, apposta.</p>
+  <div class="grid grid-rows-[1fr] js:not-data-open:grid-rows-[0fr] transition-[grid-template-rows] duration-[360ms] ease-page" id="p-viaggi">
     <div class="overflow-hidden min-h-0 grid gap-[26px] max-w-[70ch] pb-3 js:not-in-data-open:pb-0 js:in-data-open:pb-9">
-      <p class="text-sub font-medium leading-[1.35] text-pretty">Un’app nativa per organizzare viaggi di gruppo: votare la destinazione, proporre alloggi, costruire l’itinerario su mappa e calendario, dividere le spese, chattare. Costruita due volte, apposta.</p>
       <dl class="grid gap-[22px]">
         <div><dt class="text-sm text-mute mb-1.5">Il problema</dt><dd class="leading-[1.55] text-pretty">I viaggi di gruppo muoiono nelle chat: nessuno decide la destinazione, le spese si perdono, il piano vive nella testa di uno solo. La prima versione, fatta in sei nel 2025, funzionava, e ci ha insegnato cosa serviva davvero.</dd></div>
         <div><dt class="text-sm text-mute mb-1.5">Cosa ho fatto</dt><dd class="leading-[1.55] text-pretty">Ero primo committer della v1 (Angular, Ionic, Express, Prisma su Postgres). Poi ho scritto un piano tecnico e l’ho ricostruita da solo nel 2026 su Expo: voto della destinazione, spese con conguaglio automatico, itinerario su mappa e calendario, chat realtime, notifiche push. Stavolta le security rules di Firestore sono testate sull’emulatore e le decisioni di design vivono accanto al codice.</dd></div>
@@ -199,15 +211,15 @@
 <li class="relative border-b border-line pb-3.5" id="w-traq">
   <h4 class="m-0 font-normal">
     <button data-row class="group grid grid-cols-[minmax(0,1fr)_7.5em_auto_24px] items-baseline gap-x-6 w-full pt-[26px] pb-3 text-left cursor-pointer max-lg:grid-cols-[auto_minmax(0,1fr)_24px] max-lg:[grid-template-areas:'title_title_plus'_'years_tags_plus'] max-lg:gap-y-1.5" type="button" aria-expanded="false" aria-controls="p-traq">
-      <span class="text-title font-semibold tracking-[-0.015em] opsz-30 max-md:text-[24px] leading-[1.1] group-hover:underline group-hover:decoration-2 group-hover:underline-offset-[0.1em] max-lg:[grid-area:title]">Traq</span>
+      <span class="text-title font-semibold tracking-[-0.015em] opsz-30 max-md:text-[24px] leading-[1.1] project-title max-lg:[grid-area:title]">Traq</span>
       <span class="tabular-nums max-lg:[grid-area:years] max-lg:text-md max-lg:text-mute max-lg:whitespace-nowrap">2024</span>
       <span class="text-sm text-mute justify-self-end text-right max-lg:[grid-area:tags]">Expo, Spotify API, Python</span>
-      <span class="relative w-[18px] h-[18px] self-center justify-self-end transition-transform duration-[450ms] ease-page group-aria-expanded:rotate-45 before:content-[''] before:absolute before:left-0 before:top-2 before:w-[18px] before:h-0.5 before:bg-current after:content-[''] after:absolute after:left-0 after:top-2 after:w-[18px] after:h-0.5 after:bg-current after:rotate-90 max-lg:[grid-area:plus]" aria-hidden="true"></span>
+      <span class="relative w-[18px] h-[18px] self-center justify-self-end transition-transform duration-[220ms] ease-page group-aria-expanded:rotate-45 before:content-[''] before:absolute before:left-0 before:top-2 before:w-[18px] before:h-0.5 before:bg-current after:content-[''] after:absolute after:left-0 after:top-2 after:w-[18px] after:h-0.5 after:bg-current after:rotate-90 max-lg:[grid-area:plus]" aria-hidden="true"></span>
     </button>
   </h4>
-  <div class="grid grid-rows-[1fr] js:not-data-open:grid-rows-[0fr] transition-[grid-template-rows] duration-[550ms] ease-page" id="p-traq">
+  <p class="max-w-[70ch] pb-7 text-mute leading-[1.55] text-pretty">Un gioco musicale con carte stampate: inquadri il QR, parte la traccia su Spotify, indovini titolo e artista prima degli altri.</p>
+  <div class="grid grid-rows-[1fr] js:not-data-open:grid-rows-[0fr] transition-[grid-template-rows] duration-[360ms] ease-page" id="p-traq">
     <div class="overflow-hidden min-h-0 grid gap-[26px] max-w-[70ch] pb-3 js:not-in-data-open:pb-0 js:in-data-open:pb-9">
-      <p class="text-sub font-medium leading-[1.35] text-pretty">Un gioco musicale con carte stampate: inquadri il QR, parte la traccia su Spotify, indovini titolo e artista prima degli altri.</p>
       <dl class="grid gap-[22px]">
         <div><dt class="text-sm text-mute mb-1.5">Il problema</dt><dd class="leading-[1.55] text-pretty">I quiz musicali hanno bisogno di un conduttore con una playlist. Volevo una scatola di carte che facesse girare il gioco da sola, a un tavolo, con i telefoni che la gente ha già.</dd></div>
         <div><dt class="text-sm text-mute mb-1.5">Cosa ho fatto</dt><dd class="leading-[1.55] text-pretty">Ho costruito l’app in React Native con Expo: scansione con la fotocamera, riproduzione Spotify, punteggi in singolo e multiplayer. Uno script Python costruisce la lista dei brani da Spotify e genera le carte stampabili, dipingendo un gradiente radiale dentro ogni QR perché il mazzo sembri un mazzo e non un foglio di codici a barre.</dd></div>
@@ -229,61 +241,61 @@
 
     <section class="relative py-[clamp(72px,11vh,150px)] border-t border-line" id="skills" aria-labelledby="skills-h">
       <h2 class="relative w-fit max-w-full text-[clamp(40px,6vw,80px)] font-extrabold font-stretch-75% tracking-[-0.03em] leading-[0.95] opsz-96 mb-11 text-balance" id="skills-h">Competenze<span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none after:content-[attr(data-label)] after:absolute after:whitespace-nowrap bs inset-x-0 -bottom-[14px] after:left-full after:ml-2 after:-top-1.5 max-md:after:left-0 max-md:after:ml-0 max-md:after:top-1.5 border-t border-signal before:content-[''] before:absolute before:-top-1 before:inset-x-0 before:h-2 before:border-x before:border-signal" aria-hidden="true" data-label="h2 · wdth 75 · clamp(40px, 6vw, 80px)"></span></h2>
-      <span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none px-1.5 py-1 border border-signal bs top-4 right-0">#skills · padding clamp(72px, 11vh, 150px)</span>
+      <span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none px-1.5 py-1 border border-signal bs top-4 right-0" aria-hidden="true">#skills · padding clamp(72px, 11vh, 150px)</span>
       <p class="-mt-[26px] mb-11 max-w-[44ch] text-lede text-mute text-pretty">In ordine di tempo di lavoro che occupano. Gira la pagina per le prove.</p>
       <ol class="border-t border-line">
 <li class="relative grid grid-cols-[250px_minmax(0,1fr)] gap-x-8 max-lg:grid-cols-1 max-lg:gap-y-2 py-[26px] pb-[30px] border-b border-line max-md:gap-y-2.5">
   <h3 class="text-md text-mute font-normal pt-[0.45em] max-md:pt-0">Linguaggi</h3>
   <ul class="flex flex-wrap items-baseline gap-x-[1em] gap-y-[0.1em] text-balance text-[clamp(24px,2.2vw,32px)] font-semibold tracking-[-0.015em] leading-[1.15] opsz-30"><li>Java</li><li>TypeScript</li><li>Dart</li><li>Python</li><li>SQL</li></ul>
 
-  <div class="bs absolute inset-x-0 bottom-2 h-[18px] max-md:static max-md:col-span-full max-md:h-auto max-md:mt-3 max-md:not-bs:hidden" aria-hidden="true">
-    <svg class="absolute inset-x-0 top-[9px] w-full h-[2px] max-md:hidden" viewBox="0 0 1000 2" preserveAspectRatio="none"><path data-chain-line class="fill-none stroke-line stroke-2" d="M0 1 H1000" /></svg>
-    <ol class="relative flex justify-between font-mono text-xs leading-[18px] text-signal whitespace-nowrap max-md:grid max-md:gap-1 max-md:whitespace-normal"><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">Java, ecosistema Aitech, scraper</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">TypeScript, Towedo web, App Viaggi, Traq</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">Dart, Towedo mobile</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">Python, carte di Traq, script</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">SQL, migrazioni Flyway</li></ol>
+  <div class="bs absolute inset-x-0 bottom-2 h-[18px] max-[1100px]:static max-[1100px]:col-span-full max-[1100px]:h-auto max-[1100px]:mt-3 max-[1100px]:not-bs:hidden" aria-hidden="true">
+    <svg class="absolute inset-x-0 top-[9px] w-full h-[2px] max-[1100px]:hidden" viewBox="0 0 1000 2" preserveAspectRatio="none"><path data-chain-line class="fill-none stroke-line stroke-2" d="M0 1 H1000" /></svg>
+    <ol class="relative flex justify-between font-mono text-xs leading-[18px] text-signal whitespace-nowrap max-[1100px]:grid max-[1100px]:gap-1 max-[1100px]:whitespace-normal"><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">Java, ecosistema di piattaforme, scraper</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">TypeScript, web app, App Viaggi, Traq</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">Dart, app mobile</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">Python, carte di Traq, script</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">SQL, migrazioni Flyway</li></ol>
   </div>
 </li>
 <li class="relative grid grid-cols-[250px_minmax(0,1fr)] gap-x-8 max-lg:grid-cols-1 max-lg:gap-y-2 py-[26px] pb-[30px] border-b border-line max-md:gap-y-2.5">
   <h3 class="text-md text-mute font-normal pt-[0.45em] max-md:pt-0">Backend</h3>
   <ul class="flex flex-wrap items-baseline gap-x-[1em] gap-y-[0.1em] text-balance text-[clamp(24px,2.2vw,32px)] font-semibold tracking-[-0.015em] leading-[1.15] opsz-30"><li>Java</li><li>Spring Boot</li><li>Spring Security</li><li>JPA</li><li>MySQL</li><li>Node.js</li><li>Express</li><li>FastAPI</li></ul>
 
-  <div class="bs absolute inset-x-0 bottom-2 h-[18px] max-md:static max-md:col-span-full max-md:h-auto max-md:mt-3 max-md:not-bs:hidden" aria-hidden="true">
-    <svg class="absolute inset-x-0 top-[9px] w-full h-[2px] max-md:hidden" viewBox="0 0 1000 2" preserveAspectRatio="none"><path data-chain-line class="fill-none stroke-line stroke-2" d="M0 1 H1000" /></svg>
-    <ol class="relative flex justify-between font-mono text-xs leading-[18px] text-signal whitespace-nowrap max-md:grid max-md:gap-1 max-md:whitespace-normal"><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">ecosistema Aitech, ~1.000 commit</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">single sign-on OIDC in produzione</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">Cloud Functions su Node, Towedo, App Viaggi</li></ol>
+  <div class="bs absolute inset-x-0 bottom-2 h-[18px] max-[1100px]:static max-[1100px]:col-span-full max-[1100px]:h-auto max-[1100px]:mt-3 max-[1100px]:not-bs:hidden" aria-hidden="true">
+    <svg class="absolute inset-x-0 top-[9px] w-full h-[2px] max-[1100px]:hidden" viewBox="0 0 1000 2" preserveAspectRatio="none"><path data-chain-line class="fill-none stroke-line stroke-2" d="M0 1 H1000" /></svg>
+    <ol class="relative flex justify-between font-mono text-xs leading-[18px] text-signal whitespace-nowrap max-[1100px]:grid max-[1100px]:gap-1 max-[1100px]:whitespace-normal"><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">ecosistema di piattaforme, ~1.000 commit</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">single sign-on OIDC in produzione</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">Cloud Functions su Node, due prodotti</li></ol>
   </div>
 </li>
 <li class="relative grid grid-cols-[250px_minmax(0,1fr)] gap-x-8 max-lg:grid-cols-1 max-lg:gap-y-2 py-[26px] pb-[30px] border-b border-line max-md:gap-y-2.5">
   <h3 class="text-md text-mute font-normal pt-[0.45em] max-md:pt-0">Frontend</h3>
   <ul class="flex flex-wrap items-baseline gap-x-[1em] gap-y-[0.1em] text-balance text-[clamp(24px,2.2vw,32px)] font-semibold tracking-[-0.015em] leading-[1.15] opsz-30"><li>Vaadin</li><li>TypeScript</li><li>React</li><li>Next.js</li><li>Vite</li><li>Tailwind</li></ul>
 
-  <div class="bs absolute inset-x-0 bottom-2 h-[18px] max-md:static max-md:col-span-full max-md:h-auto max-md:mt-3 max-md:not-bs:hidden" aria-hidden="true">
-    <svg class="absolute inset-x-0 top-[9px] w-full h-[2px] max-md:hidden" viewBox="0 0 1000 2" preserveAspectRatio="none"><path data-chain-line class="fill-none stroke-line stroke-2" d="M0 1 H1000" /></svg>
-    <ol class="relative flex justify-between font-mono text-xs leading-[18px] text-signal whitespace-nowrap max-md:grid max-md:gap-1 max-md:whitespace-normal"><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">Vaadin 25, viste Flow e React</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">Towedo web, 39.000 righe di TypeScript</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">due siti aziendali in Next.js</li></ol>
+  <div class="bs absolute inset-x-0 bottom-2 h-[18px] max-[1100px]:static max-[1100px]:col-span-full max-[1100px]:h-auto max-[1100px]:mt-3 max-[1100px]:not-bs:hidden" aria-hidden="true">
+    <svg class="absolute inset-x-0 top-[9px] w-full h-[2px] max-[1100px]:hidden" viewBox="0 0 1000 2" preserveAspectRatio="none"><path data-chain-line class="fill-none stroke-line stroke-2" d="M0 1 H1000" /></svg>
+    <ol class="relative flex justify-between font-mono text-xs leading-[18px] text-signal whitespace-nowrap max-[1100px]:grid max-[1100px]:gap-1 max-[1100px]:whitespace-normal"><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">Vaadin 25, viste Flow e React</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">una web app, 39.000 righe di TypeScript</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">due siti aziendali in Next.js</li></ol>
   </div>
 </li>
 <li class="relative grid grid-cols-[250px_minmax(0,1fr)] gap-x-8 max-lg:grid-cols-1 max-lg:gap-y-2 py-[26px] pb-[30px] border-b border-line max-md:gap-y-2.5">
   <h3 class="text-md text-mute font-normal pt-[0.45em] max-md:pt-0">Mobile</h3>
   <ul class="flex flex-wrap items-baseline gap-x-[1em] gap-y-[0.1em] text-balance text-[clamp(24px,2.2vw,32px)] font-semibold tracking-[-0.015em] leading-[1.15] opsz-30"><li>Flutter</li><li>React Native</li><li>Expo</li></ul>
 
-  <div class="bs absolute inset-x-0 bottom-2 h-[18px] max-md:static max-md:col-span-full max-md:h-auto max-md:mt-3 max-md:not-bs:hidden" aria-hidden="true">
-    <svg class="absolute inset-x-0 top-[9px] w-full h-[2px] max-md:hidden" viewBox="0 0 1000 2" preserveAspectRatio="none"><path data-chain-line class="fill-none stroke-line stroke-2" d="M0 1 H1000" /></svg>
-    <ol class="relative flex justify-between font-mono text-xs leading-[18px] text-signal whitespace-nowrap max-md:grid max-md:gap-1 max-md:whitespace-normal"><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">Towedo, 42.000 righe di Dart</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">App Viaggi, Expo 56</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">Traq, Expo 51</li></ol>
+  <div class="bs absolute inset-x-0 bottom-2 h-[18px] max-[1100px]:static max-[1100px]:col-span-full max-[1100px]:h-auto max-[1100px]:mt-3 max-[1100px]:not-bs:hidden" aria-hidden="true">
+    <svg class="absolute inset-x-0 top-[9px] w-full h-[2px] max-[1100px]:hidden" viewBox="0 0 1000 2" preserveAspectRatio="none"><path data-chain-line class="fill-none stroke-line stroke-2" d="M0 1 H1000" /></svg>
+    <ol class="relative flex justify-between font-mono text-xs leading-[18px] text-signal whitespace-nowrap max-[1100px]:grid max-[1100px]:gap-1 max-[1100px]:whitespace-normal"><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">un’app mobile, 42.000 righe di Dart</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">App Viaggi, Expo 56</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">Traq, Expo 51</li></ol>
   </div>
 </li>
 <li class="relative grid grid-cols-[250px_minmax(0,1fr)] gap-x-8 max-lg:grid-cols-1 max-lg:gap-y-2 py-[26px] pb-[30px] border-b border-line max-md:gap-y-2.5">
   <h3 class="text-md text-mute font-normal pt-[0.45em] max-md:pt-0">Cloud</h3>
   <ul class="flex flex-wrap items-baseline gap-x-[1em] gap-y-[0.1em] text-balance text-[clamp(24px,2.2vw,32px)] font-semibold tracking-[-0.015em] leading-[1.15] opsz-30"><li>Firebase</li><li>Cloud Functions</li><li>Firestore</li><li>Docker</li><li>Traefik</li><li>GitHub Actions</li><li>Google Cloud</li></ul>
 
-  <div class="bs absolute inset-x-0 bottom-2 h-[18px] max-md:static max-md:col-span-full max-md:h-auto max-md:mt-3 max-md:not-bs:hidden" aria-hidden="true">
-    <svg class="absolute inset-x-0 top-[9px] w-full h-[2px] max-md:hidden" viewBox="0 0 1000 2" preserveAspectRatio="none"><path data-chain-line class="fill-none stroke-line stroke-2" d="M0 1 H1000" /></svg>
-    <ol class="relative flex justify-between font-mono text-xs leading-[18px] text-signal whitespace-nowrap max-md:grid max-md:gap-1 max-md:whitespace-normal"><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">rules Firestore testate sull’emulatore</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">immagini su GHCR, deploy con docker compose</li></ol>
+  <div class="bs absolute inset-x-0 bottom-2 h-[18px] max-[1100px]:static max-[1100px]:col-span-full max-[1100px]:h-auto max-[1100px]:mt-3 max-[1100px]:not-bs:hidden" aria-hidden="true">
+    <svg class="absolute inset-x-0 top-[9px] w-full h-[2px] max-[1100px]:hidden" viewBox="0 0 1000 2" preserveAspectRatio="none"><path data-chain-line class="fill-none stroke-line stroke-2" d="M0 1 H1000" /></svg>
+    <ol class="relative flex justify-between font-mono text-xs leading-[18px] text-signal whitespace-nowrap max-[1100px]:grid max-[1100px]:gap-1 max-[1100px]:whitespace-normal"><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">rules Firestore testate sull’emulatore</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">immagini su GHCR, deploy con docker compose</li></ol>
   </div>
 </li>
 <li class="relative grid grid-cols-[250px_minmax(0,1fr)] gap-x-8 max-lg:grid-cols-1 max-lg:gap-y-2 py-[26px] pb-[30px] border-b border-line max-md:gap-y-2.5">
   <h3 class="text-md text-mute font-normal pt-[0.45em] max-md:pt-0">E poi</h3>
   <ul class="flex flex-wrap items-baseline gap-x-[1em] gap-y-[0.1em] text-balance text-[clamp(24px,2.2vw,32px)] font-semibold tracking-[-0.015em] leading-[1.15] opsz-30"><li>Python</li><li>Postgres</li><li>Stripe</li><li>Playwright</li><li>Electron</li></ul>
 
-  <div class="bs absolute inset-x-0 bottom-2 h-[18px] max-md:static max-md:col-span-full max-md:h-auto max-md:mt-3 max-md:not-bs:hidden" aria-hidden="true">
-    <svg class="absolute inset-x-0 top-[9px] w-full h-[2px] max-md:hidden" viewBox="0 0 1000 2" preserveAspectRatio="none"><path data-chain-line class="fill-none stroke-line stroke-2" d="M0 1 H1000" /></svg>
-    <ol class="relative flex justify-between font-mono text-xs leading-[18px] text-signal whitespace-nowrap max-md:grid max-md:gap-1 max-md:whitespace-normal"><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">App Viaggi v1, Express su Postgres</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">scraper Java su Playwright</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-md:p-0">checkout Stripe embedded</li></ol>
+  <div class="bs absolute inset-x-0 bottom-2 h-[18px] max-[1100px]:static max-[1100px]:col-span-full max-[1100px]:h-auto max-[1100px]:mt-3 max-[1100px]:not-bs:hidden" aria-hidden="true">
+    <svg class="absolute inset-x-0 top-[9px] w-full h-[2px] max-[1100px]:hidden" viewBox="0 0 1000 2" preserveAspectRatio="none"><path data-chain-line class="fill-none stroke-line stroke-2" d="M0 1 H1000" /></svg>
+    <ol class="relative flex justify-between font-mono text-xs leading-[18px] text-signal whitespace-nowrap max-[1100px]:grid max-[1100px]:gap-1 max-[1100px]:whitespace-normal"><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">App Viaggi v1, Express su Postgres</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">scraper Java su Playwright</li><li class="px-2 bg-bg first:pl-0 last:pr-0 max-[1100px]:p-0">checkout Stripe embedded</li></ol>
   </div>
 </li>
       </ol>
@@ -291,33 +303,33 @@
 
     <section class="relative py-[clamp(72px,11vh,150px)] border-t border-line" id="experience" aria-labelledby="experience-h">
       <h2 class="relative w-fit max-w-full text-[clamp(40px,6vw,80px)] font-extrabold font-stretch-75% tracking-[-0.03em] leading-[0.95] opsz-96 mb-11 text-balance" id="experience-h">Esperienza<span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none after:content-[attr(data-label)] after:absolute after:whitespace-nowrap bs inset-x-0 -bottom-[14px] after:left-full after:ml-2 after:-top-1.5 max-md:after:left-0 max-md:after:ml-0 max-md:after:top-1.5 border-t border-signal before:content-[''] before:absolute before:-top-1 before:inset-x-0 before:h-2 before:border-x before:border-signal" aria-hidden="true" data-label="h2 · wdth 75 · clamp(40px, 6vw, 80px)"></span></h2>
-      <span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none px-1.5 py-1 border border-signal bs top-4 right-0">#experience · padding clamp(72px, 11vh, 150px)</span>
+      <span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none px-1.5 py-1 border border-signal bs top-4 right-0" aria-hidden="true">#experience · padding clamp(72px, 11vh, 150px)</span>
       <ol class="border-t border-line">
         <li class="grid grid-cols-[250px_minmax(0,1fr)] gap-x-8 max-lg:grid-cols-1 max-lg:gap-y-2 py-7 border-b border-line">
           <p class="text-md text-mute tabular-nums pt-[5px]"><time>marzo 2025</time><span class="inline-block w-3 mx-2 border-t border-current align-middle"></span><time>oggi</time></p>
           <div>
-            <h3 class="text-sub font-semibold leading-[1.25] mb-2">Fullstack developer<span class="block font-normal text-mute text-base">Aitech S.r.l.</span></h3>
+            <h3 class="text-sub font-semibold leading-[1.25] mb-2">Fullstack developer<span class="block font-normal text-mute text-base">Azienda della formazione professionale</span></h3>
             <p class="max-w-[65ch] text-pretty">Progetto e sviluppo piattaforme fullstack per uso interno ed esterno, dalla prima bozza al go-live. Prendo le decisioni su architettura e stack, integro prodotti esterni e ho costruito il single sign-on centralizzato dell’intero ecosistema applicativo.</p>
           </div>
         </li>
         <li class="grid grid-cols-[250px_minmax(0,1fr)] gap-x-8 max-lg:grid-cols-1 max-lg:gap-y-2 py-7 border-b border-line">
           <p class="text-md text-mute tabular-nums pt-[5px]"><time>novembre 2022</time><span class="inline-block w-3 mx-2 border-t border-current align-middle"></span><time>marzo 2025</time></p>
           <div>
-            <h3 class="text-sub font-semibold leading-[1.25] mb-2">Fullstack developer<span class="block font-normal text-mute text-base">StarkTech S.p.A.</span></h3>
+            <h3 class="text-sub font-semibold leading-[1.25] mb-2">Fullstack developer<span class="block font-normal text-mute text-base">Software house</span></h3>
             <p class="max-w-[65ch] text-pretty">Piattaforme web e mobile: architettura software, infrastruttura cloud e intero ciclo di sviluppo. Autore principale di entrambi i client di un prodotto di project management.</p>
           </div>
         </li>
         <li class="grid grid-cols-[250px_minmax(0,1fr)] gap-x-8 max-lg:grid-cols-1 max-lg:gap-y-2 py-7 border-b border-line">
           <p class="text-md text-mute tabular-nums pt-[5px]"><time>maggio 2022</time><span class="inline-block w-3 mx-2 border-t border-current align-middle"></span><time>ottobre 2022</time></p>
           <div>
-            <h3 class="text-sub font-semibold leading-[1.25] mb-2">Sviluppatore web<span class="block font-normal text-mute text-base">134U (Kit For You, PAIC)</span></h3>
+            <h3 class="text-sub font-semibold leading-[1.25] mb-2">Sviluppatore web<span class="block font-normal text-mute text-base">Agenzia digitale</span></h3>
             <p class="max-w-[65ch] text-pretty">Backend di un e-commerce personalizzato su WooCommerce, una mappa interattiva con Google Maps API e script di automazione per i processi interni. Primo approccio a Web3 e smart contract.</p>
           </div>
         </li>
         <li class="grid grid-cols-[250px_minmax(0,1fr)] gap-x-8 max-lg:grid-cols-1 max-lg:gap-y-2 py-7 border-b border-line">
           <p class="text-md text-mute tabular-nums pt-[5px]"><time>gennaio 2020</time><span class="inline-block w-3 mx-2 border-t border-current align-middle"></span><time>agosto 2021</time></p>
           <div>
-            <h3 class="text-sub font-semibold leading-[1.25] mb-2">Analista di sistemi informatici<span class="block font-normal text-mute text-base">XEOS.IT, RES Synesis</span></h3>
+            <h3 class="text-sub font-semibold leading-[1.25] mb-2">Analista di sistemi informatici<span class="block font-normal text-mute text-base">Servizi IT per il settore bancario</span></h3>
             <p class="max-w-[65ch] text-pretty">Application management per istituti bancari: esecuzione e monitoraggio di elaborazioni, analisi dei log e risoluzione errori su ambienti Windows, Linux e Host, SQL per la gestione dei database.</p>
           </div>
         </li>
@@ -328,7 +340,7 @@
 
     <section class="relative py-[clamp(72px,11vh,150px)] border-t border-line" id="about" aria-labelledby="about-h">
       <h2 class="relative w-fit max-w-full text-[clamp(40px,6vw,80px)] font-extrabold font-stretch-75% tracking-[-0.03em] leading-[0.95] opsz-96 mb-11 text-balance" id="about-h">Chi sono<span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none after:content-[attr(data-label)] after:absolute after:whitespace-nowrap bs inset-x-0 -bottom-[14px] after:left-full after:ml-2 after:-top-1.5 max-md:after:left-0 max-md:after:ml-0 max-md:after:top-1.5 border-t border-signal before:content-[''] before:absolute before:-top-1 before:inset-x-0 before:h-2 before:border-x before:border-signal" aria-hidden="true" data-label="h2 · wdth 75 · clamp(40px, 6vw, 80px)"></span></h2>
-      <span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none px-1.5 py-1 border border-signal bs top-4 right-0">#about · padding clamp(72px, 11vh, 150px)</span>
+      <span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none px-1.5 py-1 border border-signal bs top-4 right-0" aria-hidden="true">#about · padding clamp(72px, 11vh, 150px)</span>
       <div class="grid gap-[18px] max-w-[60ch] text-lede"><p>Sono Federico, fullstack developer di Brescia. Scrivo software per lavoro dal 2020 e costruisco piattaforme a tutto tondo dal 2022: backend, frontend, mobile e il cloud sotto.</p><p>Quello che mi piace è il giro completo: capire cosa deve fare un prodotto, scegliere uno stack che ci stia, scriverlo, portarlo online e tenerlo onesto con documentazione e test. Scrivo le decisioni prima di scrivere il codice.</p><p>Fuori dal lavoro costruisco le cose che vorrei esistessero: un pianificatore di viaggi per gruppi di amici, un <span data-phrase class="relative z-2 bg-bg">gioco musicale su carte stampate</span>.</p>
         <p class="text-mute text-base">Italiano, madrelingua. Inglese, B2/C1.</p>
       </div>
@@ -336,10 +348,10 @@
 
     <section class="relative py-[clamp(72px,11vh,150px)] border-t border-line" id="contact" aria-labelledby="contact-h">
       <h2 class="relative w-fit max-w-full text-[clamp(40px,6vw,80px)] font-extrabold font-stretch-75% tracking-[-0.03em] leading-[0.95] opsz-96 mb-11 text-balance" id="contact-h">Contatti<span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none after:content-[attr(data-label)] after:absolute after:whitespace-nowrap bs inset-x-0 -bottom-[14px] after:left-full after:ml-2 after:-top-1.5 max-md:after:left-0 max-md:after:ml-0 max-md:after:top-1.5 border-t border-signal before:content-[''] before:absolute before:-top-1 before:inset-x-0 before:h-2 before:border-x before:border-signal" aria-hidden="true" data-label="h2 · wdth 75 · clamp(40px, 6vw, 80px)"></span></h2>
-      <span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none px-1.5 py-1 border border-signal bs top-4 right-0">#contact · padding clamp(72px, 11vh, 150px)</span>
-      <p class="text-sub max-w-[40ch] text-pretty">Sono aperto a ruoli fullstack, da remoto o nella zona di Brescia. L’email è <span data-phrase class="relative z-2 bg-bg">il modo più veloce per raggiungermi</span>.</p>
+      <span class="absolute font-mono text-xs leading-none tracking-[0.01em] text-signal pointer-events-none px-1.5 py-1 border border-signal bs top-4 right-0" aria-hidden="true">#contact · padding clamp(72px, 11vh, 150px)</span>
+      <p class="text-sub max-w-[40ch] text-pretty">Vuoi più dettagli, o il mio CV? Basta chiedere: l’email è <span data-phrase class="relative z-2 bg-bg">il modo più veloce per raggiungermi</span>.</p>
       <p class="flex items-center gap-7 mt-9 max-sm:flex-wrap">
-        <a data-cta class="relative z-2 inline-block px-7 py-4 bg-ink text-bg rounded-full no-underline font-semibold transition-[background-color,color,transform] duration-[600ms,600ms,300ms] ease-page hover:-translate-y-0.5" href="mailto:federico.barbieri99@gmail.com">Scrivimi una email</a>
+        <a data-cta class="relative z-2 inline-block px-7 py-4 bg-ink text-bg rounded-full no-underline font-semibold contact-action" href="mailto:federico.barbieri99@gmail.com">Scrivimi una email</a>
         <a class="underline" href="https://www.linkedin.com/in/federico-barbieri-6b6944225/" rel="me noopener">LinkedIn</a>
       </p>
       <p class="mt-7 text-mute"><a class="underline" href="mailto:federico.barbieri99@gmail.com">federico.barbieri99@gmail.com</a></p>
@@ -350,27 +362,59 @@
     <p>© 2026 Federico Barbieri. Niente cookie, niente tracciamento.</p>
   </footer>
 
-  <!-- the penguin: hides behind the switch knob, walks the hairlines and behind two phrases -->
-  <div data-penguin class="absolute top-0 left-0 w-7 z-1 origin-bottom pointer-events-none will-change-transform motion-reduce:hidden" aria-hidden="true">
-    <svg viewBox="0 0 28 38" class="block w-full h-auto">
-      <path class="fill-ink" d="M20.5 27 C23.5 26.5 24.5 29 23 32 C22.5 30 21.5 28.5 20.5 27 Z" />
-      <path class="fill-ink stroke-ink stroke-1 [stroke-linejoin:round]" d="M13.5 2.5 C9.5 2.5 6.5 6 6 12 C5.5 16 4.5 20 4.5 24 C4.5 30 8 34 13.5 34 C19 34 22.5 30 22.5 24 C22.5 20 21.5 16 21 12 C20.5 6 17.5 2.5 13.5 2.5 Z" />
-      <path class="fill-bg" d="M13.5 10.5 C10 10.5 7.5 16 7.5 22 C7.5 28 9.5 32.5 13.5 32.5 C17.5 32.5 19.5 28 19.5 22 C19.5 16 17 10.5 13.5 10.5 Z" />
-      <path data-wing class="fill-ink stroke-bg stroke-1 [stroke-linejoin:round] [transform-box:fill-box] origin-top" d="M18.5 12.5 C23.5 16 24.5 24 20.5 30.5 C20 24.5 19.5 18.5 18.5 12.5 Z" />
-      <circle data-eye class="fill-bg [transform-box:fill-box] origin-center" cx="9.6" cy="8.6" r="2" />
-      <circle class="fill-ink" cx="9.1" cy="8.8" r="1" />
-      <path class="fill-signal" d="M6.6 11 C4.2 11.4 2.6 12.6 1.4 13.6 C3 14.6 4.8 15.4 6.8 15.4 C7.2 14 7.2 12.4 6.6 11 Z" />
-      <path class="fill-signal" d="M8.2 33.4 C6 33.8 5.2 35.6 5.6 37 L11.4 37 C11.6 35.2 10.6 33.8 8.2 33.4 Z" />
-      <path class="fill-signal" d="M15.6 33.4 C13.4 33.8 12.6 35.6 13 37 L18.8 37 C19 35.2 18 33.8 15.6 33.4 Z" />
-      <!-- wardrobe: one piece at a time, changed in the wings -->
-      <g data-prop="scarf" hidden><path class="fill-signal" d="M6.8 13 C10 16 17 16 20.2 13 C19.6 15.4 17 17.4 13.5 17.4 C10 17.4 7.4 15.4 6.8 13 Z" /><path class="fill-signal" d="M16.2 16.2 L19.8 21.8 L22 20.2 L18.4 15 Z" /></g>
-      <g data-prop="beanie" hidden><path class="fill-signal" d="M7.4 9 C7.4 2 19.6 2 19.6 9 C16.6 7.4 10.4 7.4 7.4 9 Z" /><path class="fill-bg" d="M6.8 9.4 C10.2 7.6 16.8 7.6 20.2 9.4 C16.8 10.6 10.2 10.6 6.8 9.4 Z" /><circle class="fill-bg stroke-ink stroke-[0.6]" cx="13.5" cy="2.4" r="1.8" /></g>
-      <g data-prop="bowtie" hidden><path class="fill-signal" d="M9.6 16.2 L6 14.4 L6 18 Z M9.6 16.2 L13.2 14.4 L13.2 18 Z" /><circle class="fill-bg" cx="9.6" cy="16.2" r="0.9" /></g>
-      <g data-prop="glasses" hidden><circle class="fill-none stroke-bg stroke-1" cx="9.6" cy="8.6" r="3.2" /><path class="fill-none stroke-bg stroke-1 [stroke-linecap:round]" d="M12.8 8.4 L18 7.2" /></g>
-      <g data-prop="headphones" hidden><path class="fill-none stroke-bg stroke-[1.2] [stroke-linecap:round]" d="M7.2 8 C7.6 2.4 19.4 2.4 19.8 8" /><circle class="fill-signal" cx="7.4" cy="9" r="2.1" /><circle class="fill-signal" cx="19.6" cy="9" r="1.4" /></g>
+  <!-- A compact, articulated character: stable plumage in both page modes. -->
+  <div data-penguin hidden data-state="hidden" class="absolute top-0 left-0 z-1 origin-bottom pointer-events-none motion-reduce:hidden" aria-hidden="true">
+    <svg viewBox="0 0 64 72" class="block w-full h-auto overflow-visible">
+      <g data-penguin-body>
+        <path class="penguin-dark penguin-outline" d="M14 31C7 34 3 42 5 50Q6 54 9 51L19 38Z" />
+        <path class="penguin-accent" data-foot d="M20 63Q17 65 15 69Q14 71 18 71H29Q32 70 29 67L27 63Z" />
+        <path class="penguin-accent" data-foot d="M38 63L36 67Q34 71 38 71H50Q53 71 50 68L45 63Z" />
+        <path class="penguin-dark penguin-outline" d="M32 7C20 7 13 16 13 29C13 36 9 40 10 49C10 61 19 67 32 67C46 67 54 60 54 48C54 40 50 34 50 26C49 14 43 7 32 7Z" />
+        <path class="penguin-dark" d="M28 9Q27 2 34 3L33 7Q38 2 42 6L39 12Z" />
+        <path class="penguin-cream" d="M17 29C15 20 21 16 26 18Q30 19 32 23Q37 16 42 20C47 24 44 31 42 36C41 40 47 46 46 52C45 59 40 63 31 63C21 63 15 58 15 51C14 42 21 37 17 29Z" />
+        <path class="penguin-belly" d="M16 50C21 60 37 63 45 52C45 60 39 64 31 64C23 64 16 59 16 50Z" />
+        <g data-eye>
+          <ellipse class="penguin-dark" data-pupil cx="23" cy="27" rx="2.8" ry="3.7" />
+          <circle class="penguin-cream" cx="22.2" cy="25.8" r="0.9" />
+        </g>
+        <g data-eye>
+          <ellipse class="penguin-dark" data-pupil cx="37" cy="27" rx="2.5" ry="3.4" />
+          <circle class="penguin-cream" cx="36.3" cy="25.9" r="0.85" />
+        </g>
+        <g data-eyes-happy fill="none" stroke="var(--penguin-dark)" stroke-width="2.5" stroke-linecap="round">
+          <path d="M20 28Q23 23 26 28M34 28Q37 23 40 28" />
+        </g>
+        <path class="penguin-accent" d="M23 33Q28 29 33 33Q32 37 28 38Q24 37 23 33Z" />
+        <path fill="none" stroke="var(--penguin-dark)" stroke-width="0.8" stroke-linecap="round" opacity="0.35" d="M24 33.5Q28 35 32 33.5" />
+        <g data-prop="scarf" hidden>
+          <path class="penguin-accent" d="M16 38Q30 44 45 38L46 43Q30 49 16 43Z" />
+          <path class="penguin-accent" d="M36 43L44 43L43 55L36 52Z" />
+          <path fill="none" stroke="var(--penguin-cream)" stroke-width="1.4" opacity="0.6" d="M38 50L43 52" />
+        </g>
+        <g data-prop="beanie" hidden>
+          <path class="penguin-accent" d="M14 20C13 0 49 0 49 20Q31 15 14 20Z" />
+          <path class="penguin-cream" d="M13 17Q30 12 50 17L50 22Q31 17 13 22Z" />
+          <circle class="penguin-cream" cx="33" cy="4" r="3.5" />
+        </g>
+        <g data-prop="bowtie" hidden>
+          <path class="penguin-accent" d="M30 43L22 39Q20 44 22 49L30 45L39 49Q41 44 39 39Z" />
+          <circle class="penguin-cream" cx="30" cy="44" r="2" />
+        </g>
+        <g data-prop="glasses" hidden fill="none" stroke="var(--penguin-dark)" stroke-width="1.6">
+          <circle cx="23" cy="27" r="5.8" /><circle cx="37" cy="27" r="5.4" />
+          <path d="M29 26H32M17 25L14 23M43 25L47 23" />
+        </g>
+        <g data-prop="headphones" hidden>
+          <path fill="none" stroke="var(--penguin-accent)" stroke-width="3" d="M13 27C7 1 53 0 50 27" />
+          <rect class="penguin-accent" x="10" y="23" width="6" height="12" rx="3" />
+          <rect class="penguin-accent" x="47" y="23" width="6" height="12" rx="3" />
+        </g>
+        <path data-wing class="penguin-dark penguin-outline" d="M47 33C53 34 58 41 60 49Q61 54 57 53C51 50 46 44 44 39Q42 34 47 33Z" />
+        <path fill="none" stroke="var(--penguin-cream)" stroke-linecap="round" stroke-width="1.1" opacity="0.22" d="M47 17Q50 20 49 25" />
+      </g>
     </svg>
   </div>
-  <span data-penguin-label data-prefix="mascotte" class="bs absolute top-0 left-0 z-1 font-mono text-xs leading-none tracking-[0.01em] text-signal whitespace-nowrap pointer-events-none" aria-hidden="true"></span>
+  <span hidden data-penguin-label data-prefix="mascotte" class="bs absolute top-0 left-0 z-1 font-mono text-xs leading-none tracking-[0.01em] text-signal whitespace-nowrap pointer-events-none" aria-hidden="true"></span>
   <!-- live timelines panel (backstage) -->
   <aside data-hud class="bs fixed right-gutter bottom-4 z-9 w-[230px] pt-2.5 px-3 pb-3 border border-line bg-bg font-mono text-xs text-mute max-md:hidden motion-reduce:hidden" aria-hidden="true">
     <p class="mb-2 text-signal">Timeline in esecuzione</p>

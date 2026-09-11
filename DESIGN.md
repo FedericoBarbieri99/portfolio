@@ -141,12 +141,13 @@ The site is one page with two faces. The *front* is the surface a visitor reads:
 Density is editorial: one column of long text, generous vertical rhythm, a wide right margin reserved for annotations. Hierarchy is carried by type size and the condensed width axis, never by colour, boxes or badges. Confirmed rejections: card grids, stat heroes, eyebrow labels, gradients, glass, skill bars or percentages, monospace as decoration in the front.
 
 **Key Characteristics:**
-- Two token sets on one DOM, switched by `data-mode` on `<html>`; every Tailwind colour utility reads the same variables, so the whole page flips. The flip itself is a circular View Transition wipe growing from the switch (colour transitions paused for its 750ms); without the API it falls back to the native 600ms colour transition. anime.js animates only the knob, staggers and SVG draws.
+- Two token sets on one DOM, switched by `data-mode` on `<html>`. The switch reveals the blueprint through a circle growing from the switch in 640ms; closing shrinks the circle back to the switch in 540ms. The mask uses viewport percentages for high-density webviews. Latest input is queued until the current reveal finishes. Without View Transitions, colours transition in 360ms; reduced motion applies state directly.
 - Backstage annotates, it never decorates: every section heading carries its type spec, every section its id and padding, hovered text its computed size, and the HUD reports timelines, scroll position and the last three events.
 - Ledger rows grouped under employer names instead of cards; hairlines carry all structure.
 - One grotesque, two registers: the condensed axis (wdth 75, opsz 96/60) marks the top of every hierarchy (name, section headings, employer names); everything below it is the same face at normal width, opsz 30 or 17.
 - Mono appears only where it is content (annotations, chains, "under the hood").
-- One orchestrated load sequence, motion otherwise only on action. The page has a stagehand: a 28px penguin in the page's own ink and bone, orange beak and feet, drawn with a small head, a round belly, a tail and one flipper held away from the body, an eye with a pupil that blinks. In the wings it changes one accessory at a time, all in the same three colours: a scarf, round glasses, a beanie, headphones, a bow tie, and often nothing at all. It is born behind the switch knob, steps out into the empty half of the track once the switch is drawn, and hops onto the pill when the switch flips. From then on it always stands on something real, at the right end of the row, rung or role nearest the reading line; the reader's scroll chooses the station, never the pose. To a neighbouring station it hops and lands with a squash; to a distant one it walks off through the right edge of the page, the wings of this stage. How it comes back depends on the reader: scrolling down, it arrives from above, dropping from behind the top bar straight onto the perch; scrolling up, it walks back in from the right. Twice it walks in along a line of text and stops behind a sentence, its head bobbing above the words (the phrase sits above it in the ground colour), and at the end it hides behind the email button and climbs on top of it to wave. Every move is timed and drawn with the classic vocabulary: it turns through its own profile before changing direction, crouches before a hop, stretches in the air, leans only as far as it travels sideways, and lands with a squash that overshoots and settles; walking has a step bob and a waddle, standing has breath and a blink. It stays on a perch until that perch nears the top or bottom band of the screen, then moves in the reader's direction to the perch nearest the reading line, never before it has had a beat to land. An opened row carries it along. It is never caught between poses, and if the page scrolls while it moves, it thinks again once it has landed. Hidden with reduced motion; it never crosses the text column except behind those two phrases.
+- Motion thesis: a small typographic stage. The two name lines arrive as whole printed units over 700ms, 110ms apart; the switch draws and supporting text follows within one second. Content remains static during reading. Project panels unfold in 360ms, their contents enter in a bounded 280ms stagger, and the plus turns in 220ms. Navigation marks the section currently being read.
+- The stagehand is a rounded penguin, 48px wide on desktop and 40px below 768px, on a 64×72 SVG canvas. Navy (#17253e), warm ivory (#fff9e9), orange (#ec793b), with a light edge in backstage. It starts on top of the switch and makes a small celebratory hop after the mode change finishes. Scroll chooses its surface only after settling for 180ms. Close perches use a look, 130ms crouch, 320–520ms arc and 230ms landing; distant perches use a 150ms fade-out and 320ms local arrival. No page-wide crossing or fall from the header. Live bounds keep its feet on opening rows. A single abortable scene prevents competing gestures. Accessories are tied to sections, and contact earns a 760ms wave with smiling eyes. Breathing (4200ms) and blinking (7200ms) use CSS only while idle. Reduced motion and page suspension hide the character; focus and hover on contact can repeat its greeting.
 
 ## Colors
 
@@ -219,7 +220,7 @@ Rectangles with zero radius for every container, rule and tag. Exactly two round
 
 ### Buttons
 - **Shape:** pill (999px)
-- **Primary ("Write me an email"):** navy ground, bone text, 16px 28px padding, weight 600. Hover lifts 2px. In backstage the roles invert with the tokens.
+- **Primary ("Write me an email"):** navy ground, bone text, 16px 28px padding, weight 600. Press contracts to 97% over 180ms without moving its perch. In backstage the roles invert with the tokens.
 - **Secondary:** plain underlined text links (LinkedIn, email, case-study links).
 - **Focus:** 2px signal outline, 4px offset, on every interactive element.
 
@@ -238,13 +239,13 @@ An SVG toggle: a 200×100 pill track stroked in ink and a knob filled with the s
 - **Mobile (≤ 768px):** the chain leaves the padding and stacks in flow under the rung, one node per line, line hidden; it is hidden entirely in front mode so no blank band remains. Accepted trade-off: the section grows on toggle on phones.
 
 ### Chains (backstage)
-The shared drawing under rows and rungs: a 2px line in hairline colour drawn left to right on reveal (1000ms, 70ms stagger) with 11px mono node labels in amber spaced along it, each label on a page-coloured pad so it breaks the line. Nodes are `aria-hidden`; the same component serves the row's stack and the rung's proof.
+The shared drawing under rows and rungs: a 2px line in hairline colour drawn left to right on reveal (460ms, visible connections only) with 11px mono node labels in amber spaced along it, each label on a page-coloured pad so it breaks the line. Nodes are `aria-hidden`; the same component serves the row's stack and the rung's proof.
 
 ### Redlines and tags (backstage)
 Amber 1px measurement lines with 8px end ticks and an 11px mono label: name height, name width, gutter, intro measure. Bordered mono tags at the hero corners (route, `data-mode`, stack). All `aria-hidden`. Under 768px the two name redlines and the gutter line are hidden (they quote desktop sizes and need room beside the name); the h2 label moves under its bracket.
 
 ### HUD ("Running timelines")
-Fixed bottom-right, 230px, 1px border, mono 11px. One row per registered animation (load, toggle) with a 2px progress bar and a percentage, updated per frame only while backstage is on. Hidden on mobile and under reduced motion.
+Fixed bottom-right, 230px, 1px border, mono 11px. One row per registered animation (load, toggle) with a 2px progress bar and a percentage, updated per frame only while a visible backstage has active animations, and on scroll. Hidden on mobile and under reduced motion.
 
 ### Navigation
 Sticky 56px bar: name (600), section links (Work, Skills, Experience, About, Contact), language link in mute, small switch. Links underline on hover. On mobile only name, language and switch remain.
@@ -262,3 +263,7 @@ Sticky 56px bar: name (600), section links (Work, Skills, Experience, About, Con
 - Don't add per-section entrance animations; the page has one load sequence, one scroll-linked line, and one toggle timeline.
 - Don't introduce a third colour family; extend within bone/navy and blueprint/amber.
 - Don't persist the mode between visits; every visit starts on the front (the `#backstage` hash is the only way to open flipped).
+
+## Identity assets
+
+The mark is a geometric FB monogram with a square F and rounded B, drawn as paths in `public/logo.svg`; it does not depend on a font. It inherits the page ink in the header, alongside the name on larger screens and on its own below 640px (the accessible link name remains Federico Barbieri). The favicon uses the same ivory mark on a navy tile with a 14px corner radius. SVG, ICO and a 180px Apple touch icon share the same silhouette.

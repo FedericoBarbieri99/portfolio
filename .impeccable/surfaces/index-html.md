@@ -9,7 +9,7 @@ related_targets: ["it/index.html"]
 
 Scope: the whole single-page portfolio, both languages. Visitor mode: Experience (a recruiter inside the work itself).
 Audience and job: recruiters and tech leads deciding in under a minute whether to contact Federico. Action: write an email or open LinkedIn. Proof: four verified projects grouped by employer, a skills ladder with backstage evidence, four roles, the front/backstage mechanism itself.
-Constraints: static Vite output, Tailwind 4 utilities, anime.js only at runtime, text plus one line-drawn mascot in the margin, EN + IT, full content with motion off, keyboard operable.
+Constraints: static Vite output, Tailwind 4 utilities, anime.js only at runtime, text plus one articulated SVG mascot in the margin, EN + IT, full content with motion off, keyboard operable.
 Memorable moment: the physical switch that flips the page into its own backstage.
 Unresolved: none. Deliberately withheld: Aitech LMS detail, Masseria Passarelli, Video Map.
 

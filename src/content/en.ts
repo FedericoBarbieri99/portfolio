@@ -11,6 +11,8 @@ const en: Content = {
   },
   ui: {
     skip: 'Skip to work',
+    navLabel: 'Sections',
+    exploreWork: 'Explore my work',
     navWork: 'Work',
     navSkills: 'Skills',
     navExperience: 'Experience',
@@ -57,17 +59,17 @@ const en: Content = {
   },
   groups: [
     {
-      id: 'aitech',
-      org: 'Aitech',
-      period: '2025 – today',
+      id: 'current',
+      org: 'Current role',
+      period: '2025 - today',
       works: [
         {
-          id: 'aitech',
-          title: 'Aitech platform ecosystem',
-          years: '2025–2026',
+          id: 'platform',
+          title: 'Platform ecosystem',
+          years: '2025-2026',
           tags: ['Java', 'Spring Boot', 'Vaadin', 'OIDC', 'MySQL'],
           summary:
-            'A suite of products for a training company, internal and customer-facing, that share one identity: a management platform for the core business, a central authorization server, a marketplace, ticketing, timesheets. I design the architecture and write most of the code.',
+            'A suite of products for a company in professional training, internal and customer-facing, that share one identity: a management platform for the core business, a central authorization server, a marketplace, ticketing, timesheets. I design the architecture and write most of the code.',
           problem:
             'The company ran its business on separate tools with separate logins. Every new product meant another user database and another password, and none of the tools talked to each other.',
           did: 'I designed and built the products as one ecosystem with a single identity. The management platform is the largest of them: it models the company’s day-to-day operations end to end, from planning to reporting, and integrates the external services the business already relies on. A separate authorization server handles login for everything and issues OIDC tokens that carry identity only, while each product keeps its own roles and decides who gets in. The marketplace sells with Stripe checkout; ticketing and timesheets run on the same stack and the same login. Decisions are written down as ADRs before they ship.',
@@ -80,19 +82,19 @@ const en: Content = {
         'A Playwright scraper in Java, ported from a Python prototype, feeding a MySQL database.',
         'An Electron desktop client for internal tooling.',
         'Python scripts that validate Excel and PDF data for an enterprise client’s compliance process.',
-        'The company website in Next.js.',
+        'A company website in Next.js.',
       ],
       alsoTags: 'scraper, Electron, Python, website',
     },
     {
-      id: 'starktech',
-      org: 'StarkTech',
-      period: '2022 – 2025',
+      id: 'previous',
+      org: 'Previous role',
+      period: '2022 - 2025',
       works: [
         {
-          id: 'towedo',
-          title: 'Towedo',
-          years: '2022–2024',
+          id: 'pm',
+          title: 'Project management platform',
+          years: '2022-2024',
           tags: ['Flutter', 'Next.js', 'Firebase', 'TypeScript'],
           summary:
             'A project management platform: a mobile app, a web app with gantt and timelines, task automations and Microsoft 365 integration. I was the main developer on both clients.',
@@ -106,19 +108,19 @@ const en: Content = {
       ],
       also: [
         'A location-based social app for a client under NDA: Expo and Firebase, geohash proximity search, map clustering, subscription-gated chat. About 26,000 lines, 53 commits of mine.',
-        'The company website in Next.js.',
+        'A company website in Next.js.',
       ],
       alsoTags: 'NDA app, website',
     },
     {
       id: 'personal',
       org: 'Personal',
-      period: '2024 – 2026',
+      period: '2024 - 2026',
       works: [
         {
           id: 'viaggi',
           title: 'App Viaggi',
-          years: '2025–2026',
+          years: '2025-2026',
           tags: ['Expo', 'React Native', 'Firebase', 'TypeScript'],
           summary:
             'A native app for planning group trips: vote the destination, propose stays, build the itinerary on map and calendar, split expenses, chat. Built twice, on purpose.',
@@ -152,22 +154,22 @@ const en: Content = {
     {
       group: 'Languages',
       items: ['Java', 'TypeScript', 'Dart', 'Python', 'SQL'],
-      proof: ['Java, Aitech ecosystem, scraper', 'TypeScript, Towedo web, App Viaggi, Traq', 'Dart, Towedo mobile', 'Python, Traq cards, scripts', 'SQL, Flyway migrations'],
+      proof: ['Java, platform ecosystem, scraper', 'TypeScript, web apps, App Viaggi, Traq', 'Dart, mobile app', 'Python, Traq cards, scripts', 'SQL, Flyway migrations'],
     },
     {
       group: 'Back-end',
       items: ['Java', 'Spring Boot', 'Spring Security', 'JPA', 'MySQL', 'Node.js', 'Express', 'FastAPI'],
-      proof: ['Aitech ecosystem, ~1,000 commits', 'OIDC single sign-on in production', 'Cloud Functions on Node, Towedo, App Viaggi'],
+      proof: ['platform ecosystem, ~1,000 commits', 'OIDC single sign-on in production', 'Cloud Functions on Node, two products'],
     },
     {
       group: 'Front-end',
       items: ['Vaadin', 'TypeScript', 'React', 'Next.js', 'Vite', 'Tailwind'],
-      proof: ['Vaadin 25, Flow and React views', 'Towedo web, 39,000 lines of TypeScript', 'two company websites in Next.js'],
+      proof: ['Vaadin 25, Flow and React views', 'a web app, 39,000 lines of TypeScript', 'two company websites in Next.js'],
     },
     {
       group: 'Mobile',
       items: ['Flutter', 'React Native', 'Expo'],
-      proof: ['Towedo, 42,000 lines of Dart', 'App Viaggi, Expo 56', 'Traq, Expo 51'],
+      proof: ['a mobile app, 42,000 lines of Dart', 'App Viaggi, Expo 56', 'Traq, Expo 51'],
     },
     {
       group: 'Cloud',
@@ -182,28 +184,28 @@ const en: Content = {
   ],
   experience: [
     {
-      org: 'Aitech S.r.l.',
+      org: 'Company in professional training',
       role: 'Fullstack developer',
       from: 'March 2025',
       to: 'today',
       text: 'Design and development of fullstack platforms for internal and external use, from first draft to go-live. I make the architecture and stack decisions, integrate external products, and built the centralised single sign-on for the whole application ecosystem.',
     },
     {
-      org: 'StarkTech S.p.A.',
+      org: 'Software house',
       role: 'Fullstack developer',
       from: 'November 2022',
       to: 'March 2025',
       text: 'Web and mobile platforms: software architecture, cloud infrastructure and the full development cycle. Lead author on both clients of a project management product.',
     },
     {
-      org: '134U (Kit For You, PAIC)',
+      org: 'Digital agency',
       role: 'Web developer',
       from: 'May 2022',
       to: 'October 2022',
       text: 'Back-end of a custom WooCommerce e-commerce, an interactive map on the Google Maps API, and automation scripts for internal processes. First contact with Web3 and smart contracts.',
     },
     {
-      org: 'XEOS.IT, RES Synesis',
+      org: 'IT services for the banking sector',
       role: 'IT systems analyst',
       from: 'January 2020',
       to: 'August 2021',
@@ -214,7 +216,7 @@ const en: Content = {
     {
       school: 'Digital Universitas',
       what: 'Full-time programme on digital skills, with scholarships from companies and entrepreneurs',
-      years: '2021–2022',
+      years: '2021-2022',
     },
     {
       school: 'Istituto Industriale Statale Benedetto Castelli, Brescia',
@@ -234,7 +236,7 @@ const en: Content = {
     email: 'federico.barbieri99@gmail.com',
     linkedin: 'https://www.linkedin.com/in/federico-barbieri-6b6944225/',
     cta: 'Write me an email',
-    note: 'I’m open to fullstack roles, remote or around Brescia. Email is [[the fastest way to reach me]].',
+    note: 'Want more detail, or my CV? Just ask: email is [[the fastest way to reach me]].',
   },
 };
 

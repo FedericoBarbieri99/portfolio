@@ -18,7 +18,17 @@ npm run build      # typecheck + static build into dist/
 npm run preview    # serve dist/ locally
 ```
 
-Useful while developing: `B` toggles the mode from the keyboard, and `/#backstage` opens the page already flipped. In backstage, hovering any text (tapping it, on touch) shows its computed type; the HUD in the corner lists running timelines, scroll position and the last events. A small penguin lives on the page (hidden under reduced motion). It always stands on something real: it starts behind the switch knob, hops onto the switch when you flip it, then perches on the end of whichever row, rung or role is nearest the middle of the screen. Scrolling only chooses the station; every move is a timed animation. A near station it reaches with a hop; a far one it leaves for through the right edge of the page and comes back in from the top, dropping from behind the bar onto the perch, when you scroll down, or walking in from the right when you scroll up. Each return it wears a different accessory (`[data-prop]` groups in the SVG; the order is `wardrobe` in `penguin()`). In About it walks in along the last line and stops behind the `[[phrase]]`-marked words (a marked phrase must be the closing words of its paragraph's last line); at the bottom it walks in behind the Contact phrase, hides behind the email button and climbs on top of it to wave. Stations are `penguin()` in `src/motion.ts`; positions are read from element rects, so an opened row carries it along.
+Useful while developing: `B` toggles the mode and `/#backstage` opens it directly. The new motion system lives in `src/motion.ts`: two whole name lines enter in sequence, the switch reveals the blueprint through a circle growing from the switch (640ms) and closes it in reverse (540ms), and project panels unfold in 360ms with a short content stagger. Rapid mode commands are coalesced without interrupting the active reveal. The navigation underlines the current reading section. Backstage shows computed type on hover/tap and a HUD that redraws only during active animations or scrolling.
+
+The penguin controller is in `src/penguin.ts`. It starts on the switch, waits for scroll to settle, then chooses a real row or text perch. Nearby moves use a look, crouch, short arc and cushioned landing; distant moves use a brief exit and local arrival, with no page-wide walk or falling entrance. Accessories belong to sections: scarf, glasses, headphones, beanie and the contact bow tie. Contact earns a wave, repeated on hover or focus. One abortable scene owns every gesture; hidden pages, stale destinations and live reduced-motion changes stop it. Landings follow live element bounds, including expanding project rows. The 64×72 navy/ivory/orange SVG renders at 48px desktop and 40px mobile; breathing and blinking run in CSS only while idle.
+
+The browser regression checks require a running dev server and Playwright CLI:
+
+```bash
+playwright-cli open http://127.0.0.1:5173/it/
+playwright-cli run-code --filename scripts/check-penguin.js
+playwright-cli run-code --filename scripts/check-browser.js
+```
 
 ## Content
 

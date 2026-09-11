@@ -11,6 +11,8 @@ const it: Content = {
   },
   ui: {
     skip: 'Vai ai progetti',
+    navLabel: 'Sezioni',
+    exploreWork: 'Esplora i progetti',
     navWork: 'Progetti',
     navSkills: 'Competenze',
     navExperience: 'Esperienza',
@@ -57,17 +59,17 @@ const it: Content = {
   },
   groups: [
     {
-      id: 'aitech',
-      org: 'Aitech',
-      period: '2025 – oggi',
+      id: 'current',
+      org: 'Ruolo attuale',
+      period: '2025 - oggi',
       works: [
         {
-          id: 'aitech',
-          title: 'Ecosistema piattaforme Aitech',
-          years: '2025–2026',
+          id: 'platform',
+          title: 'Ecosistema di piattaforme',
+          years: '2025-2026',
           tags: ['Java', 'Spring Boot', 'Vaadin', 'OIDC', 'MySQL'],
           summary:
-            'Una suite di prodotti per un ente di formazione, interni e rivolti ai clienti, con una sola identità: un gestionale per il core business, un authorization server centrale, un marketplace, ticketing e timesheet. Progetto l’architettura e scrivo gran parte del codice.',
+            'Una suite di prodotti per un’azienda della formazione professionale, interni e rivolti ai clienti, con una sola identità: un gestionale per il core business, un authorization server centrale, un marketplace, ticketing e timesheet. Progetto l’architettura e scrivo gran parte del codice.',
           problem:
             'L’azienda gestiva il proprio lavoro su strumenti separati con login separati. Ogni nuovo prodotto voleva dire un altro database utenti e un’altra password, e nessuno strumento parlava con gli altri.',
           did: 'Ho progettato e costruito i prodotti come un unico ecosistema con una sola identità. Il gestionale è il più grande: modella l’operatività quotidiana dell’azienda da capo a fondo, dalla pianificazione alla rendicontazione, e integra i servizi esterni su cui il business già si appoggia. Un authorization server separato gestisce il login di tutto ed emette token OIDC che portano solo l’identità, mentre ogni prodotto tiene i propri ruoli e decide chi entra. Il marketplace vende con checkout Stripe; ticketing e timesheet girano sullo stesso stack e sullo stesso login. Le decisioni sono scritte come ADR prima di andare in produzione.',
@@ -80,19 +82,19 @@ const it: Content = {
         'Uno scraper Playwright in Java, porting di un prototipo Python, che alimenta un database MySQL.',
         'Un client desktop Electron per strumenti interni.',
         'Script Python che validano dati Excel e PDF per il processo di conformità di un cliente enterprise.',
-        'Il sito aziendale in Next.js.',
+        'Un sito aziendale in Next.js.',
       ],
       alsoTags: 'scraper, Electron, Python, sito',
     },
     {
-      id: 'starktech',
-      org: 'StarkTech',
-      period: '2022 – 2025',
+      id: 'previous',
+      org: 'Ruolo precedente',
+      period: '2022 - 2025',
       works: [
         {
-          id: 'towedo',
-          title: 'Towedo',
-          years: '2022–2024',
+          id: 'pm',
+          title: 'Piattaforma di project management',
+          years: '2022-2024',
           tags: ['Flutter', 'Next.js', 'Firebase', 'TypeScript'],
           summary:
             'Una piattaforma di project management: app mobile, web app con gantt e timeline, automazioni sui task e integrazione Microsoft 365. Ero lo sviluppatore principale su entrambi i client.',
@@ -106,19 +108,19 @@ const it: Content = {
       ],
       also: [
         'Un’app social geolocalizzata per un cliente sotto NDA: Expo e Firebase, ricerca di prossimità con geohash, clustering su mappa, chat vincolata all’abbonamento. Circa 26.000 righe, 53 commit miei.',
-        'Il sito aziendale in Next.js.',
+        'Un sito aziendale in Next.js.',
       ],
       alsoTags: 'app NDA, sito',
     },
     {
       id: 'personal',
       org: 'Personali',
-      period: '2024 – 2026',
+      period: '2024 - 2026',
       works: [
         {
           id: 'viaggi',
           title: 'App Viaggi',
-          years: '2025–2026',
+          years: '2025-2026',
           tags: ['Expo', 'React Native', 'Firebase', 'TypeScript'],
           summary:
             'Un’app nativa per organizzare viaggi di gruppo: votare la destinazione, proporre alloggi, costruire l’itinerario su mappa e calendario, dividere le spese, chattare. Costruita due volte, apposta.',
@@ -152,22 +154,22 @@ const it: Content = {
     {
       group: 'Linguaggi',
       items: ['Java', 'TypeScript', 'Dart', 'Python', 'SQL'],
-      proof: ['Java, ecosistema Aitech, scraper', 'TypeScript, Towedo web, App Viaggi, Traq', 'Dart, Towedo mobile', 'Python, carte di Traq, script', 'SQL, migrazioni Flyway'],
+      proof: ['Java, ecosistema di piattaforme, scraper', 'TypeScript, web app, App Viaggi, Traq', 'Dart, app mobile', 'Python, carte di Traq, script', 'SQL, migrazioni Flyway'],
     },
     {
       group: 'Backend',
       items: ['Java', 'Spring Boot', 'Spring Security', 'JPA', 'MySQL', 'Node.js', 'Express', 'FastAPI'],
-      proof: ['ecosistema Aitech, ~1.000 commit', 'single sign-on OIDC in produzione', 'Cloud Functions su Node, Towedo, App Viaggi'],
+      proof: ['ecosistema di piattaforme, ~1.000 commit', 'single sign-on OIDC in produzione', 'Cloud Functions su Node, due prodotti'],
     },
     {
       group: 'Frontend',
       items: ['Vaadin', 'TypeScript', 'React', 'Next.js', 'Vite', 'Tailwind'],
-      proof: ['Vaadin 25, viste Flow e React', 'Towedo web, 39.000 righe di TypeScript', 'due siti aziendali in Next.js'],
+      proof: ['Vaadin 25, viste Flow e React', 'una web app, 39.000 righe di TypeScript', 'due siti aziendali in Next.js'],
     },
     {
       group: 'Mobile',
       items: ['Flutter', 'React Native', 'Expo'],
-      proof: ['Towedo, 42.000 righe di Dart', 'App Viaggi, Expo 56', 'Traq, Expo 51'],
+      proof: ['un’app mobile, 42.000 righe di Dart', 'App Viaggi, Expo 56', 'Traq, Expo 51'],
     },
     {
       group: 'Cloud',
@@ -182,28 +184,28 @@ const it: Content = {
   ],
   experience: [
     {
-      org: 'Aitech S.r.l.',
+      org: 'Azienda della formazione professionale',
       role: 'Fullstack developer',
       from: 'marzo 2025',
       to: 'oggi',
       text: 'Progetto e sviluppo piattaforme fullstack per uso interno ed esterno, dalla prima bozza al go-live. Prendo le decisioni su architettura e stack, integro prodotti esterni e ho costruito il single sign-on centralizzato dell’intero ecosistema applicativo.',
     },
     {
-      org: 'StarkTech S.p.A.',
+      org: 'Software house',
       role: 'Fullstack developer',
       from: 'novembre 2022',
       to: 'marzo 2025',
       text: 'Piattaforme web e mobile: architettura software, infrastruttura cloud e intero ciclo di sviluppo. Autore principale di entrambi i client di un prodotto di project management.',
     },
     {
-      org: '134U (Kit For You, PAIC)',
+      org: 'Agenzia digitale',
       role: 'Sviluppatore web',
       from: 'maggio 2022',
       to: 'ottobre 2022',
       text: 'Backend di un e-commerce personalizzato su WooCommerce, una mappa interattiva con Google Maps API e script di automazione per i processi interni. Primo approccio a Web3 e smart contract.',
     },
     {
-      org: 'XEOS.IT, RES Synesis',
+      org: 'Servizi IT per il settore bancario',
       role: 'Analista di sistemi informatici',
       from: 'gennaio 2020',
       to: 'agosto 2021',
@@ -214,7 +216,7 @@ const it: Content = {
     {
       school: 'Digital Universitas',
       what: 'Percorso full-time sulle competenze digitali, con borse di studio offerte da aziende e imprenditori',
-      years: '2021–2022',
+      years: '2021-2022',
     },
     {
       school: 'Istituto Industriale Statale Benedetto Castelli, Brescia',
@@ -234,7 +236,7 @@ const it: Content = {
     email: 'federico.barbieri99@gmail.com',
     linkedin: 'https://www.linkedin.com/in/federico-barbieri-6b6944225/',
     cta: 'Scrivimi una email',
-    note: 'Sono aperto a ruoli fullstack, da remoto o nella zona di Brescia. L’email è [[il modo più veloce per raggiungermi]].',
+    note: 'Vuoi più dettagli, o il mio CV? Basta chiedere: l’email è [[il modo più veloce per raggiungermi]].',
   },
 };
 
