@@ -10,10 +10,14 @@ async (page) => {
     await page.goto(origin + route);
     await page.waitForFunction(() => document.documentElement.classList.contains('js'));
     await page.evaluate(() => document.fonts.ready.then(() => {}));
-    check(await page.locator('[id^="p-"][inert]').count() === 6, 'Closed panels must be inert');
     const first = page.locator('[data-row]').nth(0);
     const second = page.locator('[data-row]').nth(1);
+    check(await first.getAttribute('aria-expanded') === 'true', 'The lead case study arrives open');
+    check(await page.locator('[id^="p-"][inert]').count() === 5, 'Every other panel must arrive inert');
     await first.focus();
+    await page.keyboard.press('Enter');
+    check(await first.getAttribute('aria-expanded') === 'false', 'Keyboard must close a project');
+    check(await page.locator('[id^="p-"][inert]').count() === 6, 'Closed panels must be inert');
     await page.keyboard.press('Enter');
     check(await first.getAttribute('aria-expanded') === 'true', 'Keyboard must open a project');
     check(await page.locator('#p-platform').getAttribute('inert') === null, 'Open content must be accessible');
@@ -36,6 +40,16 @@ async (page) => {
           return rect.left >= 0 && rect.right <= innerWidth && rect.bottom <= header.getBoundingClientRect().bottom;
         })), `Header controls must fit at ${width}px on ${route}`);
         check(await page.locator('nav').isVisible(), 'Section navigation must be available');
+        check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `No horizontal scroll at ${width}px in ${mode} on ${route}`);
+        // the clay name lies over the live text in front; backstage hides it and the live text becomes its outline
+        await page.waitForFunction(backstage => {
+          const style = getComputedStyle(document.querySelector('[data-name-clay]'));
+          return backstage ? style.visibility === 'hidden' || style.opacity === '0' : style.opacity === '1' && style.visibility === 'visible';
+        }, mode === 'backstage', { timeout: 3000 }).catch(() => { throw new Error(`The clay name must show in front only (${mode}, ${width}px)`); });
+        check(await page.locator('[data-hero-knob]').evaluate((knob, backstage) => {
+          const track = knob.parentElement.getBoundingClientRect(); const k = knob.getBoundingClientRect();
+          return backstage ? track.right - k.right < track.height * 0.25 : k.left - track.left < track.height * 0.25;
+        }, mode === 'backstage'), 'The knob rests on the side of the mode');
       }
     }
     await page.locator('header [data-toggle]').click();
@@ -51,10 +65,13 @@ async (page) => {
       check(await fallback.locator('body').evaluate(el => getComputedStyle(el).backgroundColor === 'rgb(237, 239, 236)'), 'Styles must load without JavaScript');
       check(await fallback.locator('#p-platform').evaluate(el => el.offsetHeight > 100 && !el.inert), 'Project details must be readable without JavaScript');
       check(await fallback.locator('header [data-toggle]').isHidden(), 'Unavailable switches must be hidden');
+      await fallback.locator('[data-diorama-still]').scrollIntoViewIfNeeded();
+      await fallback.waitForFunction(() => { const img = document.querySelector('[data-diorama-still]'); return img.complete && img.naturalWidth > 0; });
+      check(await fallback.locator('[data-diorama-still]').evaluate(img => { const r = img.getBoundingClientRect(); return r.width > 90 && r.height > 90 && getComputedStyle(img).visibility === 'visible'; }), 'Without JavaScript the still pose of the diorama is the whole feature');
     }
   } finally {
     await context.close();
   }
   check(errors.length === 0, errors.join('\n'));
-  console.log('Passed: EN/IT, five widths, both modes, keyboard, accordion accessibility, anchors, no-JS fallback.');
+  console.log('Passed: EN/IT, five widths, both modes, no horizontal scroll, clay name and switch rest, keyboard, accordion accessibility, anchors, no-JS fallback.');
 }

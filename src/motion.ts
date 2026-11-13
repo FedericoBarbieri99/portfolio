@@ -1,5 +1,6 @@
 import { animate, createTimeline, stagger, svg, utils } from 'animejs';
 import { createPenguin } from './penguin';
+import { createDiorama } from './diorama';
 
 type Mode = 'front' | 'backstage';
 type Progress = { progress: number; cancelled?: boolean };
@@ -63,7 +64,9 @@ export function init() {
   const lifetime = new AbortController();
   const { signal } = lifetime;
   const toggles = [...document.querySelectorAll<HTMLButtonElement>('[data-toggle]')];
-  const knobs = [...document.querySelectorAll<SVGCircleElement>('[data-knob]')];
+  const knobs = [...document.querySelectorAll<HTMLElement>('[data-knob]')];
+  // the knob's resting side is CSS (aria-pressed); the slide is a transform that starts from the old side and ends at rest
+  const SLIDE = 147.0588;
   const animations = new Map<string, ReturnType<typeof animate> | ReturnType<typeof createTimeline>>();
   let mode: Mode = root.dataset.mode === 'backstage' ? 'backstage' : 'front';
   let desired = mode;
@@ -77,17 +80,28 @@ export function init() {
   };
 
   // Two printed lines enter as units. The rest of the page is never gated by this introduction.
+  const clay = document.querySelector<HTMLElement>('[data-name-clay]');
   const entrance = createTimeline({ autoplay: false, defaults: { ease: 'outQuint' } });
   if (!reduced && scrollY < innerHeight && !location.hash) {
     entrance
       .add('[data-name-line]', { translateY: ['105%', '0%'], rotate: [2, 0], opacity: [0, 1], duration: 700, delay: stagger(110) }, 0)
-      .add(svg.createDrawable('[data-hero-track]'), { draw: ['0 0', '0 1'], duration: 650 }, 160)
-      .add('[data-hero-knob]', { scale: [0.72, 1], opacity: [0, 1], duration: 380 }, 430)
+      .add('[data-hero-track]', { '--press': [0, 1], duration: 650 }, 160)
+      .add('[data-hero-knob] > *', { scale: [0.72, 1], opacity: [0, 1], duration: 380 }, 430)
       .add('[data-fade]', { opacity: [0, 1], translateY: [8, 0], duration: 400, delay: stagger(45) }, 400);
+    // the printed name turns to clay once, after the two lines have landed
+    if (clay) {
+      clay.style.setProperty('--name-in', '0');
+      clay.dataset.ready = '';
+      entrance.add(clay, { '--name-in': [0, 1], scale: [1.018, 1], translateY: ['-1.2%', '0%'], duration: 560, ease: 'outQuad' }, 640);
+    }
     trackAnimation('page · entrance', entrance);
     entrance.play();
   }
-  const pen = createPenguin({ ready: entrance.duration && !entrance.paused ? entrance.then(() => {}) : Promise.resolve(), log, register, reduced: () => reduced });
+  if (clay) clay.dataset.ready = '';
+  // One mascot at a time: while the clay penguin is on the diorama stage the flat one stays away.
+  let stageTaken = false;
+  const pen = createPenguin({ ready: entrance.duration && !entrance.paused ? entrance.then(() => {}) : Promise.resolve(), log, register, reduced: () => reduced, away: () => stageTaken });
+  const diorama = createDiorama({ reduced: () => reduced, log, onStage: active => { stageTaken = active; pen.refresh(); } });
 
   function setMode(next: Mode) {
     animations.get('backstage · notes')?.revert();
@@ -96,11 +110,12 @@ export function init() {
     mode = next;
     const on = next === 'backstage';
     root.dataset.mode = next;
+    diorama.onMode();
+    pen.onMode();
     toggles.forEach(toggle => toggle.setAttribute('aria-pressed', String(on)));
     document.querySelectorAll<HTMLElement>('[data-mode-label]').forEach(label => { label.textContent = on ? label.dataset.backstage! : label.dataset.front!; });
-    animations.get('switch · latch')?.cancel();
-    if (reduced) knobs.forEach(knob => knob.setAttribute('cx', on ? '150' : '50'));
-    else trackAnimation('switch · latch', animate(knobs, { cx: on ? 150 : 50, duration: 360, ease: 'outQuint' }));
+    animations.get('switch · latch')?.revert();
+    if (!reduced) trackAnimation('switch · latch', animate(knobs, { x: [`${on ? -SLIDE : SLIDE}%`, '0%'], duration: 360, ease: 'outQuint' }));
     log(`flip → ${next}`);
     drawHUD();
   }
@@ -170,7 +185,7 @@ export function init() {
   const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-row]')];
   buttons.forEach(button => {
     const panel = document.getElementById(button.getAttribute('aria-controls')!)!;
-    panel.inert = true;
+    panel.inert = button.getAttribute('aria-expanded') !== 'true';
     button.addEventListener('click', () => {
       const open = button.getAttribute('aria-expanded') !== 'true';
       for (const sibling of buttons) {
@@ -181,7 +196,7 @@ export function init() {
         body.inert = !expanded;
         animations.get(body.id)?.revert();
         if (expanded && !reduced) {
-          const contents = [...body.querySelectorAll(':scope > div > dl > div, :scope > div > ul > li, :scope > div > a')];
+          const contents = [...body.querySelectorAll(':scope > div > div > dl > div, :scope > div > div > ul > li, :scope > div > div > a')];
           trackAnimation(body.id, animate(contents, { opacity: [0, 1], translateY: [7, 0], duration: 280, delay: (_: unknown, i = 0) => 60 + Math.min(i * 40, 120), ease: 'outCubic' }));
         }
       }
@@ -230,6 +245,7 @@ export function init() {
   preference.addEventListener('change', event => {
     reduced = event.matches;
     pen.onMotionChange();
+    diorama.onMotionChange();
     if (reduced) {
       for (const animation of animations.values()) animation.complete();
       transition?.skipTransition();
@@ -239,6 +255,10 @@ export function init() {
   }, { signal });
   document.addEventListener('visibilitychange', drawHUD, { signal });
   if (location.hash === '#backstage') { desired = 'backstage'; setMode(desired); }
+  // A shared /#backstage link lands on an open tab too, and then it is worth the reveal.
+  addEventListener('hashchange', () => {
+    if (location.hash === '#backstage' && desired !== 'backstage') flip(toggles[0]);
+  }, { signal });
   if (import.meta.hot) import.meta.hot.dispose(() => {
     lifetime.abort();
     transition?.skipTransition();
@@ -247,5 +267,6 @@ export function init() {
     cancelAnimationFrame(readingFrame);
     clearInspector();
     pen.destroy();
+    diorama.destroy();
   });
 }

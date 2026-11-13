@@ -35,10 +35,16 @@ Thumbs.db
 coverage
 .cache
 
-# tool-local configs
-.impeccable/config.local.json
-.impeccable/hook.cache.json
-.impeccable/review/
-.claude/settings.local.json
-.codex/hooks.json
-.cursor/hooks.json
+# AI and design tooling: local configs, hooks, review caches. Not part of the site.
+.claude/
+.codex/
+.cursor/
+.impeccable/
+
+# working material: briefs for agents, references, raw renders and generations (large).
+# Only the processed assets in public/ ship.
+cowork/
+
+# asset tooling, local only: the site needs the files in public/, not what made them
+scripts/blender/
+scripts/og.mjs
