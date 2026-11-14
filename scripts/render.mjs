@@ -190,7 +190,6 @@ function page(c) {
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="${esc(c.meta.title)}, ${esc(c.hero.role)}, ${esc(c.hero.place)}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="theme-color" content="#EDEFEC" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#EDEFEC" />
   <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
   <link rel="icon" href="/icon-32.png" type="image/png" sizes="32x32" />

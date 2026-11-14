@@ -1,5 +1,6 @@
 import { animate } from 'animejs';
 import { clamp, decode, mod } from './diorama';
+import sprites from '../public/penguin/sprites.json';
 
 type Point = { x: number; y: number };
 type Perch = { name: string; element: Element; point: () => Point; fits?: () => boolean };
@@ -45,30 +46,28 @@ export function createPenguin({ ready, log, register, reduced, away }: Hooks) {
   const backstage = () => root.dataset.mode === 'backstage';
 
   // ---------- the sprite: sheet layout comes from sprites.json, nothing here assumes it ----------
-  let mini: Mini | null = null;
+  const mini: Mini = sprites.mini; // bundled: no extra request before the sheet
   let clay: ImageBitmap | null = null;
   let wire: ImageBitmap | null = null;
   let wireRequested = false;
   let ground = '#edefec';
   let painted = '';
-  const sprite = (async () => {
-    mini = (await (await fetch('/penguin/sprites.json')).json()).mini as Mini;
-    clay = await decode(`/penguin/${mini.file}`);
-  })();
+  // the sheet is only needed once the entrance is done, so it never competes with the hero's own assets
+  const sprite = ready.then(async () => { clay = await decode(`/penguin/${mini.file}`); });
   // the wire twin loads on first entry to backstage; until it is decoded the clay silhouette is filled and drawn without lines
   function loadWire() {
-    if (wireRequested || !mini) return;
+    if (wireRequested) return;
     wireRequested = true;
     void decode(`/penguin/${mini.wireFile}`).then(image => { wire = image; painted = ''; paint(); }, () => { wireRequested = false; });
   }
   function frameIndex() {
-    const { clips, degreesPerFrame } = mini!;
+    const { clips, degreesPerFrame } = mini;
     if (pose.clip) return clips[pose.clip.name].start + pose.clip.frame;
     return clips.turn.start + mod(Math.round(pose.yaw / degreesPerFrame), clips.turn.frames);
   }
   // One frame onto the canvas: clay in front; in backstage the clay silhouette filled with the ground colour and the wire frame on top.
   function paint() {
-    if (!mini || !clay || !canvas.width) return;
+    if (!clay || !canvas.width) return;
     const index = frameIndex();
     const key = `${index}|${backstage()}|${!!wire}|${canvas.width}|${ground}`;
     if (key === painted) return;
@@ -248,7 +247,7 @@ export function createPenguin({ ready, log, register, reduced, away }: Hooks) {
     glance += (glanceTarget - glance) * (1 - Math.exp(-dt * 11));
     if (Math.abs(glanceTarget - glance) < 0.4) glance = glanceTarget;
     pose.yaw = glance;
-    const clip = mini!.clips.blink;
+    const clip = mini.clips.blink;
     if (blinkStart < 0 && now >= nextBlink && Math.abs(glance) < 7) blinkStart = now;
     if (blinkStart >= 0) {
       const f = Math.floor((now - blinkStart) * (clip.fps ?? 12) / 1000);
@@ -331,7 +330,7 @@ export function createPenguin({ ready, log, register, reduced, away }: Hooks) {
   }
   // The wave is the sheet's own clip, front on; it lasts as long as the clip.
   async function wave(perch: Perch, abort: AbortSignal) {
-    const clip = mini!.clips.wave;
+    const clip = mini.clips.wave;
     await turn(0, abort);
     await beat('wave', clip.frames / (clip.fps ?? 12) * 1000, t => {
       Object.assign(pose, perch.point());
