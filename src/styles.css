@@ -94,7 +94,6 @@
   --radius-row: 18px;
   --radius-well: 22px;
   --radius-slab: 28px;
-  --radius-bar: 30px;
   --radius-oval: 50%;
 
   --container-hint: 20ch;
@@ -141,6 +140,8 @@
 @theme inline {
   --min-height-hero: min(820px, calc(100svh - var(--spacing-bar) - var(--bar-top)));
   --inset-hero-line: calc(var(--spacing-hero) - 28px);
+  /* the Menu panel hangs 8px under the bar, which sticks at --bar-top */
+  --inset-menu: calc(var(--bar-top) + var(--spacing-bar) + 8px);
 }
 
 /* ---------- the clay: one light from the upper left ----------
@@ -160,67 +161,67 @@
   --background-image-cta: url(/clay/grain.png), linear-gradient(145deg, color-mix(in srgb, var(--clay-primary) 90%, white), var(--clay-primary) 50%, color-mix(in srgb, var(--clay-primary) 86%, black));
 
   --shadow-slab:
-    calc(20 * var(--u)) calc(26 * var(--u)) calc(40 * var(--u)) var(--clay-lo),
-    calc(5 * var(--u)) calc(6 * var(--u)) calc(10 * var(--u)) var(--clay-lo-soft),
-    calc(-14 * var(--u)) calc(-14 * var(--u)) calc(34 * var(--u)) var(--clay-hi),
+    calc(12 * var(--u)) calc(16 * var(--u)) calc(24 * var(--u)) var(--clay-cast),
+    calc(3 * var(--u)) calc(4 * var(--u)) calc(6 * var(--u)) var(--clay-lo-soft),
+    calc(-8 * var(--u)) calc(-8 * var(--u)) calc(20 * var(--u)) var(--clay-hi),
     inset 1px 1px 0 var(--clay-hi),
     inset calc(-5 * var(--u)) calc(-6 * var(--u)) calc(18 * var(--u)) var(--clay-lo-soft),
     inset calc(4 * var(--u)) calc(4 * var(--u)) calc(14 * var(--u)) var(--clay-hi);
   --shadow-lump:
-    calc(8 * var(--u)) calc(10 * var(--u)) calc(20 * var(--u)) var(--clay-lo),
-    calc(2 * var(--u)) calc(3 * var(--u)) calc(5 * var(--u)) var(--clay-lo-soft),
-    calc(-6 * var(--u)) calc(-6 * var(--u)) calc(14 * var(--u)) var(--clay-hi),
+    calc(5 * var(--u)) calc(6 * var(--u)) calc(12 * var(--u)) var(--clay-cast),
+    calc(1.2 * var(--u)) calc(1.8 * var(--u)) calc(3 * var(--u)) var(--clay-lo-soft),
+    calc(-4 * var(--u)) calc(-4 * var(--u)) calc(8 * var(--u)) var(--clay-hi),
     inset 1px 1px 0 var(--clay-hi),
     inset calc(-3 * var(--u)) calc(-4 * var(--u)) calc(8 * var(--u)) var(--clay-lo),
     inset calc(3 * var(--u)) calc(3 * var(--u)) calc(6 * var(--u)) var(--clay-hi);
   --shadow-lump-up:
-    calc(11 * var(--u)) calc(14 * var(--u)) calc(26 * var(--u)) var(--clay-lo),
-    calc(3 * var(--u)) calc(4 * var(--u)) calc(7 * var(--u)) var(--clay-lo-soft),
-    calc(-7 * var(--u)) calc(-7 * var(--u)) calc(18 * var(--u)) var(--clay-hi),
+    calc(7 * var(--u)) calc(8 * var(--u)) calc(16 * var(--u)) var(--clay-cast),
+    calc(1.8 * var(--u)) calc(2.4 * var(--u)) calc(4 * var(--u)) var(--clay-lo-soft),
+    calc(-4 * var(--u)) calc(-4 * var(--u)) calc(11 * var(--u)) var(--clay-hi),
     inset 1px 1px 0 var(--clay-hi),
     inset calc(-3 * var(--u)) calc(-4 * var(--u)) calc(8 * var(--u)) var(--clay-lo-soft),
     inset calc(3 * var(--u)) calc(3 * var(--u)) calc(6 * var(--u)) var(--clay-hi);
   --shadow-lump-down:
-    calc(3 * var(--u)) calc(4 * var(--u)) calc(8 * var(--u)) var(--clay-lo),
-    calc(1 * var(--u)) calc(1 * var(--u)) calc(2 * var(--u)) var(--clay-lo-soft),
-    calc(-2 * var(--u)) calc(-2 * var(--u)) calc(5 * var(--u)) var(--clay-hi),
+    calc(2 * var(--u)) calc(2.4 * var(--u)) calc(5 * var(--u)) var(--clay-cast),
+    calc(0.6 * var(--u)) calc(0.6 * var(--u)) calc(1.2 * var(--u)) var(--clay-lo-soft),
+    calc(-1.2 * var(--u)) calc(-1.2 * var(--u)) calc(3 * var(--u)) var(--clay-hi),
     inset 1px 1px 0 var(--clay-hi),
     inset calc(-2 * var(--u)) calc(-2 * var(--u)) calc(5 * var(--u)) var(--clay-lo-soft),
     inset calc(2 * var(--u)) calc(2 * var(--u)) calc(4 * var(--u)) var(--clay-hi);
   --shadow-well:
-    0 0 0 0 var(--clay-lo), 0 0 0 0 var(--clay-lo-soft), 0 0 0 0 var(--clay-hi), inset 0 0 0 0 var(--clay-hi),
+    0 0 0 0 var(--clay-cast), 0 0 0 0 var(--clay-lo-soft), 0 0 0 0 var(--clay-hi), inset 0 0 0 0 var(--clay-hi),
     inset calc(7 * var(--u)) calc(7 * var(--u)) calc(14 * var(--u)) var(--clay-lo),
     inset calc(-6 * var(--u)) calc(-6 * var(--u)) calc(12 * var(--u)) var(--clay-hi);
   --shadow-well-lite:
-    0 0 0 0 var(--clay-lo), 0 0 0 0 var(--clay-lo-soft), 0 0 0 0 var(--clay-hi), inset 0 0 0 0 var(--clay-hi),
+    0 0 0 0 var(--clay-cast), 0 0 0 0 var(--clay-lo-soft), 0 0 0 0 var(--clay-hi), inset 0 0 0 0 var(--clay-hi),
     inset calc(3 * var(--u)) calc(3 * var(--u)) calc(6 * var(--u)) var(--clay-lo),
     inset calc(-3 * var(--u)) calc(-3 * var(--u)) calc(6 * var(--u)) var(--clay-hi);
   /* the ink lump's light only spreads to its left: the mascot stands on its top edge, and a halo above it would haze its feet */
   --shadow-cta:
-    calc(10 * var(--u)) calc(14 * var(--u)) calc(26 * var(--u)) var(--clay-ink-lo),
-    calc(2 * var(--u)) calc(4 * var(--u)) calc(7 * var(--u)) var(--clay-ink-lo),
-    calc(-9 * var(--u)) 0 calc(14 * var(--u)) calc(-9 * var(--u)) var(--clay-hi),
+    calc(6 * var(--u)) calc(8 * var(--u)) calc(16 * var(--u)) var(--clay-ink-cast),
+    calc(1.2 * var(--u)) calc(2.4 * var(--u)) calc(4 * var(--u)) var(--clay-ink-lo),
+    calc(-5 * var(--u)) 0 calc(8 * var(--u)) calc(-5 * var(--u)) var(--clay-hi),
     inset 1px 1px 0 rgb(255 255 255 / 0.28),
     inset calc(-4 * var(--u)) calc(-5 * var(--u)) calc(10 * var(--u)) rgb(0 0 0 / 0.28),
     inset calc(4 * var(--u)) calc(4 * var(--u)) calc(9 * var(--u)) rgb(255 255 255 / 0.12);
   --shadow-cta-up:
-    calc(13 * var(--u)) calc(18 * var(--u)) calc(32 * var(--u)) var(--clay-ink-lo),
-    calc(3 * var(--u)) calc(5 * var(--u)) calc(9 * var(--u)) var(--clay-ink-lo),
-    calc(-11 * var(--u)) 0 calc(18 * var(--u)) calc(-10 * var(--u)) var(--clay-hi),
+    calc(8 * var(--u)) calc(11 * var(--u)) calc(19 * var(--u)) var(--clay-ink-cast),
+    calc(1.8 * var(--u)) calc(3 * var(--u)) calc(5 * var(--u)) var(--clay-ink-lo),
+    calc(-7 * var(--u)) 0 calc(11 * var(--u)) calc(-6 * var(--u)) var(--clay-hi),
     inset 1px 1px 0 rgb(255 255 255 / 0.28),
     inset calc(-4 * var(--u)) calc(-5 * var(--u)) calc(10 * var(--u)) rgb(0 0 0 / 0.28),
     inset calc(4 * var(--u)) calc(4 * var(--u)) calc(9 * var(--u)) rgb(255 255 255 / 0.12);
   --shadow-cta-down:
-    calc(3 * var(--u)) calc(5 * var(--u)) calc(9 * var(--u)) var(--clay-ink-lo),
-    calc(1 * var(--u)) calc(1 * var(--u)) calc(3 * var(--u)) var(--clay-ink-lo),
-    calc(-3 * var(--u)) 0 calc(6 * var(--u)) calc(-3 * var(--u)) var(--clay-hi),
+    calc(2 * var(--u)) calc(3 * var(--u)) calc(5 * var(--u)) var(--clay-ink-cast),
+    calc(0.6 * var(--u)) calc(0.6 * var(--u)) calc(2 * var(--u)) var(--clay-ink-lo),
+    calc(-2 * var(--u)) 0 calc(4 * var(--u)) calc(-2 * var(--u)) var(--clay-hi),
     inset 1px 1px 0 rgb(255 255 255 / 0.2),
     inset calc(-2 * var(--u)) calc(-3 * var(--u)) calc(6 * var(--u)) rgb(0 0 0 / 0.3),
     inset calc(2 * var(--u)) calc(2 * var(--u)) calc(5 * var(--u)) rgb(255 255 255 / 0.1);
   --shadow-bar:
-    calc(10 * var(--u)) calc(14 * var(--u)) calc(30 * var(--u)) var(--clay-lo),
-    calc(2 * var(--u)) calc(3 * var(--u)) calc(6 * var(--u)) var(--clay-lo-soft),
-    calc(-8 * var(--u)) calc(-8 * var(--u)) calc(20 * var(--u)) var(--clay-hi),
+    calc(6 * var(--u)) calc(8 * var(--u)) calc(18 * var(--u)) var(--clay-cast),
+    calc(1.2 * var(--u)) calc(1.8 * var(--u)) calc(4 * var(--u)) var(--clay-lo-soft),
+    calc(-5 * var(--u)) calc(-5 * var(--u)) calc(12 * var(--u)) var(--clay-hi),
     inset 1px 1px 0 var(--clay-hi),
     inset calc(-3 * var(--u)) calc(-4 * var(--u)) calc(10 * var(--u)) var(--clay-lo-soft),
     inset calc(3 * var(--u)) calc(3 * var(--u)) calc(8 * var(--u)) var(--clay-hi);
@@ -255,6 +256,9 @@
   --transition-property-clay: box-shadow, scale, background-color, color;
   --transition-duration-clay: 140ms, 120ms, var(--dur), var(--dur);
   --transition-duration-nav: 160ms, var(--dur), var(--dur);
+  /* the Menu panel: it fades and drops in (and out), display and overlay carry the exit; the colours follow the mode */
+  --transition-property-menu: opacity, translate, display, overlay, background-color, color;
+  --transition-duration-menu: 160ms, 220ms, 220ms, 220ms, var(--dur), var(--dur);
   --transition-duration-plus: 220ms, var(--dur);
   --transition-duration-ball: 160ms, 140ms, 160ms;
   --transition-duration-mode: var(--dur);
@@ -358,6 +362,9 @@
     --clay-k: 1;
     --u: calc(1px * var(--clay-k));
     --clay-lo-soft: color-mix(in srgb, var(--clay-lo) 60%, transparent);
+    /* the outer cast only: the shade lifted toward the ground, so it reads as a gentle lift and not a band under the surface */
+    --clay-cast: color-mix(in srgb, var(--clay-lo) 70%, var(--color-bg));
+    --clay-ink-cast: color-mix(in srgb, var(--clay-ink-lo) 70%, transparent);
     --clay-signal-lo: color-mix(in srgb, var(--color-signal) 55%, #1a0800);
     /* the diorama stage's side as a fraction of the drawn art: a phone needs the head to clear the corner tag, wide screens a smaller bird */
     --stage-k: 0.9;
@@ -383,9 +390,10 @@
       --stage-k: 0.45;
     }
   }
+  /* below xl the bar is a single, slimmer row: the sections move into the Menu panel */
   @media (width < 1100px) {
     html {
-      --spacing-bar: 96px;
+      --spacing-bar: 60px;
     }
   }
   html[data-mode='backstage'] {
@@ -396,6 +404,7 @@
     --color-mute: #9fb4e0;
     --clay-hi: rgb(46 98 196 / 0.4);
     --clay-lo: #061029;
+    --clay-cast: color-mix(in srgb, var(--clay-lo) 88%, var(--color-bg));
     --clay-ink-lo: #030a1c;
     --clay-primary: #2c5aa8;
     --clay-primary-text: #edefec;

@@ -3,7 +3,7 @@ import type { Content } from './types.ts';
 const en: Content = {
   lang: 'en',
   dir: '/',
-  other: { code: 'it', href: '/it/', label: 'Italiano' },
+  other: { code: 'it', href: '/it/', label: 'Italiano', short: 'IT' },
   meta: {
     title: 'Federico Barbieri',
     description:
@@ -18,6 +18,7 @@ const en: Content = {
     navExperience: 'Experience',
     navAbout: 'About',
     navContact: 'Contact',
+    menu: 'Menu',
     modeFront: 'front',
     modeBackstage: 'backstage',
     toggleLabel: 'Show the backstage of this page',

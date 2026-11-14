@@ -162,7 +162,12 @@ function page(c) {
   const alt = c.lang === 'en' ? it : en;
   // every link of the bar eases its shadow and colours; those inside <nav> are pills that press into a well on hover and while being read
   const navLink = 'relative inline-flex items-center min-h-11 shrink-0 no-underline transition-nav duration-nav ease-page';
-  const navPill = 'rounded-full px-3.5 max-sm:px-2 hover:shadow-well-lite focus-visible:shadow-well-lite focus-visible:-outline-offset-3 current:bg-pressed current:shadow-well-lite';
+  const navState = 'hover:shadow-well-lite focus-visible:shadow-well-lite focus-visible:-outline-offset-3 current:bg-pressed current:shadow-well-lite';
+  const navPill = `rounded-full px-3.5 ${navState}`;
+  // below xl the sections live in a native popover under the bar: a slab of clay with the same links as full-width rows
+  const menuPanel = `fixed top-menu inset-x-bar-inset bottom-auto w-auto md:left-auto md:w-80 xl:hidden overflow-visible p-2 bg-bg bg-slab text-ink rounded-slab shadow-slab transition-menu duration-menu ease-page transition-discrete opacity-0 -translate-y-2 open:opacity-100 open:translate-y-0 starting:open:opacity-0 starting:open:-translate-y-2`;
+  const menuRow = `w-full min-h-12 px-5 rounded-row text-base font-medium ${navState}`;
+  const sections = [['work', ui.navWork], ['skills', ui.navSkills], ['experience', ui.navExperience], ['about', ui.navAbout], ['contact', ui.navContact]];
   return `<!doctype html>
 <html lang="${c.lang}" data-mode="front">
 <head>
@@ -213,21 +218,20 @@ function page(c) {
 <body class="relative pt-(--bar-top) bg-bg text-ink font-sans text-base overflow-x-clip">
   <a class="absolute left-gutter -top-25 focus:top-2 px-3.5 py-2.5 bg-ink text-bg z-20" href="#work">${esc(ui.skip)}</a>
 
-  <header data-clay="bar" class="mx-bar-inset bg-bg bg-grain rounded-full max-xl:rounded-bar shadow-bar sticky top-(--bar-top) z-10 flex items-center gap-x-5 h-bar px-6 max-sm:px-3.5 text-sm max-xl:flex-wrap max-xl:gap-x-4 max-sm:gap-x-1.5">
-    <a class="font-semibold mr-auto gap-2.5 ${navLink}" href="#top">${brand}<span class="max-sm:sr-only">Federico Barbieri</span></a>
-    <nav class="flex gap-1 max-xl:order-last max-xl:w-full max-xl:overflow-x-auto max-xl:-mt-1 max-xl:gap-1.5 max-sm:gap-0" aria-label="${esc(ui.navLabel)}">
-      <a class="${navLink} ${navPill}" href="#work">${esc(ui.navWork)}</a>
-      <a class="${navLink} ${navPill}" href="#skills">${esc(ui.navSkills)}</a>
-      <a class="${navLink} ${navPill}" href="#experience">${esc(ui.navExperience)}</a>
-      <a class="${navLink} ${navPill}" href="#about">${esc(ui.navAbout)}</a>
-      <a class="${navLink} ${navPill} max-xl:hidden" href="#contact">${esc(ui.navContact)}</a>
+  <header data-clay="bar" class="mx-bar-inset bg-bg bg-grain rounded-full shadow-bar sticky top-(--bar-top) z-10 flex items-center gap-x-5 h-bar px-6 max-xl:pl-2.5 max-xl:pr-2 text-sm max-xl:gap-x-2 max-sm:gap-x-1">
+    <a class="font-semibold mr-auto gap-2.5 ${navLink}" href="#top"><span class="contents max-xl:hidden">${brand}</span><img class="size-10 xl:hidden" src="/icon-192.png" width="40" height="40" alt="" /><span class="max-sm:sr-only">Federico Barbieri</span></a>
+    <nav class="flex gap-1 max-xl:hidden" aria-label="${esc(ui.navLabel)}">
+      ${sections.map(([id, label]) => `<a class="${navLink} ${navPill}" href="#${id}">${esc(label)}</a>`).join('\n      ')}
     </nav>
-    <a class="${navLink} xl:hidden" href="#contact">${esc(ui.navContact)}</a>
-    <a class="text-mute ${navLink}" href="${c.other.href}" hreflang="${c.other.code}" lang="${c.other.code}">${esc(c.other.label)}</a>
+    <a class="text-mute ${navLink} max-xl:min-w-11 max-xl:justify-center" href="${c.other.href}" hreflang="${c.other.code}" lang="${c.other.code}" title="${esc(c.other.label)}"><span class="max-xl:sr-only">${esc(c.other.label)}</span><span class="xl:hidden font-medium" aria-hidden="true">${esc(c.other.short)}</span></a>
     <button class="inline-flex items-center justify-center min-w-11 min-h-11 gap-2.5 cursor-pointer rounded-full not-js:hidden group" type="button" data-toggle aria-pressed="false" aria-label="${esc(ui.toggleLabel)}">
       ${switchControl(false)}
       <span class="min-w-label text-left text-mute max-xl:hidden" data-mode-label data-front="${esc(ui.modeFront)}" data-backstage="${esc(ui.modeBackstage)}">${esc(ui.modeFront)}</span>
     </button>
+    <button data-clay="menu" class="${LUMP_PRESS} xl:hidden inline-flex items-center min-h-11 px-4.5 font-semibold aria-expanded:bg-pressed aria-expanded:bg-grain aria-expanded:shadow-well-lite" type="button" popovertarget="menu">${esc(ui.menu)}</button>
+    <nav id="menu" data-menu data-clay="menu" popover class="${menuPanel}" aria-label="${esc(ui.navLabel)}">
+      ${sections.map(([id, label]) => `<a class="${navLink} ${menuRow}" href="#${id}">${esc(label)}</a>`).join('\n      ')}
+    </nav>
   </header>
 
   <main id="top" class="max-w-page mx-auto px-gutter">
@@ -316,13 +320,13 @@ function page(c) {
   <!-- The closing scene: a clay diorama, one composition in two plates. The night plate is stacked on the
        day one and only shows in backstage, so the circular mode wipe already does the cross-fade. The
        stage is a reserved square on the ice shelf: the still pose is the whole feature without JS or with
-       reduced motion; src/diorama.ts layers the pre-rendered sprite sheets over it. -->
+       reduced motion; src/diorama.ts layers the real-time model (a WebGL canvas) over it. -->
   <div data-horizon class="relative h-horizon overflow-hidden" aria-hidden="true">
     <img class="absolute inset-0 size-full block object-cover object-plate mask-plate bs:opacity-0" src="/footer/day-1831.webp" srcset="/footer/day-960.webp 960w, /footer/day-1831.webp 1831w" sizes="100vw" width="1831" height="599" alt="" loading="lazy" decoding="async" />
     <img class="absolute inset-0 size-full block object-cover object-plate mask-plate opacity-0 bs:opacity-100" src="/footer/night-1831.webp" srcset="/footer/night-960.webp 960w, /footer/night-1831.webp 1831w" sizes="100vw" width="1831" height="599" alt="" loading="lazy" decoding="async" />
     <div data-diorama-stage class="absolute left-37/100 size-stage bottom-stage-ground -translate-x-1/2 pointer-events-none waiting:invisible" aria-hidden="true">
       <img data-diorama-still class="block size-full select-none covered:invisible" src="/penguin/still.webp" width="400" height="400" alt="" loading="lazy" decoding="async" />
-      <span class="${TAG} bs bg-bg left-21/25 top-4/5 sm:left-4/5 sm:top-4/25 whitespace-nowrap"><span data-diorama-name class="max-sm:block">sprite · still</span><span class="max-sm:hidden"> · </span><span data-diorama-frame class="max-sm:block">1/1</span></span>
+      <span class="${TAG} bs bg-bg left-21/25 top-4/5 sm:left-4/5 sm:top-4/25 whitespace-nowrap"><span data-diorama-name class="max-sm:block">model · still</span><span class="max-sm:hidden"> · </span><span data-diorama-frame class="max-sm:block">0°</span></span>
     </div>
     <span class="${TAG} bs top-3 left-gutter">${esc(ui.rlHorizon)}</span>
   </div>

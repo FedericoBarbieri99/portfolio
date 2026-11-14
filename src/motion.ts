@@ -204,6 +204,16 @@ export function init() {
     }, { signal });
   });
 
+  // Below xl the section links live in a native popover: the browser opens, closes and light-dismisses it. We only close it when a
+  // section is chosen, and mirror its state on the button (aria-expanded is the pressed look and the name for assistive tech).
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  const menuButton = document.querySelector<HTMLElement>('[popovertarget]');
+  if (menu && menuButton) {
+    menuButton.setAttribute('aria-expanded', String(menu.matches(':popover-open')));
+    menu.addEventListener('toggle', event => menuButton.setAttribute('aria-expanded', String((event as ToggleEvent).newState === 'open')), { signal });
+    menu.addEventListener('click', event => { if ((event.target as Element).closest('a')) menu.hidePopover(); }, { signal });
+  }
+
   // A reading marker moves between section links; content itself stays still during scroll.
   const links = [...document.querySelectorAll<HTMLAnchorElement>('nav a[href^="#"]')];
   const sections = [...document.querySelectorAll<HTMLElement>('main > section[id]')];

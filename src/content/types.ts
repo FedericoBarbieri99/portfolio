@@ -40,7 +40,7 @@ export interface Experience {
 export interface Content {
   lang: 'en' | 'it';
   dir: string;
-  other: { code: string; href: string; label: string };
+  other: { code: string; href: string; label: string; short: string };
   meta: { title: string; description: string };
   ui: Record<string, string>;
   hero: { first: string; last: string; role: string; place: string; intro: string };

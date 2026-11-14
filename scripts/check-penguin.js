@@ -141,6 +141,27 @@ async (page) => {
     });
     await page.waitForTimeout(500);
     check(await page.evaluate(() => window.loopCount) > 2, 'The idle loop must be running on screen');
+    // The character is a real-time model on a WebGL canvas, with a clip playing and no turn yet.
+    check(await page.locator('[data-diorama-stage] canvas').first().evaluate(canvas => !!canvas.getContext('webgl2') || !!canvas.getContext('webgl')), 'The diorama canvas must be a WebGL canvas');
+    check(await page.locator('[data-diorama-stage]').evaluate(stage => /^idle:\d+$/.test(stage.dataset.pose) && stage.dataset.yaw === '0'), 'Idle plays a clip of the model, facing front');
+    // Dragging turns it 1:1 (a drag across the stage is one full turn) and it springs back to the front.
+    const box = await page.locator('[data-diorama-stage]').boundingBox();
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height * 0.5);
+    await page.mouse.down();
+    for (let i = 1; i <= 8; i++) { await page.mouse.move(box.x + box.width / 2 + box.width / 4 * i / 8, box.y + box.height * 0.5); await page.waitForTimeout(24); }
+    await page.waitForTimeout(120);
+    check(await page.locator('[data-diorama-stage]').evaluate(stage => stage.dataset.state === 'spin' && Math.abs(Number(stage.dataset.yaw) - 90) <= 3), 'A drag of a quarter of the stage must turn the body a quarter turn');
+    await page.mouse.up();
+    await page.waitForFunction(() => document.querySelector('[data-diorama-stage]').dataset.state === 'idle' && document.querySelector('[data-diorama-stage]').dataset.yaw === '0', null, { timeout: 8000 })
+      .catch(() => { throw new Error('After a drag the body must come back to the front and idle'); });
+    // Backstage: the same canvas draws the wireframe model, loaded the first time the page is in backstage, with a live tag.
+    check(await page.locator('[data-diorama-stage]').evaluate(stage => stage.dataset.wire === undefined), 'The wireframe model must not load before backstage');
+    await page.keyboard.press('b');
+    await page.waitForFunction(() => document.documentElement.dataset.mode === 'backstage' && document.querySelector('[data-diorama-stage]').dataset.wire === 'ready', null, { timeout: 8000 })
+      .catch(() => { throw new Error('Backstage must load the wireframe model'); });
+    check(await page.evaluate(() => /^model · (idle|wave|turn)$/.test(document.querySelector('[data-diorama-name]').textContent) && /^\d+°$/.test(document.querySelector('[data-diorama-frame]').textContent)), 'The backstage tag must read the live clip and yaw');
+    await page.keyboard.press('b');
+    await page.waitForFunction(() => document.documentElement.dataset.mode === 'front');
     // ...and stops when the band leaves the screen.
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
     // The loop parks when the band's IntersectionObserver reports it off screen, and that report is asynchronous (it waits for a
@@ -161,7 +182,7 @@ async (page) => {
     const frozen = await page.locator('[data-diorama-stage]').getAttribute('data-pose');
     await page.waitForTimeout(600);
     check(await page.evaluate(() => window.loopCount) === 0, 'Reduced motion must stop the frame loop');
-    check(await page.locator('[data-diorama-stage]').getAttribute('data-pose') === frozen && frozen === 'still:0', 'Reduced motion must freeze the pose');
+    check(await page.locator('[data-diorama-stage]').getAttribute('data-pose') === frozen && frozen === 'still', 'Reduced motion must freeze the pose');
     check(await page.locator('[data-diorama-still]').isVisible(), 'The static pose is the still image');
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.waitForFunction(() => document.querySelector('[data-diorama-stage]').dataset.state === 'idle', null, { timeout: 8000 });

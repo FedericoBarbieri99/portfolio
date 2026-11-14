@@ -39,7 +39,18 @@ async (page) => {
           const rect = el.getBoundingClientRect();
           return rect.left >= 0 && rect.right <= innerWidth && rect.bottom <= header.getBoundingClientRect().bottom;
         })), `Header controls must fit at ${width}px on ${route}`);
-        check(await page.locator('nav').isVisible(), 'Section navigation must be available');
+        // from 1100px the sections are inline in the bar; below it they live in the Menu popover, which opens, closes on Escape and holds every section link
+        if (width >= 1100) {
+          check(await page.locator('header nav:not([popover])').isVisible() && await page.locator('header [popovertarget]').isHidden(), `Inline section navigation at ${width}px`);
+        } else {
+          const menu = page.locator('header [data-menu]');
+          check(await page.locator('header [popovertarget]').isVisible() && await menu.isHidden(), `The Menu button stands in for the navigation at ${width}px`);
+          await page.locator('header [popovertarget]').focus();
+          await page.keyboard.press('Enter');
+          check(await menu.evaluate(el => el.matches(':popover-open')) && await menu.locator('a').count() === 5 && await menu.locator('a').evaluateAll(links => links.every(a => a.getBoundingClientRect().height >= 44)), `The Menu opens with five touch-sized links at ${width}px`);
+          await page.keyboard.press('Escape');
+          check(await menu.evaluate(el => !el.matches(':popover-open')), `Escape closes the Menu at ${width}px`);
+        }
         check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `No horizontal scroll at ${width}px in ${mode} on ${route}`);
         // the clay name lies over the live text in front; backstage hides it and the live text becomes its outline
         await page.waitForFunction(backstage => {
