@@ -43,11 +43,11 @@ function register(name: string, item: Progress) {
   list.replaceChildren(...[...registry.keys()].map(key => {
     const li = document.createElement('li');
     li.dataset.animation = key;
-    li.className = 'grid grid-cols-[1fr_30px] gap-2 items-center';
+    li.className = 'grid grid-cols-hud gap-2 items-center';
     const caption = document.createElement('div');
     caption.textContent = key;
     const bar = document.createElement('span');
-    bar.className = 'block mt-[3px] h-0.5 bg-line overflow-hidden';
+    bar.className = 'block mt-0.75 h-0.5 bg-line overflow-hidden';
     const fill = document.createElement('i');
     fill.className = 'block h-full bg-signal origin-left';
     bar.append(fill);

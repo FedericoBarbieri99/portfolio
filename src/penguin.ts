@@ -1,14 +1,12 @@
 import { animate } from 'animejs';
+import { clamp, decode, mod } from './diorama';
 
 type Point = { x: number; y: number };
 type Perch = { name: string; element: Element; point: () => Point; fits?: () => boolean };
 type Hooks = { reduced: () => boolean; away: () => boolean; ready: Promise<void>; log: (message: string) => void; register: (name: string, animation: { progress: number }) => void };
 type Clip = { start: number; frames: number; fps?: number };
 type Mini = { file: string; wireFile: string; frameWidth: number; frameHeight: number; cols: number; degreesPerFrame: number; clips: { turn: Clip; wave: Clip; blink: Clip } };
-type Image = ImageBitmap | HTMLImageElement;
 const mix = (a: number, b: number, t: number) => a + (b - a) * t;
-const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
-const mod = (value: number, n: number) => ((value % n) + n) % n;
 const ease = (t: number) => 1 - (1 - t) ** 3;
 // Geometry of a frame of the mini sheet (see sprites.json: same framing as the big sheets). The element is the whole square frame.
 const GROUND = 1 - 0.0833; // the feet stand on this line, as a fraction of the frame's height
@@ -48,20 +46,11 @@ export function createPenguin({ ready, log, register, reduced, away }: Hooks) {
 
   // ---------- the sprite: sheet layout comes from sprites.json, nothing here assumes it ----------
   let mini: Mini | null = null;
-  let clay: Image | null = null;
-  let wire: Image | null = null;
+  let clay: ImageBitmap | null = null;
+  let wire: ImageBitmap | null = null;
   let wireRequested = false;
   let ground = '#edefec';
   let painted = '';
-  async function decode(url: string): Promise<Image> {
-    const blob = await (await fetch(url)).blob();
-    try { return await createImageBitmap(blob); } catch {
-      const img = document.createElement('img');
-      img.src = URL.createObjectURL(blob);
-      await img.decode();
-      return img;
-    }
-  }
   const sprite = (async () => {
     mini = (await (await fetch('/penguin/sprites.json')).json()).mini as Mini;
     clay = await decode(`/penguin/${mini.file}`);
@@ -86,7 +75,7 @@ export function createPenguin({ ready, log, register, reduced, away }: Hooks) {
     painted = key;
     bird.dataset.frame = String(index);
     const { frameWidth: w, frameHeight: h, cols } = mini;
-    const from = (image: Image) => ctx.drawImage(image, (index % cols) * w, Math.floor(index / cols) * h, w, h, 0, 0, canvas.width, canvas.height);
+    const from = (image: ImageBitmap) => ctx.drawImage(image, (index % cols) * w, Math.floor(index / cols) * h, w, h, 0, 0, canvas.width, canvas.height);
     ctx.globalCompositeOperation = 'source-over';
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     from(clay);
@@ -142,7 +131,7 @@ export function createPenguin({ ready, log, register, reduced, away }: Hooks) {
       range.selectNodeContents(node);
       for (const b of range.getClientRects()) add(b);
     }
-    element.querySelectorAll('.plus, .clay-lump').forEach(el => add(rect(el)));
+    element.querySelectorAll('[data-clay="plus"], [data-clay="lump"]').forEach(el => add(rect(el)));
     for (let x = r.right - half - 8; x >= r.left + half + 4; x -= 6) {
       if (!boxes.some(([left, right]) => x + half > left && x - half < right) && (!note || clear(x))) return x;
     }
@@ -229,7 +218,7 @@ export function createPenguin({ ready, log, register, reduced, away }: Hooks) {
     if (!r.width || !r.height) return false;
     const p = perch.point();
     let bottom = innerHeight - 12 - margin;
-    if (document.documentElement.dataset.mode === 'backstage' && hud.getClientRects().length && p.x + width * HALF > rect(hud).left) {
+    if (backstage() && hud.getClientRects().length && p.x + width * HALF > rect(hud).left) {
       bottom = Math.min(bottom, rect(hud).top - 16);
     }
     return p.y - scrollY > rect(header).bottom + width * TALL + 2 + margin && p.y - scrollY < bottom && (perch.fits?.() ?? true);
@@ -286,9 +275,7 @@ export function createPenguin({ ready, log, register, reduced, away }: Hooks) {
   const endZone = () => rect(closing).bottom <= innerHeight + 12;
   function choose() {
     if (visible(hero)) return hero;
-    if (endZone()) {
-      if (visible(finale)) return finale;
-    }
+    if (endZone() && visible(finale)) return finale;
     const readingLine = scrollY + rect(header).bottom + (innerHeight - rect(header).bottom) * 0.58;
     return perches.filter(p => visible(p, 24)).sort((a, b) => Math.abs(a.point().y - readingLine) - Math.abs(b.point().y - readingLine))[0] ?? null;
   }
@@ -425,9 +412,7 @@ export function createPenguin({ ready, log, register, reduced, away }: Hooks) {
       if (destination && !visible(destination)) { cancel(); current = null; hide(); }
       else return;
     }
-    if (!scrolling && endZone()) {
-      if (visible(finale) && current !== finale) { enter(finale); return; }
-    }
+    if (!scrolling && endZone() && visible(finale) && current !== finale) { enter(finale); return; }
     if (current && visible(current)) {
       Object.assign(pose, current.point());
       draw();

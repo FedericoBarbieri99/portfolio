@@ -8,10 +8,9 @@
 type Name = 'still' | 'rise' | 'idle' | 'wave' | 'turn';
 type State = 'waiting' | 'slide' | 'rise' | 'wave' | 'idle' | 'look' | 'spin' | 'static';
 type Hooks = { reduced: () => boolean; log: (message: string) => void; onStage: (active: boolean) => void };
-type Sheet = { frames: number; cols: number; rows: number; frameWidth?: number; frameHeight?: number; fps: number; loop?: boolean };
+type Sheet = { frames: number; cols: number; rows: number; fps: number; loop?: boolean };
 type Pose = { sheet: Name; frame: number };
 type Clip = { sheet: Name; from: number; to: number; fps: number; loop: boolean; done?: () => void; t0: number; elapsed: number };
-type Source = ImageBitmap | HTMLImageElement;
 
 const SOLO: Sheet = { frames: 1, cols: 1, rows: 1, fps: 24 };
 const FADE = 120; // ms: every change of clip dissolves, so nothing ever pops
@@ -22,8 +21,10 @@ const LOOK_OMEGA = 18; // rad/s of the critically damped spring that follows the
 const SETTLE_OMEGA = 11; // softer, for the way back to the front after a drag
 const INERTIA = 0.3; // s: decay of the spin after release
 const MAX_SPIN = 540; // deg/s: a flick coasts about half a turn at most
-const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
-const mod = (n: number, m = 360) => ((n % m) + m) % m;
+export const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(max, value));
+export const mod = (n: number, m = 360) => ((n % m) + m) % m;
+export const decode = async (file: string) => createImageBitmap(await (await fetch(file)).blob());
+const LIVE = ['idle', 'look', 'wave', 'spin']; // the states in which the character answers the pointer
 const wrap = (deg: number) => mod(deg + 180) - 180; // to (-180, 180]
 const url = (key: string) => `/penguin/${key}.webp`;
 
@@ -38,19 +39,19 @@ export function createDiorama({ reduced, log, onStage }: Hooks) {
   const nameTag = stage.querySelector<HTMLElement>('[data-diorama-name]');
   const frameTag = stage.querySelector<HTMLElement>('[data-diorama-frame]');
   const canvas = document.createElement('canvas');
-  canvas.className = 'diorama-canvas';
+  canvas.className = 'absolute inset-0 size-full block pointer-events-none';
   canvas.setAttribute('aria-hidden', 'true');
   const ctx = canvas.getContext('2d');
   const scratch = document.createElement('canvas'); // one pose composed on its own, for the dissolves
   const sctx = scratch.getContext('2d');
   const hit = document.createElement('div');
-  hit.className = 'diorama-hit';
+  hit.className = 'absolute left-9/50 right-9/50 top-17/100 bottom-3/50 pointer-events-auto cursor-grab touch-pan-y select-none data-dragging:cursor-grabbing';
   hit.hidden = true;
   stage.prepend(canvas);
   stage.append(hit);
 
   let meta: Record<string, Sheet> | null = null;
-  const sources = new Map<string, Source>(); // every decoded sheet, kept alive
+  const sources = new Map<string, ImageBitmap>(); // every decoded sheet, kept alive
   const requests = new Map<string, Promise<boolean>>();
   let state: State = 'waiting';
   let cur: Pose = { sheet: 'still', frame: 0 };
@@ -61,6 +62,7 @@ export function createDiorama({ reduced, log, onStage }: Hooks) {
   let near = false;
   let failed = false;
   let onScreen = false;
+  let staged = false; // enough of the band is on screen for the character to take the stage
   let active = false;
   let suspended = false;
   let entranceDone = false;
@@ -81,7 +83,7 @@ export function createDiorama({ reduced, log, onStage }: Hooks) {
   let inside = false;
   let calm = false; // after a drag the pose stays frontal until the pointer moves again
   let pointerX = 0;
-  let drag: { id: number; x0: number; yaw0: number; moved: boolean; x: number; t: number; v: number } | null = null;
+  let drag: { id: number; x0: number; yaw0: number; moved: boolean; t: number; v: number } | null = null;
 
   const backstage = () => root.dataset.mode === 'backstage';
   const running = () => onScreen && !document.hidden && !suspended;
@@ -104,9 +106,9 @@ export function createDiorama({ reduced, log, onStage }: Hooks) {
       render();
     }
   }
-  function frameOf(c: CanvasRenderingContext2D, source: Source, def: Sheet, index: number) {
-    const w = def.frameWidth ?? source.width / def.cols;
-    const h = def.frameHeight ?? source.height / def.rows;
+  function frameOf(c: CanvasRenderingContext2D, source: ImageBitmap, def: Sheet, index: number) {
+    const w = source.width / def.cols; // the sheets are exact grids, no padding
+    const h = source.height / def.rows;
     c.drawImage(source, (index % def.cols) * w, Math.floor(index / def.cols) * h, w, h, 0, 0, c.canvas.width, c.canvas.height);
   }
   // One pose onto a context: the clay frame in front; in backstage the clay silhouette filled with the
@@ -174,18 +176,6 @@ export function createDiorama({ reduced, log, onStage }: Hooks) {
   }
 
   // ---------- loading ----------
-  async function decode(file: string): Promise<Source> {
-    try {
-      const blob = await (await fetch(file)).blob();
-      return await createImageBitmap(blob);
-    } catch {
-      const img = new Image();
-      img.decoding = 'async';
-      img.src = file;
-      await img.decode();
-      return img;
-    }
-  }
   function load(name: Name, wired = false) {
     const id = key(name, wired);
     let request = requests.get(id);
@@ -294,7 +284,7 @@ export function createDiorama({ reduced, log, onStage }: Hooks) {
   function setState(next: State) {
     state = next;
     stage!.dataset.state = next;
-    hit.hidden = !['idle', 'look', 'wave', 'spin'].includes(next);
+    hit.hidden = !LIVE.includes(next);
   }
   function toIdle() {
     wantWave = false;
@@ -400,15 +390,15 @@ export function createDiorama({ reduced, log, onStage }: Hooks) {
   // ---------- pointer ----------
   function endDrag() {
     if (!drag) return;
-    hit.classList.remove('is-dragging');
+    hit.removeAttribute('data-dragging');
     if (hit.hasPointerCapture(drag.id)) hit.releasePointerCapture(drag.id);
     drag = null;
   }
   hit.addEventListener('pointerdown', event => {
-    if (drag || (event.pointerType === 'mouse' && event.button !== 0) || !['idle', 'look', 'wave', 'spin'].includes(state) || !running()) return;
+    if (drag || (event.pointerType === 'mouse' && event.button !== 0) || !LIVE.includes(state) || !running()) return;
     hit.setPointerCapture(event.pointerId);
-    drag = { id: event.pointerId, x0: event.clientX, yaw0: state === 'look' || state === 'spin' ? yaw : 0, moved: false, x: event.clientX, t: event.timeStamp, v: 0 };
-    hit.classList.add('is-dragging');
+    drag = { id: event.pointerId, x0: event.clientX, yaw0: state === 'look' || state === 'spin' ? yaw : 0, moved: false, t: event.timeStamp, v: 0 };
+    hit.setAttribute('data-dragging', '');
   }, { signal });
   hit.addEventListener('pointermove', event => {
     if (!drag || event.pointerId !== drag.id) return;
@@ -429,7 +419,6 @@ export function createDiorama({ reduced, log, onStage }: Hooks) {
     const dt = event.timeStamp - drag.t;
     if (dt > 0) drag.v = 0.6 * drag.v + 0.4 * (wrap(next - yaw) / dt * 1000);
     yaw = next;
-    drag.x = event.clientX;
     drag.t = event.timeStamp;
     setPose({ sheet: 'turn', frame: turnFrame(yaw) });
     wake();
@@ -500,7 +489,8 @@ export function createDiorama({ reduced, log, onStage }: Hooks) {
   const intersection = new IntersectionObserver(entries => {
     const entry = entries.at(-1)!;
     onScreen = entry.isIntersecting;
-    setActive(entry.isIntersecting && entry.intersectionRatio >= ACTIVE - 0.005);
+    staged = onScreen && entry.intersectionRatio >= ACTIVE - 0.005;
+    setActive(staged);
     sync();
   }, { threshold: [0, 0.2, ACTIVE - 0.005, 0.7, 1] });
   intersection.observe(band);
@@ -515,7 +505,6 @@ export function createDiorama({ reduced, log, onStage }: Hooks) {
   document.addEventListener('visibilitychange', sync, { signal });
   const resizer = new ResizeObserver(size);
   resizer.observe(stage);
-  addEventListener('resize', size, { signal });
 
   function readGround() {
     ground = getComputedStyle(root).getPropertyValue('--color-bg').trim() || ground;
@@ -536,7 +525,7 @@ export function createDiorama({ reduced, log, onStage }: Hooks) {
       tryEnter();
     },
     onMotionChange() {
-      if (reduced()) { goStatic(); setActive(false); } else { setActive(onScreen && visibleShare() >= ACTIVE - 0.005); leaveStatic(); }
+      if (reduced()) { goStatic(); setActive(false); } else { setActive(staged); leaveStatic(); }
     },
     destroy() {
       lifetime.abort();
@@ -553,9 +542,4 @@ export function createDiorama({ reduced, log, onStage }: Hooks) {
       if (active) onStage(false);
     },
   };
-
-  function visibleShare() {
-    const r = band!.getBoundingClientRect();
-    return r.height ? clamp((Math.min(r.bottom, innerHeight) - Math.max(r.top, 0)) / r.height, 0, 1) : 0;
-  }
 }

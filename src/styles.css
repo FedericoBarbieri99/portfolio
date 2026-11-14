@@ -28,32 +28,254 @@
   --font-sans: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'Azeret Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
+  /* type: body sizes, then the display sizes (with the leading they always come with), then the switch's own scale */
   --text-*: initial;
   --text-xs: 11px;
   --text-sm: 14px;
   --text-md: 15px;
+  --text-code: 13px;
+  --text-code--line-height: 1.65;
   --text-base: 17px;
   --text-base--line-height: 1.5;
+  --text-address: 18px;
   --text-lede: 19px;
+  --text-sub-compact: 20px;
   --text-sub: 22px;
+  --text-title-compact: 24px;
   --text-title: 30px;
+  --text-skill: clamp(20px, 1.55vw, 22px);
+  --text-skill--line-height: 1.15;
+  --text-org: clamp(34px, 4.2vw, 60px);
+  --text-org--line-height: 1;
+  --text-heading: clamp(40px, 6vw, 80px);
+  --text-heading--line-height: 0.95;
+  --text-hero-compact: clamp(64px, 19vw, 120px);
+  --text-hero: clamp(88px, 14vw, 220px);
+  --text-hero--line-height: 0.86;
+  --text-switch-bar: 24px;
+  --text-switch-compact: clamp(48px, 9.5vw, 75px);
+  --text-switch: clamp(75px, 7.5vw, 105px);
+  --text-underline-offset-link: 0.16em;
+
+  --leading-title: 1.1;
+  --leading-role: 1.3;
+  --leading-hint: 1.4;
+  --leading-prose: 1.55;
+
+  --tracking-pill: -0.01em;
+  --tracking-title: -0.015em;
+  --tracking-display: -0.03em;
+  --tracking-note: 0.01em;
 
   --spacing-gutter: clamp(20px, 4vw, 64px);
   --spacing-bar: 56px;
+  --spacing-section: clamp(72px, 11vh, 150px);
+  --spacing-slab: clamp(20px, 3.2vw, 48px);
+  --spacing-slab-top: clamp(24px, 3vw, 40px);
+  --spacing-slab-gap: clamp(56px, 8vh, 96px);
+  --spacing-ledger: clamp(8px, 1vw, 14px);
+  --spacing-hero: clamp(48px, 12vh, 140px);
+  --spacing-hero-lead: clamp(32px, 5vh, 56px);
+  --spacing-label: 5.5em;
+  /* em of the element they sit on: the hero name's overhang, the switch's track and knob */
+  --spacing-bleed: 0.05em;
+  --spacing-switch: 2em;
+  --spacing-knob: 0.68em;
+  --spacing-knob-gap: 0.16em;
+  --spacing-name-w: 3.0727em;
+  --spacing-name-h: 2.1409em;
+  --spacing-name-x: 0.22em;
+  --spacing-name-y: 0.16em;
+  /* the closing diorama: the band's height, and the height of the art drawn in it (see --stage-k in base) */
+  --spacing-horizon: clamp(200px, 32.72vw, 1000px);
+  --spacing-horizon-art: max(var(--spacing-horizon), 32.72vw);
+
+  --radius-line: 1px;
+  --radius-row: 18px;
+  --radius-well: 22px;
+  --radius-slab: 28px;
+  --radius-bar: 30px;
+  --radius-oval: 50%;
+
+  --container-hint: 20ch;
+  --container-brief: 40ch;
+  --container-note: 44ch;
+  --container-lede: 60ch;
+  --container-case: 70ch;
+  --container-case-body: calc(70ch + 56px);
+  --container-page: 1440px;
 
   --breakpoint-*: initial;
   --breakpoint-sm: 640px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 900px;
+  --breakpoint-xl: 1100px;
 
+  --grid-template-columns-hud: 1fr 30px;
+  --grid-template-columns-hero: minmax(0, 1fr) auto;
+  --grid-template-columns-ledger: 250px minmax(0, 1fr);
+  --grid-template-columns-row: minmax(0, 1fr) 7.5em auto 34px;
+  --grid-template-columns-row-stacked: auto minmax(0, 1fr) 34px;
+  --grid-template-rows-hero: auto auto 1fr auto;
+  --grid-template-rows-open: 1fr;
+  --grid-template-rows-shut: 0fr;
+
+  --translate-knob: 147.0588%;
+  --transform-origin-name: 42% 62%;
+  --transform-origin-ground: 50% 91.67%;
+  --object-position-plate: 60% 100%;
+
+  --transition-property-rows: grid-template-rows;
+  --transition-property-nav: box-shadow, background-color, color;
+  --transition-property-plus: box-shadow, background-color;
+  --transition-property-ball: box-shadow, scale, filter;
+  --transition-property-underline: text-decoration-color;
   --ease-page: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-plain: ease;
   --dur: 360ms;
+
+  --animate-breathe: penguin-breathe 4200ms ease-in-out infinite;
+}
+
+/* tokens that read the page's own variables, so they resolve where they are used */
+@theme inline {
+  --min-height-hero: min(820px, calc(100svh - var(--spacing-bar) - var(--bar-top)));
+  --inset-hero-line: calc(var(--spacing-hero) - 28px);
+}
+
+/* ---------- the clay: one light from the upper left ----------
+   Every shadow recipe is the same six layers (far shade, contact shade, light, rim, inner shade, inner light), so a lump
+   can sink into a well, or squash, and the shadow interpolates instead of snapping. Offsets are in --u (see base). */
+@theme inline {
+  --color-pressed: color-mix(in srgb, var(--color-bg) 92%, var(--clay-lo));
+  --color-primary: var(--clay-primary);
+  --color-on-primary: var(--clay-primary-text);
+  --color-track: color-mix(in srgb, var(--color-bg) 86%, var(--clay-lo));
+  --background-image-ball: radial-gradient(circle at 30% 24%, color-mix(in srgb, var(--color-signal) 78%, white) 0, color-mix(in srgb, var(--color-signal) 92%, white) 24%, var(--color-signal) 55%, color-mix(in srgb, var(--color-signal) 90%, black) 100%);
+
+  --background-image-grain: url(/clay/grain.png);
+  --background-image-slab: url(/clay/grain.png), linear-gradient(150deg, color-mix(in srgb, var(--color-bg) 70%, var(--clay-hi)) 0, var(--color-bg) 38%, color-mix(in srgb, var(--color-bg) 93%, var(--clay-lo)) 100%);
+  --background-image-lump: url(/clay/grain.png), linear-gradient(145deg, color-mix(in srgb, var(--color-bg) 82%, var(--clay-hi)), var(--color-bg) 62%);
+  --background-image-groove: linear-gradient(to bottom, var(--clay-lo) 50%, var(--clay-hi) 50%);
+  --background-image-cta: url(/clay/grain.png), linear-gradient(145deg, color-mix(in srgb, var(--clay-primary) 90%, white), var(--clay-primary) 50%, color-mix(in srgb, var(--clay-primary) 86%, black));
+
+  --shadow-slab:
+    calc(20 * var(--u)) calc(26 * var(--u)) calc(40 * var(--u)) var(--clay-lo),
+    calc(5 * var(--u)) calc(6 * var(--u)) calc(10 * var(--u)) var(--clay-lo-soft),
+    calc(-14 * var(--u)) calc(-14 * var(--u)) calc(34 * var(--u)) var(--clay-hi),
+    inset 1px 1px 0 var(--clay-hi),
+    inset calc(-5 * var(--u)) calc(-6 * var(--u)) calc(18 * var(--u)) var(--clay-lo-soft),
+    inset calc(4 * var(--u)) calc(4 * var(--u)) calc(14 * var(--u)) var(--clay-hi);
+  --shadow-lump:
+    calc(8 * var(--u)) calc(10 * var(--u)) calc(20 * var(--u)) var(--clay-lo),
+    calc(2 * var(--u)) calc(3 * var(--u)) calc(5 * var(--u)) var(--clay-lo-soft),
+    calc(-6 * var(--u)) calc(-6 * var(--u)) calc(14 * var(--u)) var(--clay-hi),
+    inset 1px 1px 0 var(--clay-hi),
+    inset calc(-3 * var(--u)) calc(-4 * var(--u)) calc(8 * var(--u)) var(--clay-lo),
+    inset calc(3 * var(--u)) calc(3 * var(--u)) calc(6 * var(--u)) var(--clay-hi);
+  --shadow-lump-up:
+    calc(11 * var(--u)) calc(14 * var(--u)) calc(26 * var(--u)) var(--clay-lo),
+    calc(3 * var(--u)) calc(4 * var(--u)) calc(7 * var(--u)) var(--clay-lo-soft),
+    calc(-7 * var(--u)) calc(-7 * var(--u)) calc(18 * var(--u)) var(--clay-hi),
+    inset 1px 1px 0 var(--clay-hi),
+    inset calc(-3 * var(--u)) calc(-4 * var(--u)) calc(8 * var(--u)) var(--clay-lo-soft),
+    inset calc(3 * var(--u)) calc(3 * var(--u)) calc(6 * var(--u)) var(--clay-hi);
+  --shadow-lump-down:
+    calc(3 * var(--u)) calc(4 * var(--u)) calc(8 * var(--u)) var(--clay-lo),
+    calc(1 * var(--u)) calc(1 * var(--u)) calc(2 * var(--u)) var(--clay-lo-soft),
+    calc(-2 * var(--u)) calc(-2 * var(--u)) calc(5 * var(--u)) var(--clay-hi),
+    inset 1px 1px 0 var(--clay-hi),
+    inset calc(-2 * var(--u)) calc(-2 * var(--u)) calc(5 * var(--u)) var(--clay-lo-soft),
+    inset calc(2 * var(--u)) calc(2 * var(--u)) calc(4 * var(--u)) var(--clay-hi);
+  --shadow-well:
+    0 0 0 0 var(--clay-lo), 0 0 0 0 var(--clay-lo-soft), 0 0 0 0 var(--clay-hi), inset 0 0 0 0 var(--clay-hi),
+    inset calc(7 * var(--u)) calc(7 * var(--u)) calc(14 * var(--u)) var(--clay-lo),
+    inset calc(-6 * var(--u)) calc(-6 * var(--u)) calc(12 * var(--u)) var(--clay-hi);
+  --shadow-well-lite:
+    0 0 0 0 var(--clay-lo), 0 0 0 0 var(--clay-lo-soft), 0 0 0 0 var(--clay-hi), inset 0 0 0 0 var(--clay-hi),
+    inset calc(3 * var(--u)) calc(3 * var(--u)) calc(6 * var(--u)) var(--clay-lo),
+    inset calc(-3 * var(--u)) calc(-3 * var(--u)) calc(6 * var(--u)) var(--clay-hi);
+  /* the ink lump's light only spreads to its left: the mascot stands on its top edge, and a halo above it would haze its feet */
+  --shadow-cta:
+    calc(10 * var(--u)) calc(14 * var(--u)) calc(26 * var(--u)) var(--clay-ink-lo),
+    calc(2 * var(--u)) calc(4 * var(--u)) calc(7 * var(--u)) var(--clay-ink-lo),
+    calc(-9 * var(--u)) 0 calc(14 * var(--u)) calc(-9 * var(--u)) var(--clay-hi),
+    inset 1px 1px 0 rgb(255 255 255 / 0.28),
+    inset calc(-4 * var(--u)) calc(-5 * var(--u)) calc(10 * var(--u)) rgb(0 0 0 / 0.28),
+    inset calc(4 * var(--u)) calc(4 * var(--u)) calc(9 * var(--u)) rgb(255 255 255 / 0.12);
+  --shadow-cta-up:
+    calc(13 * var(--u)) calc(18 * var(--u)) calc(32 * var(--u)) var(--clay-ink-lo),
+    calc(3 * var(--u)) calc(5 * var(--u)) calc(9 * var(--u)) var(--clay-ink-lo),
+    calc(-11 * var(--u)) 0 calc(18 * var(--u)) calc(-10 * var(--u)) var(--clay-hi),
+    inset 1px 1px 0 rgb(255 255 255 / 0.28),
+    inset calc(-4 * var(--u)) calc(-5 * var(--u)) calc(10 * var(--u)) rgb(0 0 0 / 0.28),
+    inset calc(4 * var(--u)) calc(4 * var(--u)) calc(9 * var(--u)) rgb(255 255 255 / 0.12);
+  --shadow-cta-down:
+    calc(3 * var(--u)) calc(5 * var(--u)) calc(9 * var(--u)) var(--clay-ink-lo),
+    calc(1 * var(--u)) calc(1 * var(--u)) calc(3 * var(--u)) var(--clay-ink-lo),
+    calc(-3 * var(--u)) 0 calc(6 * var(--u)) calc(-3 * var(--u)) var(--clay-hi),
+    inset 1px 1px 0 rgb(255 255 255 / 0.2),
+    inset calc(-2 * var(--u)) calc(-3 * var(--u)) calc(6 * var(--u)) rgb(0 0 0 / 0.3),
+    inset calc(2 * var(--u)) calc(2 * var(--u)) calc(5 * var(--u)) rgb(255 255 255 / 0.1);
+  --shadow-bar:
+    calc(10 * var(--u)) calc(14 * var(--u)) calc(30 * var(--u)) var(--clay-lo),
+    calc(2 * var(--u)) calc(3 * var(--u)) calc(6 * var(--u)) var(--clay-lo-soft),
+    calc(-8 * var(--u)) calc(-8 * var(--u)) calc(20 * var(--u)) var(--clay-hi),
+    inset 1px 1px 0 var(--clay-hi),
+    inset calc(-3 * var(--u)) calc(-4 * var(--u)) calc(10 * var(--u)) var(--clay-lo-soft),
+    inset calc(3 * var(--u)) calc(3 * var(--u)) calc(8 * var(--u)) var(--clay-hi);
+
+  /* the switch: a deep well, in em so one recipe serves the 48px twin in the bar and the 210px one in the hero.
+     --press (0 to 1) is what the page-load animation turns: the track starts flush and presses in. */
+  --shadow-switch:
+    inset calc(0.1em * var(--press, 1)) calc(0.12em * var(--press, 1)) calc(0.2em * var(--press, 1)) var(--clay-lo),
+    inset calc(0.03em * var(--press, 1)) calc(0.04em * var(--press, 1)) calc(0.05em * var(--press, 1)) var(--clay-lo),
+    calc(0.04em * var(--press, 1)) calc(0.05em * var(--press, 1)) 0 var(--clay-hi),
+    inset calc(-0.07em * var(--press, 1)) calc(-0.07em * var(--press, 1)) calc(0.14em * var(--press, 1)) var(--clay-hi);
+  --shadow-ball:
+    0.06em 0.1em 0.15em color-mix(in srgb, var(--clay-signal-lo) 78%, transparent),
+    0.015em 0.03em 0.04em color-mix(in srgb, var(--clay-signal-lo) 60%, transparent),
+    -0.04em -0.04em 0.09em var(--clay-hi),
+    inset 0.02em 0.025em 0.035em rgb(255 255 255 / 0.32),
+    inset -0.04em -0.05em 0.09em color-mix(in srgb, var(--clay-signal-lo) 38%, transparent);
+  --shadow-ball-lit:
+    0.09em 0.14em 0.2em var(--clay-signal-lo),
+    0.02em 0.04em 0.05em var(--clay-signal-lo),
+    -0.06em -0.06em 0.12em var(--clay-hi),
+    inset 0.025em 0.025em 0.03em rgb(255 255 255 / 0.5),
+    inset -0.05em -0.06em 0.1em color-mix(in srgb, var(--clay-signal-lo) 70%, transparent);
+
+  --text-shadow-clay:
+    0.028em 0.04em 0.03em var(--clay-ink-lo),
+    -0.012em -0.014em 0 var(--clay-hi);
+
+  --spacing-bar-inset: max(var(--spacing-gutter), calc((100% - var(--container-page)) / 2 + var(--spacing-gutter)));
+
+  /* what a clay surface animates: the shadow and the squash fast, the colours with the mode wipe */
+  --transition-property-clay: box-shadow, scale, background-color, color;
+  --transition-duration-clay: 140ms, 120ms, var(--dur), var(--dur);
+  --transition-duration-nav: 160ms, var(--dur), var(--dur);
+  --transition-duration-plus: 220ms, var(--dur);
+  --transition-duration-ball: 160ms, 140ms, 160ms;
+  --transition-duration-mode: var(--dur);
+
+  /* the diorama's stage: a square on the ice shelf, --stage-k times the drawn art (see base); the middle of the snow shelf
+     is 8.6% of the art above the plate's bottom and the stage's own baseline is 8.33% of its side above its bottom edge */
+  --spacing-stage: calc(var(--spacing-horizon-art) * var(--stage-k));
+  --inset-stage-ground: calc(var(--spacing-horizon-art) * 0.086 - var(--spacing-horizon-art) * var(--stage-k) * 0.0833);
 }
 
 /* backstage: applies inside html[data-mode="backstage"] */
 @custom-variant bs (&:where([data-mode='backstage'], [data-mode='backstage'] *));
 /* JS ran: html.js is set by main.ts, so rows collapse only when the script can reopen them */
 @custom-variant js (&:where(.js, .js *));
+/* the section link being read (aria-current is set by motion.ts) */
+@custom-variant current (&[aria-current]);
+/* states that src/penguin.ts and src/diorama.ts write in data-state on the mascot and on the stage */
+@custom-variant idle (&:where([data-state='idle'], [data-state='idle'] *));
+@custom-variant waiting (&[data-state='waiting']);
+/* inside a stage whose canvas has drawn, or whose clip is live */
+@custom-variant covered (:where([data-drawn], [data-state]:not([data-state='static'])) &);
 
 /* optical size axis of Bricolage Grotesque */
 @utility opsz-* {
@@ -70,37 +292,39 @@
   }
 }
 
-/* The small mascot: a canvas the size of one frame of public/penguin/mini.webp. The element is the whole square; its ground line is
-   8.33% above the bottom edge. --mini is chosen so the character, about two thirds of the frame wide, is as wide as the old flat
-   mascot was. Breathing is a slow scale about the ground line while it stands idle; everything else is drawn by src/penguin.ts. */
-@layer components {
-  [data-penguin] {
-    --mini: 72px;
-    width: var(--mini);
-    height: var(--mini);
+/* The hero name in backstage: the ground-coloured fill is painted over the inner half of a double stroke, so the glyphs' overlapping
+   contours vanish and one clean outline remains; the redlines inside the name keep their own letters plain */
+@utility name-outline {
+  @media screen {
+    [data-mode='backstage'] & {
+      color: var(--color-bg);
+      -webkit-text-stroke: max(2.5px, 0.016em) var(--color-ink);
+      paint-order: stroke fill;
+      .bs {
+        -webkit-text-stroke: 0;
+        paint-order: normal;
+      }
+    }
   }
-  @media (width < 768px) {
-    [data-penguin] { --mini: 58px; }
-  }
-  [data-penguin] canvas {
-    width: 100%;
-    height: 100%;
-    transform-origin: 50% 91.67%;
-  }
-  [data-penguin][data-state='idle'] canvas {
-    animation: penguin-breathe 4200ms ease-in-out infinite;
-  }
-  [data-penguin]:not([hidden]):not([data-state='idle']) {
-    will-change: transform;
-  }
-  @keyframes penguin-breathe {
-    0%, 100% { scale: 1 1; }
-    50% { scale: 0.992 1.012; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    [data-penguin], [data-penguin-label] { display: none; }
-    [data-penguin] * { animation: none !important; }
-  }
+}
+
+/* The diorama plates fade into the page at both edges, measured from the art and not from the band: the top fade ends 4% of
+   the band above the peaks (cropped sky counted out) and only ever covers sky, the bottom one only snow below the character's shadow. */
+@utility mask-plate {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 max(0px, calc(var(--spacing-horizon) - var(--spacing-horizon-art) * 0.623 - var(--spacing-horizon) * 0.04)),
+    #000 calc(100% - var(--spacing-horizon-art) * 0.045),
+    transparent 100%
+  );
+}
+
+/* The small mascot is a canvas the size of one frame of public/penguin/mini.webp; its ground line is 8.33% above the bottom edge.
+   Breathing is a slow scale about that line while it stands idle; everything else is drawn by src/penguin.ts. */
+@keyframes penguin-breathe {
+  0%, 100% { scale: 1 1; }
+  50% { scale: 0.992 1.012; }
 }
 
 @layer base {
@@ -135,71 +359,28 @@
     --u: calc(1px * var(--clay-k));
     --clay-lo-soft: color-mix(in srgb, var(--clay-lo) 60%, transparent);
     --clay-signal-lo: color-mix(in srgb, var(--color-signal) 55%, #1a0800);
-    /* every recipe is the same six layers (far shade, contact shade, light, rim, inner shade, inner light), so a lump
-       can sink into a well, or squash, and the shadow interpolates instead of snapping */
-    --sh-slab:
-      calc(20 * var(--u)) calc(26 * var(--u)) calc(40 * var(--u)) var(--clay-lo),
-      calc(5 * var(--u)) calc(6 * var(--u)) calc(10 * var(--u)) var(--clay-lo-soft),
-      calc(-14 * var(--u)) calc(-14 * var(--u)) calc(34 * var(--u)) var(--clay-hi),
-      inset 1px 1px 0 var(--clay-hi),
-      inset calc(-5 * var(--u)) calc(-6 * var(--u)) calc(18 * var(--u)) var(--clay-lo-soft),
-      inset calc(4 * var(--u)) calc(4 * var(--u)) calc(14 * var(--u)) var(--clay-hi);
-    --sh-lump:
-      calc(8 * var(--u)) calc(10 * var(--u)) calc(20 * var(--u)) var(--clay-lo),
-      calc(2 * var(--u)) calc(3 * var(--u)) calc(5 * var(--u)) var(--clay-lo-soft),
-      calc(-6 * var(--u)) calc(-6 * var(--u)) calc(14 * var(--u)) var(--clay-hi),
-      inset 1px 1px 0 var(--clay-hi),
-      inset calc(-3 * var(--u)) calc(-4 * var(--u)) calc(8 * var(--u)) var(--clay-lo),
-      inset calc(3 * var(--u)) calc(3 * var(--u)) calc(6 * var(--u)) var(--clay-hi);
-    --sh-lump-up:
-      calc(11 * var(--u)) calc(14 * var(--u)) calc(26 * var(--u)) var(--clay-lo),
-      calc(3 * var(--u)) calc(4 * var(--u)) calc(7 * var(--u)) var(--clay-lo-soft),
-      calc(-7 * var(--u)) calc(-7 * var(--u)) calc(18 * var(--u)) var(--clay-hi),
-      inset 1px 1px 0 var(--clay-hi),
-      inset calc(-3 * var(--u)) calc(-4 * var(--u)) calc(8 * var(--u)) var(--clay-lo-soft),
-      inset calc(3 * var(--u)) calc(3 * var(--u)) calc(6 * var(--u)) var(--clay-hi);
-    --sh-lump-down:
-      calc(3 * var(--u)) calc(4 * var(--u)) calc(8 * var(--u)) var(--clay-lo),
-      calc(1 * var(--u)) calc(1 * var(--u)) calc(2 * var(--u)) var(--clay-lo-soft),
-      calc(-2 * var(--u)) calc(-2 * var(--u)) calc(5 * var(--u)) var(--clay-hi),
-      inset 1px 1px 0 var(--clay-hi),
-      inset calc(-2 * var(--u)) calc(-2 * var(--u)) calc(5 * var(--u)) var(--clay-lo-soft),
-      inset calc(2 * var(--u)) calc(2 * var(--u)) calc(4 * var(--u)) var(--clay-hi);
-    --sh-well:
-      0 0 0 0 var(--clay-lo), 0 0 0 0 var(--clay-lo-soft), 0 0 0 0 var(--clay-hi), inset 0 0 0 0 var(--clay-hi),
-      inset calc(7 * var(--u)) calc(7 * var(--u)) calc(14 * var(--u)) var(--clay-lo),
-      inset calc(-6 * var(--u)) calc(-6 * var(--u)) calc(12 * var(--u)) var(--clay-hi);
-    --sh-well-lite:
-      0 0 0 0 var(--clay-lo), 0 0 0 0 var(--clay-lo-soft), 0 0 0 0 var(--clay-hi), inset 0 0 0 0 var(--clay-hi),
-      inset calc(3 * var(--u)) calc(3 * var(--u)) calc(6 * var(--u)) var(--clay-lo),
-      inset calc(-3 * var(--u)) calc(-3 * var(--u)) calc(6 * var(--u)) var(--clay-hi);
-    /* the ink lump's light only spreads to its left: the mascot stands on its top edge, and a halo above it would haze its feet */
-    --sh-ink:
-      calc(10 * var(--u)) calc(14 * var(--u)) calc(26 * var(--u)) var(--clay-ink-lo),
-      calc(2 * var(--u)) calc(4 * var(--u)) calc(7 * var(--u)) var(--clay-ink-lo),
-      calc(-9 * var(--u)) 0 calc(14 * var(--u)) calc(-9 * var(--u)) var(--clay-hi),
-      inset 1px 1px 0 rgb(255 255 255 / 0.28),
-      inset calc(-4 * var(--u)) calc(-5 * var(--u)) calc(10 * var(--u)) rgb(0 0 0 / 0.28),
-      inset calc(4 * var(--u)) calc(4 * var(--u)) calc(9 * var(--u)) rgb(255 255 255 / 0.12);
-    --sh-ink-up:
-      calc(13 * var(--u)) calc(18 * var(--u)) calc(32 * var(--u)) var(--clay-ink-lo),
-      calc(3 * var(--u)) calc(5 * var(--u)) calc(9 * var(--u)) var(--clay-ink-lo),
-      calc(-11 * var(--u)) 0 calc(18 * var(--u)) calc(-10 * var(--u)) var(--clay-hi),
-      inset 1px 1px 0 rgb(255 255 255 / 0.28),
-      inset calc(-4 * var(--u)) calc(-5 * var(--u)) calc(10 * var(--u)) rgb(0 0 0 / 0.28),
-      inset calc(4 * var(--u)) calc(4 * var(--u)) calc(9 * var(--u)) rgb(255 255 255 / 0.12);
-    --sh-ink-down:
-      calc(3 * var(--u)) calc(5 * var(--u)) calc(9 * var(--u)) var(--clay-ink-lo),
-      calc(1 * var(--u)) calc(1 * var(--u)) calc(3 * var(--u)) var(--clay-ink-lo),
-      calc(-3 * var(--u)) 0 calc(6 * var(--u)) calc(-3 * var(--u)) var(--clay-hi),
-      inset 1px 1px 0 rgb(255 255 255 / 0.2),
-      inset calc(-2 * var(--u)) calc(-3 * var(--u)) calc(6 * var(--u)) rgb(0 0 0 / 0.3),
-      inset calc(2 * var(--u)) calc(2 * var(--u)) calc(5 * var(--u)) rgb(255 255 255 / 0.1);
+    /* the diorama stage's side as a fraction of the drawn art: a phone needs the head to clear the corner tag, wide screens a smaller bird */
+    --stage-k: 0.9;
   }
   @media (width < 640px) {
     html {
       --clay-k: 0.5;
       --bar-top: 8px;
+    }
+  }
+  @media (width >= 640px) {
+    html {
+      --stage-k: 0.7;
+    }
+  }
+  @media (width >= 900px) {
+    html {
+      --stage-k: 0.56;
+    }
+  }
+  @media (width >= 1200px) {
+    html {
+      --stage-k: 0.45;
     }
   }
   @media (width < 1100px) {
@@ -227,7 +408,7 @@
   }
   a {
     text-decoration-thickness: 1px;
-    text-underline-offset: 0.16em;
+    text-underline-offset: var(--text-underline-offset-link);
   }
   ::selection {
     background: var(--color-ink);
@@ -276,369 +457,11 @@
   }
 }
 
-/* ---------- clay ----------
-   The page is one slab of matte clay under a single light from the upper left. Everything on it is pressed into the
-   slab or sits on it as a lump; nothing floats on a shadow of its own. The tokens and shadow recipes live on the root
-   (see base); these are the classes that use them. */
-@layer components {
-  /* a lump or a well keeps the ground colour and its grain, so large flat areas read as clay and not as a CSS colour */
-  .clay-slab,
-  .clay-lump,
-  .clay-well,
-  .clay-ink {
-    background-image: url(/clay/grain.png);
-    transition:
-      box-shadow 140ms var(--ease-page),
-      scale 120ms var(--ease-page),
-      background-color var(--dur) var(--ease-page),
-      color var(--dur) var(--ease-page);
-  }
-  /* 1. raised: the big slab (work, experience) */
-  .clay-slab {
-    background-color: var(--color-bg);
-    background-image: url(/clay/grain.png), linear-gradient(150deg, color-mix(in srgb, var(--color-bg) 70%, var(--clay-hi)) 0, var(--color-bg) 38%, color-mix(in srgb, var(--color-bg) 93%, var(--clay-lo)) 100%);
-    border-radius: 28px;
-    box-shadow: var(--sh-slab);
-  }
-  /* 1b. raised: the small lump (skill pills, chips, round buttons) */
-  .clay-lump {
-    background-color: var(--color-bg);
-    background-image: url(/clay/grain.png), linear-gradient(145deg, color-mix(in srgb, var(--color-bg) 82%, var(--clay-hi)), var(--color-bg) 62%);
-    border-radius: 999px;
-    box-shadow: var(--sh-lump);
-  }
-  /* 2. pressed: a well pushed into the slab */
-  .clay-well {
-    background-color: color-mix(in srgb, var(--color-bg) 92%, var(--clay-lo));
-    border-radius: 999px;
-    box-shadow: var(--sh-well-lite);
-  }
-  .clay-well-deep { box-shadow: var(--sh-well); }
-  /* 4. ink lump: navy clay (a lighter blueprint clay in backstage) */
-  .clay-ink {
-    background-color: var(--clay-primary);
-    background-image: url(/clay/grain.png), linear-gradient(145deg, color-mix(in srgb, var(--clay-primary) 90%, white), var(--clay-primary) 50%, color-mix(in srgb, var(--clay-primary) 86%, black));
-    color: var(--clay-primary-text);
-    border-radius: 999px;
-    box-shadow: var(--sh-ink);
-  }
-  /* 8. press feedback: hover lifts it with its shadow only (the mascot may be standing on it), a press squashes it */
-  @media (hover: hover) {
-    .clay-lump.clay-press:hover { box-shadow: var(--sh-lump-up); }
-    .clay-ink.clay-press:hover { box-shadow: var(--sh-ink-up); }
-  }
-  .clay-lump.clay-press:active { box-shadow: var(--sh-lump-down); scale: 0.97; }
-  .clay-ink.clay-press:active { box-shadow: var(--sh-ink-down); scale: 0.97; }
-  .clay-press { cursor: pointer; }
-  /* 3. groove: a 2px engraved line, the lo line with the hi line right under it. It replaces every hairline. */
-  .groove-t::before,
-  .groove-between:not(:first-child)::before,
-  .groove-b::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 2px;
-    border-radius: 1px;
-    background: linear-gradient(to bottom, var(--clay-lo) 50%, var(--clay-hi) 50%);
-    pointer-events: none;
-  }
-  .groove-t::before,
-  .groove-between::before { top: 0; }
-  .groove-b::after { bottom: 0; }
-  /* 6. clay type: display letters that sit on the surface, in em so it scales from a heading to the name */
-  .clay-type {
-    text-shadow:
-      0.028em 0.04em 0.03em var(--clay-ink-lo),
-      -0.012em -0.014em 0 var(--clay-hi);
-  }
-
-  /* the floating bar: a raised clay lozenge inset from the viewport, a rounded slab where it wraps to two rows */
-  .clay-bar {
-    margin: 0 max(var(--spacing-gutter), calc((100% - 1440px) / 2 + var(--spacing-gutter)));
-    background-image: url(/clay/grain.png);
-    border-radius: 999px;
-    box-shadow:
-      calc(10 * var(--u)) calc(14 * var(--u)) calc(30 * var(--u)) var(--clay-lo),
-      calc(2 * var(--u)) calc(3 * var(--u)) calc(6 * var(--u)) var(--clay-lo-soft),
-      calc(-8 * var(--u)) calc(-8 * var(--u)) calc(20 * var(--u)) var(--clay-hi),
-      inset 1px 1px 0 var(--clay-hi),
-      inset calc(-3 * var(--u)) calc(-4 * var(--u)) calc(10 * var(--u)) var(--clay-lo-soft),
-      inset calc(3 * var(--u)) calc(3 * var(--u)) calc(8 * var(--u)) var(--clay-hi);
-  }
-  @media (width < 1100px) {
-    .clay-bar { border-radius: 30px; }
-  }
-  /* the section being read sits in a well; hover presses a shallow one */
-  .nav-link { position: relative; transition: box-shadow 160ms var(--ease-page), background-color var(--dur) var(--ease-page), color var(--dur) var(--ease-page); }
-  nav .nav-link { border-radius: 999px; padding-inline: 14px; }
-  @media (width < 640px) {
-    nav .nav-link { padding-inline: 8px; }
-  }
-  nav .nav-link:is(:hover, :focus-visible) { box-shadow: var(--sh-well-lite); }
-  /* the wrapped nav scrolls sideways and so clips a ring drawn outside the pill */
-  nav .nav-link:focus-visible { outline-offset: -3px; }
-  nav .nav-link[aria-current] { background-color: color-mix(in srgb, var(--color-bg) 92%, var(--clay-lo)); box-shadow: var(--sh-well-lite); }
-  .project-title {
-    text-decoration: underline;
-    text-decoration-color: transparent;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.16em;
-    transition: text-decoration-color 160ms ease;
-  }
-  [data-row]:is(:hover, :focus-visible, [aria-expanded='true']) .project-title { text-decoration-color: currentColor; }
-
-  /* the plus: a raised round button that sinks into a well (and turns to a cross) when its row opens */
-  .plus {
-    position: relative;
-    width: 34px;
-    height: 34px;
-    align-self: center;
-    justify-self: end;
-    display: grid;
-    place-items: center;
-    background-color: var(--color-bg);
-    background-image: url(/clay/grain.png), linear-gradient(145deg, color-mix(in srgb, var(--color-bg) 82%, var(--clay-hi)), var(--color-bg) 62%);
-    border-radius: 50%;
-    box-shadow: var(--sh-lump);
-    transition: box-shadow 220ms var(--ease-page), background-color var(--dur) var(--ease-page);
-  }
-  [data-row]:hover .plus { box-shadow: var(--sh-lump-up); }
-  [data-row]:active .plus { box-shadow: var(--sh-lump-down); }
-  [data-row][aria-expanded='true'] .plus {
-    background-color: color-mix(in srgb, var(--color-bg) 92%, var(--clay-lo));
-    background-image: url(/clay/grain.png);
-    box-shadow: var(--sh-well-lite);
-  }
-  .plus-mark {
-    position: relative;
-    width: 14px;
-    height: 14px;
-    transition: transform 220ms var(--ease-page);
-  }
-  .plus-mark::before,
-  .plus-mark::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 6px;
-    width: 14px;
-    height: 2px;
-    border-radius: 1px;
-    background: currentColor;
-  }
-  .plus-mark::after { rotate: 90deg; }
-  [data-row][aria-expanded='true'] .plus-mark { transform: rotate(45deg); }
-
-  /* the switch: a deep well and a ball of signal clay that slides in it. Sized by --sw (the track's width); its
-     shadows are in em so one recipe serves the 52px twin in the bar and the 210px one in the hero. --press (0 to 1)
-     is what the page-load animation turns: the track starts flush and presses in. */
-  .switch {
-    --press: 1;
-    position: relative;
-    display: block;
-    width: var(--sw);
-    aspect-ratio: 2 / 1;
-    font-size: calc(var(--sw) / 2);
-    border-radius: 999px;
-    background-color: color-mix(in srgb, var(--color-bg) 86%, var(--clay-lo));
-    background-image: url(/clay/grain.png);
-    box-shadow:
-      inset calc(0.1em * var(--press)) calc(0.12em * var(--press)) calc(0.2em * var(--press)) var(--clay-lo),
-      inset calc(0.03em * var(--press)) calc(0.04em * var(--press)) calc(0.05em * var(--press)) var(--clay-lo),
-      calc(0.04em * var(--press)) calc(0.05em * var(--press)) 0 var(--clay-hi),
-      inset calc(-0.07em * var(--press)) calc(-0.07em * var(--press)) calc(0.14em * var(--press)) var(--clay-hi);
-  }
-  /* the knob slides; its resting side is CSS, anime.js only animates the travel (147.06% = a track width minus the knob and its margins) */
-  .switch-knob {
-    position: absolute;
-    left: 0.16em;
-    top: 0.16em;
-    width: 0.68em;
-    height: 0.68em;
-  }
-  [aria-pressed='true'] .switch-knob { translate: 147.0588% 0; }
-  .switch-ball {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background:
-      radial-gradient(circle at 30% 24%, color-mix(in srgb, var(--color-signal) 78%, white) 0, color-mix(in srgb, var(--color-signal) 92%, white) 24%, var(--color-signal) 55%, color-mix(in srgb, var(--color-signal) 90%, black) 100%);
-    box-shadow:
-      0.06em 0.1em 0.15em color-mix(in srgb, var(--clay-signal-lo) 78%, transparent),
-      0.015em 0.03em 0.04em color-mix(in srgb, var(--clay-signal-lo) 60%, transparent),
-      -0.04em -0.04em 0.09em var(--clay-hi),
-      inset 0.02em 0.025em 0.035em rgb(255 255 255 / 0.32),
-      inset -0.04em -0.05em 0.09em color-mix(in srgb, var(--clay-signal-lo) 38%, transparent);
-    transition: box-shadow 160ms var(--ease-page), scale 140ms var(--ease-page), filter 160ms var(--ease-page);
-  }
-  @media (hover: hover) {
-    [data-toggle]:hover .switch-ball { filter: brightness(1.06) saturate(1.05); box-shadow: 0.09em 0.14em 0.2em var(--clay-signal-lo), 0.02em 0.04em 0.05em var(--clay-signal-lo), -0.06em -0.06em 0.12em var(--clay-hi), inset 0.025em 0.025em 0.03em rgb(255 255 255 / 0.5), inset -0.05em -0.06em 0.1em color-mix(in srgb, var(--clay-signal-lo) 70%, transparent); }
-  }
-  [data-toggle]:active .switch-ball { scale: 0.93; }
-
-  /* the hero's "explore" row: a wide shallow groove with the arrow on a small raised button at its end */
-  .explore { border-radius: 999px; }
-  .explore .clay-lump { width: 40px; height: 40px; display: grid; place-items: center; }
-  .explore:hover .clay-lump { box-shadow: var(--sh-lump-up); }
-  .explore:active .clay-lump { box-shadow: var(--sh-lump-down); }
-
-  /* the detail of an open row sits in a well pressed into the slab */
-  .row-well { border-radius: 22px; padding: 22px 26px; }
-  @media (width < 640px) {
-    .row-well { padding: 18px; border-radius: 18px; }
-  }
-
-  /* the name: the clay bas-relief lies exactly over the live text (offsets and size are in em of the h1).
-     Backstage hides it and the live text turns into its own outline. --name-in is what the entrance animates. */
-  .name-clay {
-    position: absolute;
-    left: -0.22em;
-    top: -0.16em;
-    width: 3.0727em;
-    height: 2.1409em;
-    max-width: none;
-    transform-origin: 42% 62%;
-    pointer-events: none;
-    user-select: none;
-    opacity: var(--name-in, 1);
-    transition: opacity var(--dur) var(--ease-page);
-  }
-  .js .name-clay:not([data-ready]) { opacity: 0; }
-  [data-mode='backstage'] .name-clay { opacity: 0; visibility: hidden; }
-  @media screen {
-    [data-mode='backstage'] #hero-name {
-      /* the ground-coloured fill is painted over the inner half of a double stroke, so the glyphs' overlapping contours vanish and one clean outline remains */
-      color: var(--color-bg);
-      -webkit-text-stroke: max(2.5px, 0.016em) var(--color-ink);
-      paint-order: stroke fill;
-    }
-    [data-mode='backstage'] #hero-name .bs { -webkit-text-stroke: 0; paint-order: normal; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .clay-press:active, [data-toggle]:active .switch-ball { scale: 1 !important; }
-  }
-  /* more contrast when asked: shadows alone are a weak affordance, so every lump and well gets a 1px ink outline */
-  @media (prefers-contrast: more) {
-    :is(.clay-slab, .clay-lump, .clay-well, .clay-ink, .plus, .switch, .clay-bar):not(:focus-visible) {
-      outline: 1px solid var(--color-ink);
-      outline-offset: -1px;
-    }
-  }
-}
-
-
-/* ---------- the closing horizon ----------
-   A clay diorama in two plates that share one composition (1831 × 599: a generous band of pure sky, the
-   peaks and the sun starting at 37.7% of the height, the snow shelf in the bottom 8.6%). The day plate is
-   always there; the night plate sits on top of it and only appears in backstage (the mode wipe is the
-   transition, so no animation of its own). The band's height follows the art, so the whole plate shows
-   whenever the viewport is wide enough: 599/1831 of the width, never under 200px (a phone crops the
-   sides, keeping the sun and an iceberg) and never over 1000px. Above that cap only the top of the sky
-   is cropped: even at 3840px the cut is 20% of the art, and the peaks start at 37.7%. Both fades are
-   measured from the art, not from the band, so they only ever cover sky (top) and snow below the
-   character's shadow (bottom). --horizon-h and --horizon-art are public: whoever stands on the ice sizes
-   itself from them. */
-@layer components {
-  .horizon {
-    --horizon-h: clamp(200px, 32.72vw, 1000px);
-    /* the plate's drawn height: height-limited on phones, width-limited above ~611px */
-    --horizon-art: max(var(--horizon-h), 32.72vw);
-    /* the peaks and the sun sit this far below the band's top (cropped sky counted out); the fade ends 4% of the band above them */
-    --fade-in: max(0px, calc(var(--horizon-h) - var(--horizon-art) * 0.623 - var(--horizon-h) * 0.04));
-    --fade-out: calc(var(--horizon-art) * 0.045);
-    position: relative;
-    height: var(--horizon-h);
-    overflow: hidden;
-  }
-  .diorama-plate {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    /* anchored to the bottom; on a phone the crop keeps the sun (67% of the plate) and an iceberg */
-    object-position: 60% 100%;
-    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 var(--fade-in), #000 calc(100% - var(--fade-out)), transparent 100%);
-    mask-image: linear-gradient(to bottom, transparent 0, #000 var(--fade-in), #000 calc(100% - var(--fade-out)), transparent 100%);
-  }
-  .diorama-night { opacity: 0; }
-  /* the faded edges are transparent on both plates, so the day plate must leave when the night one arrives */
-  [data-mode='backstage'] .diorama-night { opacity: 1; }
-  [data-mode='backstage'] .diorama-plate:not(.diorama-night) { opacity: 0; }
-  /* The character's square: side = --stage-k × the drawn art height, centred at 37% of the width. The
-     middle of the snow shelf is 51.5px of 599 (8.6%) above the bottom of the plate, and the stage's
-     baseline (8.33% of its side above its bottom edge) sits exactly there. The character stands 73% of
-     the frame tall: on a phone --stage-k grows until the head clears the corner tag (about 0.9); on wide
-     screens 0.45 keeps it at about 60% of the tallest peak. */
-  .horizon {
-    --stage-k: 0.9;
-  }
-  @media (min-width: 640px) {
-    .horizon { --stage-k: 0.7; }
-  }
-  @media (min-width: 900px) {
-    .horizon { --stage-k: 0.56; }
-  }
-  @media (min-width: 1200px) {
-    .horizon { --stage-k: 0.45; }
-  }
-  .diorama-stage {
-    --stage: calc(var(--horizon-art) * var(--stage-k));
-    position: absolute;
-    left: 37%;
-    width: var(--stage);
-    height: var(--stage);
-    bottom: calc(var(--horizon-art) * 0.086 - var(--stage) * 0.0833);
-    translate: -50% 0;
-    pointer-events: none;
-  }
-  .diorama-still {
-    display: block;
-    width: 100%;
-    height: 100%;
-    user-select: none;
-  }
-  /* once the canvas has drawn (or a clip is live) the still image steps aside; in backstage the canvas only
-     draws once the wireframe is decoded, so the still stays until then */
-  .diorama-stage[data-drawn] .diorama-still,
-  .diorama-stage[data-state]:not([data-state='static']) .diorama-still {
-    visibility: hidden;
-  }
-  .diorama-stage[data-state='waiting'] {
-    visibility: hidden;
-  }
-  .diorama-canvas {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
-    pointer-events: none;
-  }
-  /* the body of the character, not its whole square: press and drag to spin it */
-  .diorama-hit {
-    position: absolute;
-    left: 18%;
-    right: 18%;
-    top: 17%;
-    bottom: 6%;
-    pointer-events: auto;
-    cursor: grab;
-    touch-action: pan-y;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-  .diorama-hit.is-dragging {
-    cursor: grabbing;
-  }
-  /* on a phone the annotation is a small two-line tag, not a long one */
-  @media (max-width: 639px) {
-    .diorama-tag > span { display: block; }
-    .diorama-sep { display: none !important; }
+/* more contrast when asked: shadows alone are a weak affordance, so every lump and well gets a 1px ink outline */
+@media (prefers-contrast: more) {
+  [data-clay]:not(:focus-visible) {
+    outline: 1px solid var(--color-ink);
+    outline-offset: -1px;
   }
 }
 
@@ -676,22 +499,17 @@
     text-shadow: none !important;
     background-image: none !important;
   }
-  .clay-slab,
-  .clay-lump,
-  .clay-well,
-  .clay-ink,
-  .clay-bar {
+  [data-clay] {
     background-color: transparent !important;
     border-radius: 0 !important;
   }
-  .groove-t::before,
-  .groove-between::before,
-  .groove-b::after {
+  [data-groove]::before,
+  [data-groove]::after {
     height: 1px;
     background-color: var(--color-line) !important;
   }
-  .clay-slab { padding-inline: 0 !important; }
-  .row-well { padding: 0 !important; }
+  [data-clay='slab'] { padding-inline: 0 !important; }
+  [data-clay='detail'] { padding: 0 !important; }
   /* every collapsible row prints open, with no plus mark */
   [data-row] {
     pointer-events: none;

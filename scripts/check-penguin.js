@@ -65,7 +65,7 @@ async (page) => {
         const range = document.createRange(); range.selectNodeContents(node);
         for (const b of range.getClientRects()) if (b.right > body.left && b.left < body.right && b.bottom > body.top && b.top < body.bottom) hit.push(node.textContent.trim().slice(0, 20));
       }
-      for (const el of row.querySelectorAll('.plus')) { const b = el.getBoundingClientRect(); if (b.right > body.left && b.left < body.right && b.bottom > body.top && b.top < body.bottom) hit.push('plus'); }
+      for (const el of row.querySelectorAll('[data-clay="plus"]')) { const b = el.getBoundingClientRect(); if (b.right > body.left && b.left < body.right && b.bottom > body.top && b.top < body.bottom) hit.push('plus'); }
       return hit.length === 0;
     }), 'The mascot must not stand on text or on the plus button of its row');
 
