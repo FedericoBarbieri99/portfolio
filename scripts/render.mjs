@@ -14,9 +14,6 @@ const SITE = 'https://federicobarbieri.it';
 const NAME_EM = 3.0727;
 const NAME_SIZES = `(max-width: 767px) calc(clamp(64px, 19vw, 120px) * ${NAME_EM}), calc(clamp(88px, 14vw, 220px) * ${NAME_EM})`;
 const NAME_SRCSET = '/hero/name@1x.webp 676w, /hero/name@2x.webp 1352w';
-const brand = readFileSync(resolve(root, 'public/logo.svg'), 'utf8')
-  .replace('fill="#111c33" role="img" aria-labelledby="title"', 'fill="currentColor" class="w-8 h-8 shrink-0" aria-hidden="true" focusable="false"')
-  .replace(/\s*<title[^>]*>.*?<\/title>/, '');
 
 const esc = (s) =>
   String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
@@ -218,7 +215,7 @@ function page(c) {
   <a class="absolute left-gutter -top-25 focus:top-2 px-3.5 py-2.5 bg-ink text-bg z-20" href="#work">${esc(ui.skip)}</a>
 
   <header data-clay="bar" class="mx-bar-inset bg-bg bg-grain rounded-full shadow-bar sticky top-(--bar-top) z-10 flex items-center gap-x-5 h-bar px-6 max-xl:pl-2.5 max-xl:pr-2 text-sm max-xl:gap-x-2 max-sm:gap-x-1">
-    <a class="font-semibold mr-auto gap-2.5 ${navLink}" href="#top"><span class="contents max-xl:hidden">${brand}</span><img class="size-10 xl:hidden" src="/icon-192.png" width="40" height="40" alt="" /><span class="max-sm:sr-only">Federico Barbieri</span></a>
+    <a class="font-semibold mr-auto gap-2.5 ${navLink}" href="#top"><img class="size-10 bs:hidden" src="/penguin/bust.webp" width="40" height="40" alt="" /><img class="size-10 hidden bs:block" src="/penguin/bust-wire.webp" width="40" height="40" alt="" /><span class="max-sm:sr-only">Federico Barbieri</span></a>
     <nav class="flex gap-1 max-xl:hidden" aria-label="${esc(ui.navLabel)}">
       ${sections.map(([id, label]) => `<a class="${navLink} ${navPill}" href="#${id}">${esc(label)}</a>`).join('\n      ')}
     </nav>
